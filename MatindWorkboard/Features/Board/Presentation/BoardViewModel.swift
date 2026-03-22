@@ -44,6 +44,11 @@ final class BoardViewModel {
             if selectedBoardId == boardId {
                 selectedBoardId = boards.first(where: { $0.isDefault == true })?.id ?? boards.first?.id
             }
+            // 删除后刷新 lastVisited（避免冷启动时加载已删除的板）
+            if let newSelectedId = selectedBoardId {
+                let visited = LastVisited(workspaceId: workspaceId, boardId: newSelectedId)
+                LocalStorage.shared.set(visited, forKey: AppConfig.lastVisitedKey)
+            }
         } catch {
             self.error = error.localizedDescription
         }

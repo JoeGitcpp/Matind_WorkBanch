@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct BoardTabView: View {
-    @Binding var selectedBoardId: String?
+    let selectedBoardId: String?
     let boards: [Board]
     let workspaceId: String
+    let onSelect: (String) -> Void
     let onDelete: (String) async -> Void
 
     var body: some View {
@@ -22,7 +23,7 @@ struct BoardTabView: View {
                             BoardTabItem(
                                 board: board,
                                 isSelected: selectedBoardId == board.id,
-                                onSelect: { selectedBoardId = board.id },
+                                onSelect: { onSelect(board.id) },
                                 onDelete: {
                                     Task { await onDelete(board.id) }
                                 }

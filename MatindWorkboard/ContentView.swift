@@ -32,14 +32,12 @@ struct MainView: View {
         } detail: {
             if let wsId = workspaceVM.selectedWorkspaceId {
                 BoardTabView(
-                    selectedBoardId: Binding(
-                        get: { boardVM.selectedBoardId },
-                        set: { id in
-                            if let id { boardVM.selectBoard(id, workspaceId: wsId) }
-                        }
-                    ),
+                    selectedBoardId: boardVM.selectedBoardId,
                     boards: boardVM.boards,
                     workspaceId: wsId,
+                    onSelect: { boardId in
+                        boardVM.selectBoard(boardId, workspaceId: wsId)
+                    },
                     onDelete: { boardId in
                         await boardVM.deleteBoard(boardId, workspaceId: wsId)
                     }

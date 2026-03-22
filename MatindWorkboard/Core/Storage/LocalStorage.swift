@@ -14,7 +14,14 @@ struct LocalStorage: Sendable {
 
     func get<T: Decodable>(_ type: T.Type, forKey key: String) -> T? {
         guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(type, from: data)
+        do {
+            return try JSONDecoder().decode(type, from: data)
+        } catch {
+            #if DEBUG
+            print("[LocalStorage] Failed to decode '\(key)': \(error)")
+            #endif
+            return nil
+        }
     }
 
     func remove(forKey key: String) {

@@ -37,5 +37,8 @@ final class WorkspaceViewModel {
 
     func selectWorkspace(_ id: String) {
         selectedWorkspaceId = id
+        // 持久化 workspaceId（boardId 重置，由 BoardViewModel.load 后重新写入）
+        let visited = LastVisited(workspaceId: id, boardId: "")
+        storage.set(visited, forKey: AppConfig.lastVisitedKey)
     }
 }
