@@ -45,7 +45,7 @@ final class BoardLayoutViewModel {
         let old = widgets[index]
         widgets[index] = WidgetInstance(
             id: old.id, pluginId: old.pluginId,
-            gridX: max(0, toX), gridY: max(0, toY),
+            gridX: max(0, min(toX, 12 - old.gridW)), gridY: max(0, toY),
             gridW: old.gridW, gridH: old.gridH
         )
         scheduleSave()
@@ -66,6 +66,7 @@ final class BoardLayoutViewModel {
     private func scheduleSave() {
         saveTask?.cancel()
         saveTask = Task {
+            // try? intentionally swallows CancellationError when Task is cancelled
             try? await Task.sleep(for: .seconds(1))
             guard !Task.isCancelled, let boardId = currentBoardId else { return }
             let layout = BoardLayout(boardId: boardId, widgets: widgets)
