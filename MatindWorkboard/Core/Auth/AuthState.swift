@@ -15,6 +15,9 @@ final class AuthState {
             isAuthenticated = true  // 同步设置，消除闪烁
             Task {
                 await APIClient.shared.setToken(token)
+                // TODO(M3): 调用 /auth/me 验证 token 并填充 currentUser
+                // let user: User = try? await APIClient.shared.get("/auth/me")
+                // self.currentUser = user
             }
         }
 
@@ -33,14 +36,15 @@ final class AuthState {
     func login(token: String, user: User? = nil) {
         do {
             try authService.saveToken(token)
-            Task {
-                await APIClient.shared.setToken(token)
-            }
+        } catch {
+            print("[AuthState] Failed to save token to Keychain: \(error)")
+            return
+        }
+        // 先等 APIClient 设置好 token，再标记登录状态
+        Task {
+            await APIClient.shared.setToken(token)
             self.currentUser = user
             self.isAuthenticated = true
-        } catch {
-            // Keychain 写入失败，不标记为已登录
-            print("[AuthState] Failed to save token: \(error)")
         }
     }
 
@@ -56,8 +60,8 @@ final class AuthState {
         authService.clearToken()
         Task {
             await APIClient.shared.setToken(nil)
+            self.currentUser = nil
+            self.isAuthenticated = false
         }
-        self.currentUser = nil
-        self.isAuthenticated = false
     }
 }

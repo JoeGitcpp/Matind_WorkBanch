@@ -22,11 +22,12 @@ actor APIClient {
     private let session: URLSession
     private var token: String?
 
-    init() {
+    // 允许注入 session（用于测试）
+    init(session: URLSession? = nil) {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
-        self.session = URLSession(configuration: config)
+        self.session = session ?? URLSession(configuration: config)
     }
 
     func setToken(_ token: String?) {
