@@ -4,8 +4,11 @@ struct LocalStorage: Sendable {
     static let shared = LocalStorage()
 
     func set<T: Encodable>(_ value: T, forKey key: String) {
-        if let data = try? JSONEncoder().encode(value) {
+        do {
+            let data = try JSONEncoder().encode(value)
             UserDefaults.standard.set(data, forKey: key)
+        } catch {
+            assertionFailure("[LocalStorage] Failed to encode value for key '\(key)': \(error)")
         }
     }
 

@@ -22,8 +22,11 @@ actor APIClient {
     private let session: URLSession
     private var token: String?
 
-    init(session: URLSession = .shared) {
-        self.session = session
+    init() {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 30
+        self.session = URLSession(configuration: config)
     }
 
     func setToken(_ token: String?) {
@@ -72,7 +75,9 @@ actor APIClient {
                     throw APIError.decodingError(error)
                 }
             case 401:
-                NotificationCenter.default.post(name: .unauthorizedResponse, object: nil)
+                Task { @MainActor in
+                    NotificationCenter.default.post(name: .unauthorizedResponse, object: nil)
+                }
                 throw APIError.unauthorized
             default:
                 let message = String(data: data, encoding: .utf8)

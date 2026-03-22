@@ -12,9 +12,9 @@ final class AuthState {
     init() {
         // 启动时检查 Keychain 中是否有 token
         if let token = authService.loadToken() {
+            isAuthenticated = true  // 同步设置，消除闪烁
             Task {
                 await APIClient.shared.setToken(token)
-                self.isAuthenticated = true
             }
         }
 
@@ -31,12 +31,17 @@ final class AuthState {
     }
 
     func login(token: String, user: User? = nil) {
-        try? authService.saveToken(token)
-        Task {
-            await APIClient.shared.setToken(token)
+        do {
+            try authService.saveToken(token)
+            Task {
+                await APIClient.shared.setToken(token)
+            }
+            self.currentUser = user
+            self.isAuthenticated = true
+        } catch {
+            // Keychain 写入失败，不标记为已登录
+            print("[AuthState] Failed to save token: \(error)")
         }
-        self.currentUser = user
-        self.isAuthenticated = true
     }
 
     func logout() {
