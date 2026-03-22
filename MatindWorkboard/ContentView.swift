@@ -17,6 +17,8 @@ struct ContentView: View {
 struct MainView: View {
     @State private var workspaceVM = WorkspaceViewModel()
     @State private var boardVM = BoardViewModel()
+    @State private var notificationVM = NotificationViewModel()
+    @State private var showNotifications = false
 
     var body: some View {
         NavigationSplitView {
@@ -52,14 +54,25 @@ struct MainView: View {
         .navigationTitle("Matind Workboard")
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button(action: {}) {
-                    Image(systemName: "bell")
+                Button(action: { showNotifications.toggle() }) {
+                    ZStack(alignment: .topTrailing) {
+                        Image(systemName: "bell")
+                        NotificationBadge(count: notificationVM.unreadCount)
+                            .offset(x: 6, y: -6)
+                    }
                 }
                 .help("通知中心")
+                .popover(isPresented: $showNotifications, arrowEdge: .bottom) {
+                    NotificationCenterView(viewModel: notificationVM)
+                }
             }
         }
         .task {
             await workspaceVM.load()
+        }
+        .task {
+            await notificationVM.requestNotificationPermission()
+            await notificationVM.loadUnreadCount()
         }
     }
 }

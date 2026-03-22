@@ -180,3 +180,40 @@ struct MockBoardRepository: BoardRepositoryProtocol {
     func fetchBoards(workspaceId: String) async throws -> [Board] { boards }
     func deleteBoard(boardId: String) async throws {}
 }
+
+// MARK: - NotificationViewModel Tests
+
+@Suite("NotificationViewModel Tests")
+struct NotificationViewModelTests {
+    @Test("markAllAsRead sets unreadCount to 0")
+    @MainActor
+    func markAllAsReadSetsCountToZero() async {
+        let vm = NotificationViewModel(repository: MockNotificationRepository())
+        await vm.loadNotifications()
+        #expect(vm.notifications.count == 2)
+
+        await vm.markAllAsRead()
+        #expect(vm.unreadCount == 0)
+        #expect(vm.notifications.allSatisfy { $0.isRead })
+    }
+
+    @Test("unread count reflects unread notifications")
+    @MainActor
+    func unreadCountReflectsUnread() async {
+        let vm = NotificationViewModel(repository: MockNotificationRepository())
+        await vm.loadNotifications()
+        // Mock has 1 unread notification
+        #expect(vm.unreadCount == 1)
+    }
+}
+
+struct MockNotificationRepository: NotificationRepositoryProtocol {
+    func fetchNotifications(page: Int) async throws -> [AppNotification] {
+        [
+            AppNotification(id: "1", type: .approval, title: "审批请求", content: "需要您的审批", isRead: false, createdAt: nil, boardId: nil),
+            AppNotification(id: "2", type: .system, title: "系统通知", content: "系统更新", isRead: true, createdAt: nil, boardId: nil)
+        ]
+    }
+    func fetchUnreadCount() async throws -> Int { 1 }
+    func markAllAsRead() async throws {}
+}
