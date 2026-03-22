@@ -1,0 +1,50 @@
+name: MatindWorkboard
+options:
+  bundleIdPrefix: com.matrixindustry
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  xcodeVersion: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    ENABLE_HARDENED_RUNTIME: YES
+
+targets:
+  MatindWorkboard:
+    type: application
+    platform: macOS
+    sources:
+      - MatindWorkboard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard
+        PRODUCT_NAME: MatindWorkboard
+        INFOPLIST_FILE: MatindWorkboard/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+        SWIFT_STRICT_CONCURRENCY: complete
+    entitlements:
+      path: MatindWorkboard/MatindWorkboard.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)com.matrixindustry.matind-workboard
+    scheme:
+      testTargets:
+        - MatindWorkboardTests
+
+  MatindWorkboardTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - MatindWorkboardTests
+    dependencies:
+      - target: MatindWorkboard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard-tests

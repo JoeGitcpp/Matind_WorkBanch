@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
+		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
+		4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D884CFF78623D8EA394F06 /* APIClient.swift */; };
+		6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */; };
+		8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */; };
+		9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */; };
+		BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD18F256539A80E7CE771B99 /* ContentView.swift */; };
+		FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0422E2E7F100E8281AF089E /* AuthService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		847DBB97C3B9170462ABB572 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1AC452536F0C97444305954 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29639C02D47C54987AB40394;
+			remoteInfo = MatindWorkboard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardTests.swift; sourceTree = "<group>"; };
+		85A090111C61779493D3C65E /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		86A8717AF50F9F7EA36D4190 /* MatindWorkboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatindWorkboard.entitlements; sourceTree = "<group>"; };
+		A3D884CFF78623D8EA394F06 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
+		BE796F527DB0D7CDC93EF3B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatindWorkboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		CD18F256539A80E7CE771B99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardApp.swift; sourceTree = "<group>"; };
+		DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatindWorkboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0422E2E7F100E8281AF089E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		29F659B8ECAEC0974A1B412A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3C8FC70E4A20A179BEA98173 /* Auth */,
+				90335C9B38FC6D5C62374ACC /* Config */,
+				74586FDE082F190C8C1BB9C7 /* Network */,
+				81B6ADE36E9A8A411A44EFAA /* Storage */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		3561173A8818078217569C55 = {
+			isa = PBXGroup;
+			children = (
+				FA248F54814A9A0C50145762 /* MatindWorkboard */,
+				83E12F3E71DEE197884BB517 /* MatindWorkboardTests */,
+				EE9780451302DB74A1C94996 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3C8FC70E4A20A179BEA98173 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				E0422E2E7F100E8281AF089E /* AuthService.swift */,
+				B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		74586FDE082F190C8C1BB9C7 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A3D884CFF78623D8EA394F06 /* APIClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		81B6ADE36E9A8A411A44EFAA /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				85A090111C61779493D3C65E /* LocalStorage.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		83E12F3E71DEE197884BB517 /* MatindWorkboardTests */ = {
+			isa = PBXGroup;
+			children = (
+				02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */,
+			);
+			path = MatindWorkboardTests;
+			sourceTree = "<group>";
+		};
+		90335C9B38FC6D5C62374ACC /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		EE9780451302DB74A1C94996 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */,
+				C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA248F54814A9A0C50145762 /* MatindWorkboard */ = {
+			isa = PBXGroup;
+			children = (
+				29F659B8ECAEC0974A1B412A /* Core */,
+				CD18F256539A80E7CE771B99 /* ContentView.swift */,
+				BE796F527DB0D7CDC93EF3B4 /* Info.plist */,
+				86A8717AF50F9F7EA36D4190 /* MatindWorkboard.entitlements */,
+				DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */,
+			);
+			path = MatindWorkboard;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29639C02D47C54987AB40394 /* MatindWorkboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06125AFB5613AA0F2C34D2C1 /* Build configuration list for PBXNativeTarget "MatindWorkboard" */;
+			buildPhases = (
+				7E29E0AD8107707C4252BE6C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MatindWorkboard;
+			packageProductDependencies = (
+			);
+			productName = MatindWorkboard;
+			productReference = DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B5F7D35AC08A8D1A41D4A741 /* MatindWorkboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE082199FB3043B59615BAEF /* Build configuration list for PBXNativeTarget "MatindWorkboardTests" */;
+			buildPhases = (
+				F2930E51B8698EA11BEB85D4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D696152504C0AC773139C51 /* PBXTargetDependency */,
+			);
+			name = MatindWorkboardTests;
+			packageProductDependencies = (
+			);
+			productName = MatindWorkboardTests;
+			productReference = C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1AC452536F0C97444305954 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					29639C02D47C54987AB40394 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1CB7C5FB00BAB7F376D26894 /* Build configuration list for PBXProject "MatindWorkboard" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3561173A8818078217569C55;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EE9780451302DB74A1C94996 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29639C02D47C54987AB40394 /* MatindWorkboard */,
+				B5F7D35AC08A8D1A41D4A741 /* MatindWorkboardTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7E29E0AD8107707C4252BE6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */,
+				6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */,
+				FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */,
+				9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */,
+				BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */,
+				161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */,
+				2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2930E51B8698EA11BEB85D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D696152504C0AC773139C51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29639C02D47C54987AB40394 /* MatindWorkboard */;
+			targetProxy = 847DBB97C3B9170462ABB572 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		19C892DBF36CC027CF3CD071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		4AB104A244DB5ED34E115F82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Release;
+		};
+		55C176762D8F45AC174DC73F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A4451D487E95E1BEA77B1E02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = Release;
+		};
+		BCA08387B037514AEB73B57C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = Debug;
+		};
+		C9C755E63B93EE88918E902E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		06125AFB5613AA0F2C34D2C1 /* Build configuration list for PBXNativeTarget "MatindWorkboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9C755E63B93EE88918E902E /* Debug */,
+				4AB104A244DB5ED34E115F82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1CB7C5FB00BAB7F376D26894 /* Build configuration list for PBXProject "MatindWorkboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55C176762D8F45AC174DC73F /* Debug */,
+				19C892DBF36CC027CF3CD071 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EE082199FB3043B59615BAEF /* Build configuration list for PBXNativeTarget "MatindWorkboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCA08387B037514AEB73B57C /* Debug */,
+				A4451D487E95E1BEA77B1E02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1AC452536F0C97444305954 /* Project object */;
+}
