@@ -10,6 +10,7 @@
 		154D3D4F8B6BAB8B3B6D9082 /* Workspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5695DD2D02AC714F7C128D19 /* Workspace.swift */; };
 		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
 		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
+		2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C11FBFABA7EA10899775D4 /* BoardGridView.swift */; };
 		34EE62ECF27AC6DB904014E7 /* WorkspaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D2546DA330B315B2D9D9C /* WorkspaceRepository.swift */; };
 		47E156C06905C6FF67C901E1 /* NotificationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EC92EBE765B9A7B1DD7B49 /* NotificationCenterView.swift */; };
 		4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D884CFF78623D8EA394F06 /* APIClient.swift */; };
@@ -20,7 +21,9 @@
 		5FCAAEFAB750B82AB320F54B /* PluginManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EAD494217F32A03EDF91A /* PluginManifest.swift */; };
 		62058DF1F146DC6C9AD7B43D /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82477CA33EC17A203A667C13 /* NotificationViewModel.swift */; };
 		6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */; };
+		74AE08D96F575BCECA9A12B6 /* WidgetInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F25923D82E5DACEA33F299 /* WidgetInstance.swift */; };
 		76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7E94A641D22637F8815007 /* BoardViewModel.swift */; };
+		77C9797E7AB1C8004001871F /* BoardLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */; };
 		7BF6ED6225FF2769A0A05E1F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33559A614D5E88D6D13142D2 /* NotificationService.swift */; };
 		8B09E16AC61155851B3986C8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA4617A92C0DFE494DECB6B /* Board.swift */; };
 		8C0D1E53F45C77257F6185D6 /* WorkspaceSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D12998A481A3CD77D01E13 /* WorkspaceSidebarView.swift */; };
@@ -30,6 +33,7 @@
 		9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */; };
 		B455C98DF0E74CCDA4E790FF /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF60BB371CDC46231AC7226 /* AppNotification.swift */; };
 		BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD18F256539A80E7CE771B99 /* ContentView.swift */; };
+		C237C5034A262FFBD34694FE /* BoardLayoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B519BBD48208434631893267 /* BoardLayoutRepository.swift */; };
 		E3A7F6903AD6041885B0EC65 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266C052BFD81CDB48AADA86 /* User.swift */; };
 		E6965632B991617C7D493B18 /* WorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5693126CAB1A88AE8F89B /* WorkspaceViewModel.swift */; };
 		ED19B40927A9337319E6834C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F0541EFA5DF0DF0C494176 /* LoginView.swift */; };
@@ -48,10 +52,13 @@
 
 /* Begin PBXFileReference section */
 		02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardTests.swift; sourceTree = "<group>"; };
+		03F25923D82E5DACEA33F299 /* WidgetInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetInstance.swift; sourceTree = "<group>"; };
 		1535201A60BEC6AC9BD84957 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
 		22BA5B9205A4062220DEFD1B /* BoardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTabView.swift; sourceTree = "<group>"; };
 		2FB5693126CAB1A88AE8F89B /* WorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewModel.swift; sourceTree = "<group>"; };
 		33559A614D5E88D6D13142D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		33C11FBFABA7EA10899775D4 /* BoardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGridView.swift; sourceTree = "<group>"; };
+		38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutViewModel.swift; sourceTree = "<group>"; };
 		4266C052BFD81CDB48AADA86 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4E7E94A641D22637F8815007 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		516AE3627E3F65DBBD992E61 /* LastVisited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastVisited.swift; sourceTree = "<group>"; };
@@ -65,6 +72,7 @@
 		907D2546DA330B315B2D9D9C /* WorkspaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRepository.swift; sourceTree = "<group>"; };
 		A3D884CFF78623D8EA394F06 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		B12EAD494217F32A03EDF91A /* PluginManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManifest.swift; sourceTree = "<group>"; };
+		B519BBD48208434631893267 /* BoardLayoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutRepository.swift; sourceTree = "<group>"; };
 		B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		B70DF759304B388F7E0965A7 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
 		BE796F527DB0D7CDC93EF3B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -188,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				CFA4617A92C0DFE494DECB6B /* Board.swift */,
+				03F25923D82E5DACEA33F299 /* WidgetInstance.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -214,6 +223,8 @@
 		658ACB749BD5E2C3CD582DC5 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				33C11FBFABA7EA10899775D4 /* BoardGridView.swift */,
+				38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */,
 				22BA5B9205A4062220DEFD1B /* BoardTabView.swift */,
 				4E7E94A641D22637F8815007 /* BoardViewModel.swift */,
 			);
@@ -223,6 +234,7 @@
 		6AD37DB551885815685F6C85 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				B519BBD48208434631893267 /* BoardLayoutRepository.swift */,
 				F84D2A8289857A02A25836DA /* BoardRepository.swift */,
 			);
 			path = Data;
@@ -394,6 +406,9 @@
 				FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */,
 				9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */,
 				8B09E16AC61155851B3986C8 /* Board.swift in Sources */,
+				2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */,
+				C237C5034A262FFBD34694FE /* BoardLayoutRepository.swift in Sources */,
+				77C9797E7AB1C8004001871F /* BoardLayoutViewModel.swift in Sources */,
 				50D390C12A8C3287B2FB82CB /* BoardRepository.swift in Sources */,
 				58529A575205917977358089 /* BoardTabView.swift in Sources */,
 				76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */,
@@ -410,6 +425,7 @@
 				8C51046CF39EF170418F4E1B /* PluginRegistry.swift in Sources */,
 				E3A7F6903AD6041885B0EC65 /* User.swift in Sources */,
 				973F7B6D232918ABD3EA161B /* WebViewPluginHost.swift in Sources */,
+				74AE08D96F575BCECA9A12B6 /* WidgetInstance.swift in Sources */,
 				154D3D4F8B6BAB8B3B6D9082 /* Workspace.swift in Sources */,
 				34EE62ECF27AC6DB904014E7 /* WorkspaceRepository.swift in Sources */,
 				8C0D1E53F45C77257F6185D6 /* WorkspaceSidebarView.swift in Sources */,

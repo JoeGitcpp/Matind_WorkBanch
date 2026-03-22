@@ -82,28 +82,41 @@ struct BoardTabItem: View {
 
 struct BoardContentView: View {
     let boardId: String
+    @State private var layoutVM = BoardLayoutViewModel()
     @StateObject private var registry = PluginRegistry.shared
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(
-                columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())],
-                spacing: 12
-            ) {
-                ForEach(registry.plugins) { plugin in
-                    PluginCard(plugin: plugin)
-                        .frame(height: 200)
+        VStack(spacing: 0) {
+            // 工具栏：添加插件按钮
+            HStack {
+                Spacer()
+                Button(action: { layoutVM.showPluginPicker = true }) {
+                    Label("添加插件", systemImage: "plus")
+                        .font(.system(size: 13))
                 }
+                .buttonStyle(.bordered)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .disabled(registry.plugins.isEmpty)
             }
-            .padding()
+            .background(.bar)
+
+            Divider()
+
+            // 网格内容
+            if layoutVM.isLoading {
+                ProgressView("加载布局…")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                BoardGridView(
+                    layoutVM: layoutVM,
+                    boardId: boardId,
+                    plugins: registry.plugins
+                )
+            }
         }
         .task {
             registry.loadBuiltinPlugins()
-        }
-        .overlay {
-            if registry.plugins.isEmpty {
-                ContentUnavailableView("暂无插件", systemImage: "puzzlepiece")
-            }
         }
     }
 }
