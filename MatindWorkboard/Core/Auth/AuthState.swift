@@ -44,6 +44,14 @@ final class AuthState {
         }
     }
 
+    func loginWithCredentials(email: String, password: String) async throws {
+        let response: LoginResponse = try await APIClient.shared.post(
+            "/auth/login",
+            body: LoginRequest(email: email, password: password)
+        )
+        login(token: response.token, user: response.user)
+    }
+
     func logout() {
         authService.clearToken()
         Task {
@@ -52,10 +60,4 @@ final class AuthState {
         self.currentUser = nil
         self.isAuthenticated = false
     }
-}
-
-struct User: Codable, Identifiable {
-    let id: String
-    let email: String
-    let name: String?
 }

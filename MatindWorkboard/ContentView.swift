@@ -8,7 +8,7 @@ struct ContentView: View {
             if authState.isAuthenticated {
                 MainView()
             } else {
-                LoginPlaceholderView()
+                LoginView()
             }
         }
     }
@@ -33,18 +33,4 @@ struct MainView: View {
     }
 }
 
-struct LoginPlaceholderView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "squares.leading.rectangle")
-                .font(.system(size: 64))
-                .foregroundStyle(.blue)
-            Text("Matind Workboard")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            Text("正在加载…")
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
+// LoginPlaceholderView 已由 LoginView 替代
