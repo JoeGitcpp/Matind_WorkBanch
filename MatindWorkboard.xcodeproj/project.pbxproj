@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		154D3D4F8B6BAB8B3B6D9082 /* Workspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5695DD2D02AC714F7C128D19 /* Workspace.swift */; };
 		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
 		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
+		34EE62ECF27AC6DB904014E7 /* WorkspaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D2546DA330B315B2D9D9C /* WorkspaceRepository.swift */; };
 		4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D884CFF78623D8EA394F06 /* APIClient.swift */; };
+		50D390C12A8C3287B2FB82CB /* BoardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84D2A8289857A02A25836DA /* BoardRepository.swift */; };
+		58529A575205917977358089 /* BoardTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA5B9205A4062220DEFD1B /* BoardTabView.swift */; };
+		59C7A996669363D6100F4406 /* LastVisited.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516AE3627E3F65DBBD992E61 /* LastVisited.swift */; };
 		6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */; };
+		76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7E94A641D22637F8815007 /* BoardViewModel.swift */; };
+		8B09E16AC61155851B3986C8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA4617A92C0DFE494DECB6B /* Board.swift */; };
+		8C0D1E53F45C77257F6185D6 /* WorkspaceSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D12998A481A3CD77D01E13 /* WorkspaceSidebarView.swift */; };
 		8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */; };
 		9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */; };
 		BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD18F256539A80E7CE771B99 /* ContentView.swift */; };
 		E3A7F6903AD6041885B0EC65 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266C052BFD81CDB48AADA86 /* User.swift */; };
+		E6965632B991617C7D493B18 /* WorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5693126CAB1A88AE8F89B /* WorkspaceViewModel.swift */; };
 		ED19B40927A9337319E6834C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F0541EFA5DF0DF0C494176 /* LoginView.swift */; };
 		FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0422E2E7F100E8281AF089E /* AuthService.swift */; };
 /* End PBXBuildFile section */
@@ -31,22 +40,39 @@
 
 /* Begin PBXFileReference section */
 		02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardTests.swift; sourceTree = "<group>"; };
+		22BA5B9205A4062220DEFD1B /* BoardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTabView.swift; sourceTree = "<group>"; };
+		2FB5693126CAB1A88AE8F89B /* WorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewModel.swift; sourceTree = "<group>"; };
 		4266C052BFD81CDB48AADA86 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4E7E94A641D22637F8815007 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		516AE3627E3F65DBBD992E61 /* LastVisited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastVisited.swift; sourceTree = "<group>"; };
+		5695DD2D02AC714F7C128D19 /* Workspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workspace.swift; sourceTree = "<group>"; };
+		66D12998A481A3CD77D01E13 /* WorkspaceSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSidebarView.swift; sourceTree = "<group>"; };
 		83F0541EFA5DF0DF0C494176 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		85A090111C61779493D3C65E /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		86A8717AF50F9F7EA36D4190 /* MatindWorkboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatindWorkboard.entitlements; sourceTree = "<group>"; };
+		907D2546DA330B315B2D9D9C /* WorkspaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRepository.swift; sourceTree = "<group>"; };
 		A3D884CFF78623D8EA394F06 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		BE796F527DB0D7CDC93EF3B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatindWorkboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		CD18F256539A80E7CE771B99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CFA4617A92C0DFE494DECB6B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardApp.swift; sourceTree = "<group>"; };
 		DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatindWorkboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0422E2E7F100E8281AF089E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		F84D2A8289857A02A25836DA /* BoardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		238C9A87B1DEDEEE47FDBDFD /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				5695DD2D02AC714F7C128D19 /* Workspace.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		29F659B8ECAEC0974A1B412A /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +83,16 @@
 				81B6ADE36E9A8A411A44EFAA /* Storage */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		2F93E926FDCB26F598A63E9B /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				F377CCBF94CE623B91AA80A2 /* Data */,
+				238C9A87B1DEDEEE47FDBDFD /* Domain */,
+				3EEF11E13BA9E685E12CFFF7 /* Presentation */,
+			);
+			path = Workspace;
 			sourceTree = "<group>";
 		};
 		3561173A8818078217569C55 = {
@@ -77,6 +113,23 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		3EEF11E13BA9E685E12CFFF7 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				66D12998A481A3CD77D01E13 /* WorkspaceSidebarView.swift */,
+				2FB5693126CAB1A88AE8F89B /* WorkspaceViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		4091DF3BCB764532BBEAE300 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4617A92C0DFE494DECB6B /* Board.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		44FD04D6EEE5879DF3EB1A75 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,9 +141,28 @@
 		5CE70EEF0DF1A1768CC6DB0F /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D1D1DE6B4F9D061B1EF59B26 /* Board */,
 				44FD04D6EEE5879DF3EB1A75 /* Login */,
+				2F93E926FDCB26F598A63E9B /* Workspace */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		658ACB749BD5E2C3CD582DC5 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				22BA5B9205A4062220DEFD1B /* BoardTabView.swift */,
+				4E7E94A641D22637F8815007 /* BoardViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6AD37DB551885815685F6C85 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F84D2A8289857A02A25836DA /* BoardRepository.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		74586FDE082F190C8C1BB9C7 /* Network */ = {
@@ -120,6 +192,7 @@
 		8A5361714EDFB3A22A9500C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				516AE3627E3F65DBBD992E61 /* LastVisited.swift */,
 				4266C052BFD81CDB48AADA86 /* User.swift */,
 			);
 			path = Models;
@@ -133,6 +206,16 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		D1D1DE6B4F9D061B1EF59B26 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				6AD37DB551885815685F6C85 /* Data */,
+				4091DF3BCB764532BBEAE300 /* Domain */,
+				658ACB749BD5E2C3CD582DC5 /* Presentation */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
 		EE9780451302DB74A1C94996 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +223,14 @@
 				C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F377CCBF94CE623B91AA80A2 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				907D2546DA330B315B2D9D9C /* WorkspaceRepository.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		FA248F54814A9A0C50145762 /* MatindWorkboard */ = {
@@ -237,11 +328,20 @@
 				6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */,
 				FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */,
 				9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */,
+				8B09E16AC61155851B3986C8 /* Board.swift in Sources */,
+				50D390C12A8C3287B2FB82CB /* BoardRepository.swift in Sources */,
+				58529A575205917977358089 /* BoardTabView.swift in Sources */,
+				76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */,
 				BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */,
+				59C7A996669363D6100F4406 /* LastVisited.swift in Sources */,
 				161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */,
 				ED19B40927A9337319E6834C /* LoginView.swift in Sources */,
 				2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */,
 				E3A7F6903AD6041885B0EC65 /* User.swift in Sources */,
+				154D3D4F8B6BAB8B3B6D9082 /* Workspace.swift in Sources */,
+				34EE62ECF27AC6DB904014E7 /* WorkspaceRepository.swift in Sources */,
+				8C0D1E53F45C77257F6185D6 /* WorkspaceSidebarView.swift in Sources */,
+				E6965632B991617C7D493B18 /* WorkspaceViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

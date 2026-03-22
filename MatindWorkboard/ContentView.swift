@@ -15,21 +15,54 @@ struct ContentView: View {
 }
 
 struct MainView: View {
+    @State private var workspaceVM = WorkspaceViewModel()
+    @State private var boardVM = BoardViewModel()
+
     var body: some View {
         NavigationSplitView {
-            Text("工作区列表")
-                .frame(minWidth: 200)
+            WorkspaceSidebarView(
+                selectedWorkspaceId: Binding(
+                    get: { workspaceVM.selectedWorkspaceId },
+                    set: { workspaceVM.selectWorkspace($0 ?? "") }
+                ),
+                workspaces: workspaceVM.workspaces,
+                isLoading: workspaceVM.isLoading,
+                error: workspaceVM.error
+            )
         } detail: {
-            VStack {
-                Text("Matind Workboard")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Text("选择左侧工作区开始使用")
-                    .foregroundStyle(.secondary)
+            if let wsId = workspaceVM.selectedWorkspaceId {
+                BoardTabView(
+                    selectedBoardId: Binding(
+                        get: { boardVM.selectedBoardId },
+                        set: { id in
+                            if let id { boardVM.selectBoard(id, workspaceId: wsId) }
+                        }
+                    ),
+                    boards: boardVM.boards,
+                    workspaceId: wsId,
+                    onDelete: { boardId in
+                        await boardVM.deleteBoard(boardId, workspaceId: wsId)
+                    }
+                )
+                .task(id: wsId) {
+                    await boardVM.load(workspaceId: wsId)
+                }
+            } else {
+                ContentUnavailableView("选择协作空间", systemImage: "folder")
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("Matind Workboard")
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: {}) {
+                    Image(systemName: "bell")
+                }
+                .help("通知中心")
+            }
+        }
+        .task {
+            await workspaceVM.load()
+        }
     }
 }
 
