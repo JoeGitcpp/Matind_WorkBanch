@@ -18,7 +18,12 @@ targets:
     type: application
     platform: macOS
     sources:
-      - MatindWorkboard
+      - path: MatindWorkboard
+        excludes:
+          - Resources/**
+    resources:
+      - path: MatindWorkboard/Resources/Plugins
+        type: folder
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard

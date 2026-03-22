@@ -1,0 +1,20 @@
+{
+  "id": "com.matind.chart",
+  "name": "图表",
+  "version": "1.0.0",
+  "type": "webview",
+  "category": "data",
+  "description": "数据图表展示",
+  "permissions": {
+    "network": ["api.matind.com"],
+    "notification": false,
+    "filesystem": false
+  },
+  "ui": {
+    "entry": "index.html",
+    "icon": "icon",
+    "default_width": 4,
+    "default_height": 3,
+    "resizable": true
+  }
+}

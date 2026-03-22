@@ -1,0 +1,20 @@
+{
+  "id": "com.matind.showcase-card",
+  "name": "展示卡片",
+  "version": "1.0.0",
+  "type": "webview",
+  "category": "tools",
+  "description": "产品展示卡片",
+  "permissions": {
+    "network": [],
+    "notification": false,
+    "filesystem": false
+  },
+  "ui": {
+    "entry": "index.html",
+    "icon": "icon",
+    "default_width": 3,
+    "default_height": 2,
+    "resizable": true
+  }
+}

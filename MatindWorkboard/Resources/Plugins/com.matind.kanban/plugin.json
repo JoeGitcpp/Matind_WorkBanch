@@ -1,0 +1,20 @@
+{
+  "id": "com.matind.kanban",
+  "name": "看板",
+  "version": "1.0.0",
+  "type": "webview",
+  "category": "tools",
+  "description": "任务看板",
+  "permissions": {
+    "network": ["api.matind.com"],
+    "notification": true,
+    "filesystem": false
+  },
+  "ui": {
+    "entry": "index.html",
+    "icon": "icon",
+    "default_width": 6,
+    "default_height": 4,
+    "resizable": true
+  }
+}

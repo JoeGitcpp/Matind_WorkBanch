@@ -39,6 +39,16 @@ actor APIClient {
         return try await perform(request)
     }
 
+    /// 返回原始 Data（供 WebView 插件 JS Bridge 使用）
+    func getRaw(_ path: String) async throws -> Data {
+        let request = try buildRequest(path: path, method: "GET")
+        let (data, response) = try await session.data(for: request)
+        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+            throw APIError.networkError(URLError(.badServerResponse))
+        }
+        return data
+    }
+
     func post<Body: Encodable, Response: Decodable>(
         _ path: String,
         body: Body,

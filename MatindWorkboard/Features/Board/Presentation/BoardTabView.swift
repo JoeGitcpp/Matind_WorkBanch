@@ -82,16 +82,79 @@ struct BoardTabItem: View {
 
 struct BoardContentView: View {
     let boardId: String
+    @StateObject private var registry = PluginRegistry.shared
 
     var body: some View {
-        VStack {
-            Text("工作板内容")
-                .font(.title2)
-                .foregroundStyle(.secondary)
-            Text("Board ID: \(boardId)")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+        ScrollView {
+            LazyVGrid(
+                columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())],
+                spacing: 12
+            ) {
+                ForEach(registry.plugins) { plugin in
+                    PluginCard(plugin: plugin)
+                        .frame(height: 200)
+                }
+            }
+            .padding()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .task {
+            registry.loadBuiltinPlugins()
+        }
+        .overlay {
+            if registry.plugins.isEmpty {
+                ContentUnavailableView("暂无插件", systemImage: "puzzlepiece")
+            }
+        }
+    }
+}
+
+struct PluginCard: View {
+    let plugin: PluginManifest
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // 标题栏
+            HStack {
+                Image(systemName: pluginIcon(for: plugin.category))
+                    .foregroundStyle(.blue)
+                Text(plugin.name)
+                    .font(.system(size: 13, weight: .semibold))
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(.bar)
+
+            // 内容区：WebView
+            if let pluginDir = Bundle.main.url(
+                forResource: plugin.id,
+                withExtension: nil,
+                subdirectory: "Plugins"
+            ) {
+                WebViewPluginHost(
+                    pluginId: plugin.id,
+                    pluginDirectory: pluginDir,
+                    apiToken: nil
+                )
+            } else {
+                Color.gray.opacity(0.1)
+                    .overlay {
+                        Text("插件资源未找到")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+    }
+
+    private func pluginIcon(for category: String) -> String {
+        switch category {
+        case "data": return "chart.bar"
+        case "tools": return "wrench.and.screwdriver"
+        case "monitoring": return "gauge"
+        default: return "puzzlepiece"
+        }
     }
 }
