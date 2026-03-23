@@ -15,44 +15,46 @@ struct ContentView: View {
 }
 
 struct MainView: View {
-    @State private var workspaceVM = WorkspaceViewModel()
+    @State private var workbenchVM = WorkbenchViewModel()
     @State private var boardVM = BoardViewModel()
+    @State private var tabManager = TabManager()
     @State private var notificationVM = NotificationViewModel()
     @State private var showNotifications = false
 
     var body: some View {
-        NavigationSplitView {
-            WorkspaceSidebarView(
-                selectedWorkspaceId: Binding(
-                    get: { workspaceVM.selectedWorkspaceId },
-                    set: { workspaceVM.selectWorkspace($0 ?? "") }
-                ),
-                workspaces: workspaceVM.workspaces,
-                isLoading: workspaceVM.isLoading,
-                error: workspaceVM.error
+        VStack(spacing: 0) {
+            // 唯一的标签栏
+            AppTabBar(
+                tabs: tabManager.tabs,
+                selectedTabId: tabManager.selectedTabId,
+                onSelect: { tabManager.select($0) },
+                onClose: { tabManager.close($0) },
+                onAdd: {}
             )
-        } detail: {
-            if let wsId = workspaceVM.selectedWorkspaceId {
-                BoardTabView(
-                    selectedBoardId: boardVM.selectedBoardId,
-                    boards: boardVM.boards,
-                    workspaceId: wsId,
-                    onSelect: { boardId in
-                        boardVM.selectBoard(boardId, workspaceId: wsId)
-                    },
-                    onDelete: { boardId in
-                        await boardVM.deleteBoard(boardId, workspaceId: wsId)
-                    }
-                )
-                .task(id: wsId) {
-                    await boardVM.load(workspaceId: wsId)
-                }
+
+            Divider()
+
+            // 内容区
+            if let tab = tabManager.selectedTab {
+                tabContent(for: tab)
             } else {
-                ContentUnavailableView("选择协作空间", systemImage: "folder")
+                ContentUnavailableView("选择工作台", systemImage: "folder")
             }
         }
-        .navigationTitle("Matind Workboard")
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationTitle(navigationTitle)
         .toolbar {
+            // 工作台选择器（左侧）
+            ToolbarItem(placement: .navigation) {
+                WorkbenchPicker(
+                    workbenches: workbenchVM.workbenches,
+                    selectedId: workbenchVM.selectedWorkbenchId,
+                    isLoading: workbenchVM.isLoading,
+                    onSelect: { workbenchVM.selectWorkbench($0) }
+                )
+            }
+
+            // 通知按钮（右侧）
             ToolbarItem(placement: .automatic) {
                 Button(action: { showNotifications.toggle() }) {
                     ZStack(alignment: .topTrailing) {
@@ -67,14 +69,111 @@ struct MainView: View {
                 }
             }
         }
-        .task {
-            await workspaceVM.load()
-        }
+        .task { await workbenchVM.load() }
         .task {
             await notificationVM.requestNotificationPermission()
             await notificationVM.loadUnreadCount()
         }
+        .onChange(of: workbenchVM.selectedWorkbenchId) { _, newId in
+            handleWorkbenchChange(newId)
+        }
+        .onChange(of: boardVM.boards) { _, boards in
+            tabManager.syncBoardTabs(boards, selectedBoardId: boardVM.selectedBoardId)
+        }
+        .onChange(of: tabManager.selectedBoardId) { _, newBoardId in
+            handleTabBoardChange(newBoardId)
+        }
+        // 监听系统菜单命令
+        .onReceive(NotificationCenter.default.publisher(for: .openSettings)) { _ in
+            tabManager.openSettings()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openAutomation)) { _ in
+            tabManager.openAutomation()
+        }
+    }
+
+    // MARK: - 导航标题（显示当前标签名）
+
+    private var navigationTitle: String {
+        tabManager.selectedTab?.title ?? "Matind Workboard"
+    }
+
+    // MARK: - 标签内容路由
+
+    @ViewBuilder
+    private func tabContent(for tab: AppTab) -> some View {
+        switch tab {
+        case .board(let id, _):
+            BoardContentView(boardId: id)
+        case .settings:
+            SettingsView()
+        case .automation:
+            AutomationView()
+        }
+    }
+
+    // MARK: - 事件处理
+
+    private func handleWorkbenchChange(_ newId: String?) {
+        guard let wbId = newId else { return }
+        Task { await boardVM.load(workbenchId: wbId) }
+    }
+
+    private func handleTabBoardChange(_ newBoardId: String?) {
+        guard let boardId = newBoardId,
+              let wbId = workbenchVM.selectedWorkbenchId else { return }
+        boardVM.selectBoard(boardId, workbenchId: wbId)
     }
 }
 
-// LoginPlaceholderView 已由 LoginView 替代
+// MARK: - 工作台选择器
+
+struct WorkbenchPicker: View {
+    let workbenches: [Workbench]
+    let selectedId: String?
+    let isLoading: Bool
+    let onSelect: (String) -> Void
+
+    var body: some View {
+        Menu {
+            if isLoading {
+                Text("加载中...")
+            } else if workbenches.isEmpty {
+                Text("暂无工作台")
+            } else {
+                ForEach(workbenches) { wb in
+                    Button {
+                        onSelect(wb.id)
+                    } label: {
+                        HStack {
+                            Text(wb.name)
+                            if wb.id == selectedId {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            }
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "rectangle.stack")
+                    .font(.system(size: 12))
+                Text(selectedName)
+                    .font(.system(size: 13))
+                    .lineLimit(1)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 9))
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var selectedName: String {
+        if isLoading { return "加载中..." }
+        guard let id = selectedId,
+              let wb = workbenches.first(where: { $0.id == id }) else {
+            return "选择工作台"
+        }
+        return wb.name
+    }
+}

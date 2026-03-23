@@ -16,15 +16,15 @@ final class BoardViewModel {
         self.repository = repository
     }
 
-    func load(workspaceId: String) async {
+    func load(workbenchId: String) async {
         isLoading = true
         error = nil
         defer { isLoading = false }
         do {
-            boards = try await repository.fetchBoards(workspaceId: workspaceId)
+            boards = try await repository.fetchBoards(workbenchId: workbenchId)
             // 恢复上次访问的工作板
             if let last = storage.get(LastVisited.self, forKey: AppConfig.lastVisitedKey),
-               last.workspaceId == workspaceId,
+               last.workbenchId == workbenchId,
                boards.contains(where: { $0.id == last.boardId }) {
                 selectedBoardId = last.boardId
                 return
@@ -37,7 +37,7 @@ final class BoardViewModel {
     }
 
     /// 删除工作板，若删除的是当前板则自动回退
-    func deleteBoard(_ boardId: String, workspaceId: String) async {
+    func deleteBoard(_ boardId: String, workbenchId: String) async {
         do {
             try await repository.deleteBoard(boardId: boardId)
             boards.removeAll { $0.id == boardId }
@@ -46,7 +46,7 @@ final class BoardViewModel {
             }
             // 删除后刷新 lastVisited（避免冷启动时加载已删除的板）
             if let newSelectedId = selectedBoardId {
-                let visited = LastVisited(workspaceId: workspaceId, boardId: newSelectedId)
+                let visited = LastVisited(workbenchId: workbenchId, boardId: newSelectedId)
                 LocalStorage.shared.set(visited, forKey: AppConfig.lastVisitedKey)
             }
         } catch {
@@ -54,10 +54,10 @@ final class BoardViewModel {
         }
     }
 
-    func selectBoard(_ id: String, workspaceId: String) {
+    func selectBoard(_ id: String, workbenchId: String) {
         selectedBoardId = id
         // 持久化 lastVisited
-        let visited = LastVisited(workspaceId: workspaceId, boardId: id)
+        let visited = LastVisited(workbenchId: workbenchId, boardId: id)
         LocalStorage.shared.set(visited, forKey: AppConfig.lastVisitedKey)
     }
 }

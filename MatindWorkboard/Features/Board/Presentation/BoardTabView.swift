@@ -3,7 +3,7 @@ import SwiftUI
 struct BoardTabView: View {
     let selectedBoardId: String?
     let boards: [Board]
-    let workspaceId: String
+    let workbenchId: String
     let onSelect: (String) -> Void
     let onDelete: (String) async -> Void
 

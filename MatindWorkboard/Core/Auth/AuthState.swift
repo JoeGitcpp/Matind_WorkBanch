@@ -49,10 +49,13 @@ final class AuthState {
     }
 
     func loginWithCredentials(email: String, password: String) async throws {
-        let response: LoginResponse = try await APIClient.shared.post(
-            "/auth/login",
-            body: LoginRequest(email: email, password: password)
+        let wrapper: ApiResponse<LoginResponse> = try await APIClient.shared.post(
+            "/auth/v1/login",
+            body: LoginRequest(account: email, password: password)
         )
+        guard let response = wrapper.data else {
+            throw APIError.serverError(statusCode: wrapper.code, message: wrapper.msg)
+        }
         login(token: response.token, user: response.user)
     }
 

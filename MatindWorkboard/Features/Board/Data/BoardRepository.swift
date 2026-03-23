@@ -1,7 +1,7 @@
 import Foundation
 
 protocol BoardRepositoryProtocol: Sendable {
-    func fetchBoards(workspaceId: String) async throws -> [Board]
+    func fetchBoards(workbenchId: String) async throws -> [Board]
     func deleteBoard(boardId: String) async throws
 }
 
@@ -12,8 +12,8 @@ struct BoardRepository: BoardRepositoryProtocol {
         self.client = client
     }
 
-    func fetchBoards(workspaceId: String) async throws -> [Board] {
-        let response: BoardListResponse = try await client.get("/board/list?workspace_id=\(workspaceId)")
+    func fetchBoards(workbenchId: String) async throws -> [Board] {
+        let response: BoardListResponse = try await client.get("/board/list?workbench_id=\(workbenchId)")
         return response.boards
     }
 

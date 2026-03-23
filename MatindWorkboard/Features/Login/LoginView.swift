@@ -5,6 +5,7 @@ struct LoginView: View {
 
     @State private var email = ""
     @State private var password = ""
+    @State private var showPassword = false
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -41,10 +42,26 @@ struct LoginView: View {
                     Text("密码")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    SecureField("••••••••", text: $password)
+                    HStack(spacing: 0) {
+                        Group {
+                            if showPassword {
+                                TextField("••••••••", text: $password)
+                                    .textContentType(.password)
+                                    .onSubmit { Task { await handleLogin() } }
+                            } else {
+                                SecureField("••••••••", text: $password)
+                                    .textContentType(.password)
+                                    .onSubmit { Task { await handleLogin() } }
+                            }
+                        }
                         .textFieldStyle(.roundedBorder)
-                        .textContentType(.password)
-                        .onSubmit { Task { await handleLogin() } }
+                        Button(action: { showPassword.toggle() }) {
+                            Image(systemName: showPassword ? "eye.slash" : "eye")
+                                .foregroundStyle(.secondary)
+                                .frame(width: 32, height: 28)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
 
                 if let errorMessage {

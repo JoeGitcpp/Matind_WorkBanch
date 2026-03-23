@@ -1,6 +1,6 @@
 import Foundation
 
 struct LastVisited: Codable, Sendable {
-    let workspaceId: String
+    let workbenchId: String
     let boardId: String
 }
