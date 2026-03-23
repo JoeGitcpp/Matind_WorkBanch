@@ -97,6 +97,8 @@ xcodebuild -scheme MatindWorkboard -destination "platform=macOS" build
 | `⌘,` | 打开设置 |
 | `⇧⌘B` | 打开自动化蓝图 |
 
+##www.matind.com
+
 ## 许可证
 
 [Apache License 2.0](LICENSE)
