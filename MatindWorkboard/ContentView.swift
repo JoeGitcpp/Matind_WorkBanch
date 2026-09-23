@@ -2,13 +2,30 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AuthState.self) private var authState
+    @Environment(LocalServerState.self) private var localServer
 
     var body: some View {
         Group {
-            if authState.isAuthenticated {
-                MainView()
-            } else {
+            switch authState.phase {
+            case .restoring:
+                ProgressView("正在恢复登录")
+            case .unavailable:
+                ContentUnavailableView {
+                    Label("无法连接服务器", systemImage: "wifi.slash")
+                } description: {
+                    Text(authState.notice ?? "请确认本机控制面已经启动")
+                } actions: {
+                    Button("重试") { Task { await authState.retry() } }
+                }
+            case .signedOut:
                 LoginView()
+            case .signedIn:
+                MainView()
+            }
+        }
+        .onChange(of: authState.phase) { _, phase in
+            if phase != .signedIn {
+                localServer.clearSession()
             }
         }
     }
@@ -20,26 +37,74 @@ struct MainView: View {
     @State private var tabManager = TabManager()
     @State private var notificationVM = NotificationViewModel()
     @State private var showNotifications = false
+    @State private var managedBoard: Board?
+
+    private var canCreateBoard: Bool {
+        guard workbenchVM.selectedWorkbenchId != nil else { return false }
+        switch boardVM.catalog {
+        case .loaded, .empty:
+            return true
+        case .idle, .loading, .failed:
+            return false
+        }
+    }
+
+    private var createHelp: String {
+        if workbenchVM.selectedWorkbenchId == nil { return "请先选择工作台" }
+        switch boardVM.catalog {
+        case .idle, .loading:
+            return "加载中"
+        case .failed:
+            return "加载失败"
+        case .loaded, .empty:
+            return "新建页面"
+        }
+    }
+
+    private func createBoard() {
+        guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+        Task { await boardVM.createBoard(workbenchId: workbenchId) }
+    }
+
+    private func retryCreate() {
+        guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+        Task { await boardVM.retryCreate(workbenchId: workbenchId) }
+    }
+
+    private func openManage(_ boardId: String) {
+        managedBoard = boardVM.boards.first { $0.id == boardId }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             // 唯一的标签栏
             AppTabBar(
                 tabs: tabManager.tabs,
+                boards: boardVM.boards,
                 selectedTabId: tabManager.selectedTabId,
+                canCreate: canCreateBoard,
+                createHelp: createHelp,
                 onSelect: { tabManager.select($0) },
                 onClose: { tabManager.close($0) },
-                onAdd: {}
+                onCreate: createBoard,
+                onReopen: { tabManager.reopen($0, boards: boardVM.boards) },
+                onManage: openManage
             )
+
+            if let notice = boardVM.writeNotice {
+                HStack {
+                    Text(notice)
+                        .font(.callout)
+                    Spacer()
+                    Button("重试") { retryCreate() }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+            }
 
             Divider()
 
-            // 内容区
-            if let tab = tabManager.selectedTab {
-                tabContent(for: tab)
-            } else {
-                ContentUnavailableView("选择工作台", systemImage: "folder")
-            }
+            boardCanvas
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(navigationTitle)
@@ -50,7 +115,9 @@ struct MainView: View {
                     workbenches: workbenchVM.workbenches,
                     selectedId: workbenchVM.selectedWorkbenchId,
                     isLoading: workbenchVM.isLoading,
-                    onSelect: { workbenchVM.selectWorkbench($0) }
+                    error: workbenchVM.error,
+                    onSelect: { workbenchVM.selectWorkbench($0) },
+                    onRetry: { Task { await workbenchVM.load() } }
                 )
             }
 
@@ -90,6 +157,25 @@ struct MainView: View {
         .onReceive(NotificationCenter.default.publisher(for: .openAutomation)) { _ in
             tabManager.openAutomation()
         }
+        .sheet(item: $managedBoard) { board in
+            BoardManageSheet(board: board) { name, key in
+                guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+                try await boardVM.rename(
+                    workbenchId: workbenchId,
+                    board: board,
+                    name: name,
+                    idempotencyKey: key
+                )
+            } onDelete: { reason, key in
+                guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+                try await boardVM.delete(
+                    workbenchId: workbenchId,
+                    board: board,
+                    reason: reason,
+                    idempotencyKey: key
+                )
+            }
+        }
     }
 
     // MARK: - 导航标题（显示当前标签名）
@@ -101,10 +187,48 @@ struct MainView: View {
     // MARK: - 标签内容路由
 
     @ViewBuilder
+    private var boardCanvas: some View {
+        if let tab = tabManager.selectedTab {
+            tabContent(for: tab)
+        } else {
+            idleCanvas
+        }
+    }
+
+    @ViewBuilder
+    private var idleCanvas: some View {
+        switch boardVM.catalog {
+        case .loading, .idle:
+            ProgressView("正在加载页面")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        case .failed(let failure):
+            ContentUnavailableView {
+                Label(failure.message, systemImage: "wifi.slash")
+            } actions: {
+                Button("重试") {
+                    guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+                    Task { await boardVM.load(workbenchId: workbenchId) }
+                }
+            }
+        case .empty:
+            ContentUnavailableView {
+                Label("还没有页面", systemImage: "rectangle.stack")
+            } actions: {
+                Button("新建第一个页面", action: createBoard)
+            }
+        case .loaded:
+            ContentUnavailableView("选择页面", systemImage: "rectangle.stack")
+        }
+    }
+
+    @ViewBuilder
     private func tabContent(for tab: AppTab) -> some View {
         switch tab {
         case .board(let id, _):
-            BoardContentView(boardId: id)
+            BoardContentView(
+                boardId: id,
+                access: boardVM.boards.first { $0.id == id }?.surfaceAccess ?? .readOnly
+            )
         case .settings:
             SettingsView()
         case .automation:
@@ -132,14 +256,19 @@ struct WorkbenchPicker: View {
     let workbenches: [Workbench]
     let selectedId: String?
     let isLoading: Bool
+    let error: String?
     let onSelect: (String) -> Void
+    let onRetry: () -> Void
 
     var body: some View {
         Menu {
             if isLoading {
                 Text("加载中...")
+            } else if let error {
+                Text(error)
+                Button("重试", action: onRetry)
             } else if workbenches.isEmpty {
-                Text("暂无工作台")
+                Text("还没有可用的工作台")
             } else {
                 ForEach(workbenches) { wb in
                     Button {
@@ -170,6 +299,7 @@ struct WorkbenchPicker: View {
 
     private var selectedName: String {
         if isLoading { return "加载中..." }
+        if error != nil { return "无法连接" }
         guard let id = selectedId,
               let wb = workbenches.first(where: { $0.id == id }) else {
             return "选择工作台"

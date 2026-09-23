@@ -1,13 +1,17 @@
 import SwiftUI
 
-/// 统一标签栏
-/// 显示所有打开的标签页（工作板 + 设置 + 自动化等）
+/// 统一标签栏。关闭只收起页签，删除放在管理菜单里。
 struct AppTabBar: View {
     let tabs: [AppTab]
+    let boards: [Board]
     let selectedTabId: String?
+    let canCreate: Bool
+    let createHelp: String
     let onSelect: (String) -> Void
     let onClose: (String) -> Void
-    let onAdd: () -> Void
+    let onCreate: () -> Void
+    let onReopen: (String) -> Void
+    let onManage: (String) -> Void
 
     var body: some View {
         HStack(spacing: 0) {
@@ -18,7 +22,8 @@ struct AppTabBar: View {
                             tab: tab,
                             isSelected: selectedTabId == tab.id,
                             onSelect: { onSelect(tab.id) },
-                            onClose: { onClose(tab.id) }
+                            onClose: { onClose(tab.id) },
+                            onManage: manageAction(for: tab)
                         )
                     }
                 }
@@ -27,27 +32,60 @@ struct AppTabBar: View {
 
             Spacer()
 
-            // + 按钮（添加工作板）
-            Button(action: onAdd) {
-                Image(systemName: "plus")
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, 12)
-            .help("新建工作板")
+            pageMenu
+            createButton
         }
         .frame(height: 40)
         .background(.bar)
     }
+
+    private var pageMenu: some View {
+        Menu {
+            if boards.isEmpty {
+                Text("还没有页面")
+            } else {
+                ForEach(boards) { board in
+                    Button(board.name) { onReopen(board.id) }
+                }
+            }
+        } label: {
+            Image(systemName: "list.bullet")
+                .font(.system(size: 13))
+                .foregroundStyle(.secondary)
+        }
+        .menuStyle(.borderlessButton)
+        .fixedSize()
+        .padding(.horizontal, 4)
+        .help("所有页面")
+    }
+
+    private var createButton: some View {
+        Button(action: onCreate) {
+            Image(systemName: "plus")
+                .font(.system(size: 13))
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 12)
+        .disabled(!canCreate)
+        .help(createHelp)
+    }
+
+    private func manageAction(for tab: AppTab) -> (() -> Void)? {
+        guard case .board(let id, _) = tab,
+              boards.first(where: { $0.id == id })?.settingsCapability.permitsManagement == true else {
+            return nil
+        }
+        return { onManage(id) }
+    }
 }
 
-/// 单个标签项
 struct AppTabItem: View {
     let tab: AppTab
     let isSelected: Bool
     let onSelect: () -> Void
     let onClose: () -> Void
+    let onManage: (() -> Void)?
 
     @State private var isHovering = false
 
@@ -62,7 +100,6 @@ struct AppTabItem: View {
                     .font(.system(size: 13))
                     .lineLimit(1)
 
-                // 关闭按钮（悬停或选中时显示）
                 if isHovering || isSelected {
                     Button(action: onClose) {
                         Image(systemName: "xmark")
@@ -70,6 +107,7 @@ struct AppTabItem: View {
                             .foregroundStyle(.secondary)
                     }
                     .buttonStyle(.plain)
+                    .help("关闭标签")
                 }
             }
             .padding(.horizontal, 12)
@@ -81,15 +119,16 @@ struct AppTabItem: View {
         .onHover { hovering in
             isHovering = hovering
         }
+        .simultaneousGesture(TapGesture(count: 2).onEnded {
+            onManage?()
+        })
         .contextMenu {
             Button(action: onClose) {
                 Label("关闭标签", systemImage: "xmark")
             }
-
-            if tab.isBoard {
-                Divider()
-                Button(role: .destructive, action: {}) {
-                    Label("删除工作板", systemImage: "trash")
+            if let onManage {
+                Button(action: onManage) {
+                    Label("管理", systemImage: "slider.horizontal.3")
                 }
             }
         }

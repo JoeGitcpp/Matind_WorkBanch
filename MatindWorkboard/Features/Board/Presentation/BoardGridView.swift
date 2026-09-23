@@ -5,6 +5,7 @@ struct BoardGridView: View {
     @Bindable var layoutVM: BoardLayoutViewModel
     let boardId: String
     let plugins: [PluginManifest]
+    let access: BoardSurfaceAccess
 
     // 网格配置
     private let columnCount = 12
@@ -31,6 +32,7 @@ struct BoardGridView: View {
                                 colWidth: colWidth,
                                 rowHeight: rowHeight,
                                 gap: gap,
+                                access: access,
                                 onRemove: { layoutVM.removeWidget(id: widget.id) },
                                 onMove: { dx, dy in
                                     layoutVM.moveWidget(
@@ -89,6 +91,7 @@ struct WidgetCardView: View {
     let colWidth: CGFloat
     let rowHeight: CGFloat
     let gap: CGFloat
+    let access: BoardSurfaceAccess
     let onRemove: () -> Void
     let onMove: (Int, Int) -> Void
     let onResize: (Int, Int) -> Void
@@ -108,13 +111,15 @@ struct WidgetCardView: View {
                     .font(.system(size: 12, weight: .semibold))
                     .lineLimit(1)
                 Spacer()
-                Button(action: onRemove) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 10))
-                        .foregroundStyle(.secondary)
+                if access == .editable {
+                    Button(action: onRemove) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help("移除插件")
                 }
-                .buttonStyle(.plain)
-                .help("移除插件")
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
@@ -153,23 +158,24 @@ struct WidgetCardView: View {
         .animation(.easeInOut(duration: 0.15), value: isDragging)
         .position(x: frame.midX, y: frame.midY)
         .frame(width: frame.width, height: frame.height)
-        // 拖拽（简化：方向键步进，完整拖拽在 M6 后续迭代）
         .contextMenu {
-            Menu("移动") {
-                Button("↑ 上移") { onMove(0, -1) }
-                Button("↓ 下移") { onMove(0, 1) }
-                Button("← 左移") { onMove(-1, 0) }
-                Button("→ 右移") { onMove(1, 0) }
-            }
-            Menu("调整大小") {
-                Button("加宽") { onResize(1, 0) }
-                Button("减窄") { onResize(-1, 0) }
-                Button("加高") { onResize(0, 1) }
-                Button("减矮") { onResize(0, -1) }
-            }
-            Divider()
-            Button(role: .destructive, action: onRemove) {
-                Label("移除", systemImage: "trash")
+            if access == .editable {
+                Menu("移动") {
+                    Button("↑ 上移") { onMove(0, -1) }
+                    Button("↓ 下移") { onMove(0, 1) }
+                    Button("← 左移") { onMove(-1, 0) }
+                    Button("→ 右移") { onMove(1, 0) }
+                }
+                Menu("调整大小") {
+                    Button("加宽") { onResize(1, 0) }
+                    Button("减窄") { onResize(-1, 0) }
+                    Button("加高") { onResize(0, 1) }
+                    Button("减矮") { onResize(0, -1) }
+                }
+                Divider()
+                Button(role: .destructive, action: onRemove) {
+                    Label("移除", systemImage: "trash")
+                }
             }
         }
     }

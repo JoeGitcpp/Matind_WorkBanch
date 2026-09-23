@@ -7,42 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		154D3D4F8B6BAB8B3B6D9082 /* Workbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5695DD2D02AC714F7C128D19 /* Workbench.swift */; };
+		022D760A305BD89FB8189B82 /* Workbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB38CA50C831A8C6C6A9F3C /* Workbench.swift */; };
 		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
+		28796B2EFFC5B884B24DB93D /* ControlPlaneTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55252A310853A9F7C408100D /* ControlPlaneTransport.swift */; };
 		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
 		2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C11FBFABA7EA10899775D4 /* BoardGridView.swift */; };
-		34EE62ECF27AC6DB904014E7 /* WorkbenchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D2546DA330B315B2D9D9C /* WorkbenchRepository.swift */; };
+		36D3A54FCCFDA8F2DF9CC40E /* KeychainPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB557ABCBCDB5B155561C1 /* KeychainPasswordStore.swift */; };
+		3BA46EEBC94EF4ED81B687D1 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E5415BF46915E3C436E2D /* AppTab.swift */; };
+		4014206FA39A0E66C3187B68 /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81999E0766D8136773656C98 /* TabManager.swift */; };
+		46D6D4D901CEF2E24BF454CE /* SessionCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0894A0C3A1283E23842F1E93 /* SessionCredentialStore.swift */; };
+		46EFDC8521F630D67E6F59FF /* MatindCore in Frameworks */ = {isa = PBXBuildFile; productRef = 304EEB562EA4C0F237241AA1 /* MatindCore */; };
 		47E156C06905C6FF67C901E1 /* NotificationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EC92EBE765B9A7B1DD7B49 /* NotificationCenterView.swift */; };
 		4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D884CFF78623D8EA394F06 /* APIClient.swift */; };
 		50D390C12A8C3287B2FB82CB /* BoardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84D2A8289857A02A25836DA /* BoardRepository.swift */; };
 		5235368F408A7388EA8325EC /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535201A60BEC6AC9BD84957 /* NotificationRepository.swift */; };
 		58529A575205917977358089 /* BoardTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA5B9205A4062220DEFD1B /* BoardTabView.swift */; };
 		59C7A996669363D6100F4406 /* LastVisited.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516AE3627E3F65DBBD992E61 /* LastVisited.swift */; };
+		5CBBDC93D0B644D1CEB27F01 /* WorkbenchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B69EFC9645D6F93E0BD56E /* WorkbenchViewModel.swift */; };
+		5D1EDFD9670AA9DB370E384D /* AuthorizationLedger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1387DE5483DF9C2C503B23BB /* AuthorizationLedger.swift */; };
 		5FCAAEFAB750B82AB320F54B /* PluginManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12EAD494217F32A03EDF91A /* PluginManifest.swift */; };
 		62058DF1F146DC6C9AD7B43D /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82477CA33EC17A203A667C13 /* NotificationViewModel.swift */; };
 		6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */; };
+		714F66C626834E71EA79253E /* PrivateServerPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01D30867A3FA2AA31C9B59C /* PrivateServerPolicyTests.swift */; };
 		74AE08D96F575BCECA9A12B6 /* WidgetInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F25923D82E5DACEA33F299 /* WidgetInstance.swift */; };
 		76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7E94A641D22637F8815007 /* BoardViewModel.swift */; };
 		77C9797E7AB1C8004001871F /* BoardLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */; };
+		7942EE38E7BD0742DE5B6971 /* WorkbenchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60059C19B10E1D032193B7C4 /* WorkbenchRepository.swift */; };
 		7BF6ED6225FF2769A0A05E1F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33559A614D5E88D6D13142D2 /* NotificationService.swift */; };
 		8B09E16AC61155851B3986C8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA4617A92C0DFE494DECB6B /* Board.swift */; };
-		8C0D1E53F45C77257F6185D6 /* WorkbenchSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D12998A481A3CD77D01E13 /* WorkbenchSidebarView.swift */; };
 		8C51046CF39EF170418F4E1B /* PluginRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70DF759304B388F7E0965A7 /* PluginRegistry.swift */; };
 		8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */; };
+		9340F1CF6321327C91965DA4 /* BrowserSignInReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB84139C3545DA1B356B5DE /* BrowserSignInReceiver.swift */; };
+		94A6DEED423C8110D6C8C379 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1CDB26C65801672DB1AC87 /* SettingsView.swift */; };
 		973F7B6D232918ABD3EA161B /* WebViewPluginHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7FB882FA3F2FFE4FD6BFAD /* WebViewPluginHost.swift */; };
+		9A8536AD69B65C7CB52DDC3E /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52FD87F209E3BA677AF607 /* AppTabBar.swift */; };
 		9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */; };
+		AFEA8E16ADE3C6DDDF845B92 /* LocalServerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */; };
 		B455C98DF0E74CCDA4E790FF /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF60BB371CDC46231AC7226 /* AppNotification.swift */; };
 		BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD18F256539A80E7CE771B99 /* ContentView.swift */; };
 		C237C5034A262FFBD34694FE /* BoardLayoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B519BBD48208434631893267 /* BoardLayoutRepository.swift */; };
+		D106B2397AE0FB4477067C7C /* MatindCore in Frameworks */ = {isa = PBXBuildFile; productRef = DD4ECD44C9399A332E72BE71 /* MatindCore */; };
+		D31D5C3C9A04B598AC465EBF /* PrivateServerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */; };
+		DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781A66F267F03E29171E455B /* LocalServerContract.swift */; };
+		E0719DFF5AA955EE545E2CD7 /* AutomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924ADAF05D3DC7E37F0E74E6 /* AutomationView.swift */; };
 		E3A7F6903AD6041885B0EC65 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266C052BFD81CDB48AADA86 /* User.swift */; };
-		E6965632B991617C7D493B18 /* WorkbenchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB5693126CAB1A88AE8F89B /* WorkbenchViewModel.swift */; };
+		E6EB4E6105FB3D9EBD7B04C7 /* LoopbackServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */; };
+		E9ACAB5D814672BFDE8ACF82 /* DeviceIdentityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */; };
 		ED19B40927A9337319E6834C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F0541EFA5DF0DF0C494176 /* LoginView.swift */; };
 		FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0422E2E7F100E8281AF089E /* AuthService.swift */; };
-		AA0001001111111100000001 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002001111111100000001 /* AppTab.swift */; };
-		AA0001001111111100000002 /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002001111111100000002 /* TabManager.swift */; };
-		AA0001001111111100000003 /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002001111111100000003 /* AppTabBar.swift */; };
-		AA0001001111111100000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002001111111100000004 /* SettingsView.swift */; };
-		AA0001001111111100000005 /* AutomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002001111111100000005 /* AutomationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,47 +70,87 @@
 /* Begin PBXFileReference section */
 		02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardTests.swift; sourceTree = "<group>"; };
 		03F25923D82E5DACEA33F299 /* WidgetInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetInstance.swift; sourceTree = "<group>"; };
+		0776A1307BD96D3613B9E4F8 /* MatindCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MatindCore; path = MatindCore; sourceTree = SOURCE_ROOT; };
+		0894A0C3A1283E23842F1E93 /* SessionCredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCredentialStore.swift; sourceTree = "<group>"; };
+		106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopbackServer.swift; sourceTree = "<group>"; };
+		1387DE5483DF9C2C503B23BB /* AuthorizationLedger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationLedger.swift; sourceTree = "<group>"; };
 		1535201A60BEC6AC9BD84957 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
+		1FE63A3F5B1D63EA5115FF65 /* Remote.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Remote.xcconfig; sourceTree = "<group>"; };
 		22BA5B9205A4062220DEFD1B /* BoardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTabView.swift; sourceTree = "<group>"; };
-		2FB5693126CAB1A88AE8F89B /* WorkbenchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchViewModel.swift; sourceTree = "<group>"; };
+		239E5415BF46915E3C436E2D /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		33559A614D5E88D6D13142D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		33C11FBFABA7EA10899775D4 /* BoardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGridView.swift; sourceTree = "<group>"; };
 		38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutViewModel.swift; sourceTree = "<group>"; };
 		4266C052BFD81CDB48AADA86 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerState.swift; sourceTree = "<group>"; };
 		4E7E94A641D22637F8815007 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		516AE3627E3F65DBBD992E61 /* LastVisited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastVisited.swift; sourceTree = "<group>"; };
-		5695DD2D02AC714F7C128D19 /* Workbench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workbench.swift; sourceTree = "<group>"; };
-		66D12998A481A3CD77D01E13 /* WorkbenchSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchSidebarView.swift; sourceTree = "<group>"; };
+		55252A310853A9F7C408100D /* ControlPlaneTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPlaneTransport.swift; sourceTree = "<group>"; };
+		60059C19B10E1D032193B7C4 /* WorkbenchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchRepository.swift; sourceTree = "<group>"; };
+		781A66F267F03E29171E455B /* LocalServerContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerContract.swift; sourceTree = "<group>"; };
 		78EC92EBE765B9A7B1DD7B49 /* NotificationCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterView.swift; sourceTree = "<group>"; };
+		81999E0766D8136773656C98 /* TabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		82477CA33EC17A203A667C13 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		83F0541EFA5DF0DF0C494176 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		85A090111C61779493D3C65E /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		86A8717AF50F9F7EA36D4190 /* MatindWorkboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatindWorkboard.entitlements; sourceTree = "<group>"; };
-		907D2546DA330B315B2D9D9C /* WorkbenchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchRepository.swift; sourceTree = "<group>"; };
+		8B1CDB26C65801672DB1AC87 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8DCB557ABCBCDB5B155561C1 /* KeychainPasswordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordStore.swift; sourceTree = "<group>"; };
+		924ADAF05D3DC7E37F0E74E6 /* AutomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationView.swift; sourceTree = "<group>"; };
+		9BDC3848D3EF63294E011B7A /* Local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Local.xcconfig; sourceTree = "<group>"; };
 		A3D884CFF78623D8EA394F06 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A6B69EFC9645D6F93E0BD56E /* WorkbenchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchViewModel.swift; sourceTree = "<group>"; };
 		B12EAD494217F32A03EDF91A /* PluginManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManifest.swift; sourceTree = "<group>"; };
 		B519BBD48208434631893267 /* BoardLayoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutRepository.swift; sourceTree = "<group>"; };
+		B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentityStore.swift; sourceTree = "<group>"; };
 		B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		B70DF759304B388F7E0965A7 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
 		BE796F527DB0D7CDC93EF3B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatindWorkboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateServerSection.swift; sourceTree = "<group>"; };
 		C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		CAB84139C3545DA1B356B5DE /* BrowserSignInReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserSignInReceiver.swift; sourceTree = "<group>"; };
 		CCF60BB371CDC46231AC7226 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		CD18F256539A80E7CE771B99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CFA4617A92C0DFE494DECB6B /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatindWorkboardApp.swift; sourceTree = "<group>"; };
 		DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatindWorkboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E01D30867A3FA2AA31C9B59C /* PrivateServerPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateServerPolicyTests.swift; sourceTree = "<group>"; };
 		E0422E2E7F100E8281AF089E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		EC52FD87F209E3BA677AF607 /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
 		ED7FB882FA3F2FFE4FD6BFAD /* WebViewPluginHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPluginHost.swift; sourceTree = "<group>"; };
 		F84D2A8289857A02A25836DA /* BoardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRepository.swift; sourceTree = "<group>"; };
-		AA0002001111111100000001 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
-		AA0002001111111100000002 /* TabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
-		AA0002001111111100000003 /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
-		AA0002001111111100000004 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		AA0002001111111100000005 /* AutomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationView.swift; sourceTree = "<group>"; };
+		FEB38CA50C831A8C6C6A9F3C /* Workbench.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workbench.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		72FB4BB03EE86B89F3305639 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46EFDC8521F630D67E6F59FF /* MatindCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99C63A8707569786437CBC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D106B2397AE0FB4477067C7C /* MatindCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		04B257374B596487753E920D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1FB20F069877C27A6089E330 /* Presentation */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		1317AEABE3EA68A2C0FC1C4E /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,12 +180,12 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		238C9A87B1DEDEEE47FDBDFD /* Domain */ = {
+		1FB20F069877C27A6089E330 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				5695DD2D02AC714F7C128D19 /* Workbench.swift */,
+				8B1CDB26C65801672DB1AC87 /* SettingsView.swift */,
 			);
-			path = Domain;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		24936C75C2CC260EEBACAB20 /* Data */ = {
@@ -152,29 +204,9 @@
 				8A5361714EDFB3A22A9500C0 /* Models */,
 				74586FDE082F190C8C1BB9C7 /* Network */,
 				81B6ADE36E9A8A411A44EFAA /* Storage */,
-				AA0003001111111100000001 /* Tab */,
+				737F128B4F9199C4B61A4A9D /* Tab */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		AA0003001111111100000001 /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				AA0002001111111100000001 /* AppTab.swift */,
-				AA0002001111111100000002 /* TabManager.swift */,
-				AA0002001111111100000003 /* AppTabBar.swift */,
-			);
-			path = Tab;
-			sourceTree = "<group>";
-		};
-		2F93E926FDCB26F598A63E9B /* Workbench */ = {
-			isa = PBXGroup;
-			children = (
-				F377CCBF94CE623B91AA80A2 /* Data */,
-				238C9A87B1DEDEEE47FDBDFD /* Domain */,
-				3EEF11E13BA9E685E12CFFF7 /* Presentation */,
-			);
-			path = Workbench;
 			sourceTree = "<group>";
 		};
 		3561173A8818078217569C55 = {
@@ -182,6 +214,7 @@
 			children = (
 				FA248F54814A9A0C50145762 /* MatindWorkboard */,
 				83E12F3E71DEE197884BB517 /* MatindWorkboardTests */,
+				A383D61801175FFA7C29B50D /* Packages */,
 				EE9780451302DB74A1C94996 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -200,17 +233,11 @@
 			children = (
 				E0422E2E7F100E8281AF089E /* AuthService.swift */,
 				B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */,
+				CAB84139C3545DA1B356B5DE /* BrowserSignInReceiver.swift */,
+				8DCB557ABCBCDB5B155561C1 /* KeychainPasswordStore.swift */,
+				0894A0C3A1283E23842F1E93 /* SessionCredentialStore.swift */,
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		3EEF11E13BA9E685E12CFFF7 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				66D12998A481A3CD77D01E13 /* WorkbenchSidebarView.swift */,
-				2FB5693126CAB1A88AE8F89B /* WorkbenchViewModel.swift */,
-			);
-			path = Presentation;
 			sourceTree = "<group>";
 		};
 		4091DF3BCB764532BBEAE300 /* Domain */ = {
@@ -233,46 +260,15 @@
 		5CE70EEF0DF1A1768CC6DB0F /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				AA0003001111111100000002 /* Automation */,
+				7AC2689957FC16969EB0461B /* Automation */,
 				D1D1DE6B4F9D061B1EF59B26 /* Board */,
+				A4660515F711F9D895958F39 /* LocalServer */,
 				44FD04D6EEE5879DF3EB1A75 /* Login */,
 				1317AEABE3EA68A2C0FC1C4E /* Notification */,
-				AA0003001111111100000003 /* Settings */,
-				2F93E926FDCB26F598A63E9B /* Workbench */,
+				04B257374B596487753E920D /* Settings */,
+				E6F80DBBF5E8A360EAC97093 /* Workbench */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		AA0003001111111100000002 /* Automation */ = {
-			isa = PBXGroup;
-			children = (
-				AA0003001111111100000004 /* Presentation */,
-			);
-			path = Automation;
-			sourceTree = "<group>";
-		};
-		AA0003001111111100000004 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				AA0002001111111100000005 /* AutomationView.swift */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		AA0003001111111100000003 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				AA0003001111111100000005 /* Presentation */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		AA0003001111111100000005 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				AA0002001111111100000004 /* SettingsView.swift */,
-			);
-			path = Presentation;
 			sourceTree = "<group>";
 		};
 		658ACB749BD5E2C3CD582DC5 /* Presentation */ = {
@@ -295,12 +291,31 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		737F128B4F9199C4B61A4A9D /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				239E5415BF46915E3C436E2D /* AppTab.swift */,
+				EC52FD87F209E3BA677AF607 /* AppTabBar.swift */,
+				81999E0766D8136773656C98 /* TabManager.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 		74586FDE082F190C8C1BB9C7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				A3D884CFF78623D8EA394F06 /* APIClient.swift */,
+				55252A310853A9F7C408100D /* ControlPlaneTransport.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		7AC2689957FC16969EB0461B /* Automation */ = {
+			isa = PBXGroup;
+			children = (
+				C5C7EDCFFAEF2CA287C38670 /* Presentation */,
+			);
+			path = Automation;
 			sourceTree = "<group>";
 		};
 		81B6ADE36E9A8A411A44EFAA /* Storage */ = {
@@ -311,12 +326,30 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		825A3FD8E08185D2A36E6C26 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */,
+				106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		83E12F3E71DEE197884BB517 /* MatindWorkboardTests */ = {
 			isa = PBXGroup;
 			children = (
 				02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */,
+				E01D30867A3FA2AA31C9B59C /* PrivateServerPolicyTests.swift */,
 			);
 			path = MatindWorkboardTests;
+			sourceTree = "<group>";
+		};
+		86B9E957B0AC0EEDF2421037 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A6B69EFC9645D6F93E0BD56E /* WorkbenchViewModel.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		8A5361714EDFB3A22A9500C0 /* Models */ = {
@@ -336,6 +369,58 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		928409AD1109AC559CA3BD7E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				9BDC3848D3EF63294E011B7A /* Local.xcconfig */,
+				1FE63A3F5B1D63EA5115FF65 /* Remote.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		A383D61801175FFA7C29B50D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				0776A1307BD96D3613B9E4F8 /* MatindCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		A4660515F711F9D895958F39 /* LocalServer */ = {
+			isa = PBXGroup;
+			children = (
+				825A3FD8E08185D2A36E6C26 /* Data */,
+				C82A967530A2980782789DDE /* Domain */,
+				F26D6FC8D2A31E7A1E49722A /* Presentation */,
+			);
+			path = LocalServer;
+			sourceTree = "<group>";
+		};
+		A5BAC324BD5A8DB9495DE1E6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				60059C19B10E1D032193B7C4 /* WorkbenchRepository.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		C5C7EDCFFAEF2CA287C38670 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				924ADAF05D3DC7E37F0E74E6 /* AutomationView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		C82A967530A2980782789DDE /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				1387DE5483DF9C2C503B23BB /* AuthorizationLedger.swift */,
+				781A66F267F03E29171E455B /* LocalServerContract.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		D1D1DE6B4F9D061B1EF59B26 /* Board */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,6 +429,24 @@
 				658ACB749BD5E2C3CD582DC5 /* Presentation */,
 			);
 			path = Board;
+			sourceTree = "<group>";
+		};
+		E6F80DBBF5E8A360EAC97093 /* Workbench */ = {
+			isa = PBXGroup;
+			children = (
+				A5BAC324BD5A8DB9495DE1E6 /* Data */,
+				EE4251AA68015ED4FA480DD6 /* Domain */,
+				86B9E957B0AC0EEDF2421037 /* Presentation */,
+			);
+			path = Workbench;
+			sourceTree = "<group>";
+		};
+		EE4251AA68015ED4FA480DD6 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				FEB38CA50C831A8C6C6A9F3C /* Workbench.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		EE9780451302DB74A1C94996 /* Products */ = {
@@ -355,17 +458,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F377CCBF94CE623B91AA80A2 /* Data */ = {
+		F26D6FC8D2A31E7A1E49722A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				907D2546DA330B315B2D9D9C /* WorkbenchRepository.swift */,
+				42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */,
+				C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */,
 			);
-			path = Data;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		FA248F54814A9A0C50145762 /* MatindWorkboard */ = {
 			isa = PBXGroup;
 			children = (
+				928409AD1109AC559CA3BD7E /* Config */,
 				29F659B8ECAEC0974A1B412A /* Core */,
 				5CE70EEF0DF1A1768CC6DB0F /* Features */,
 				1367A0A1021D2A65343BF96A /* Plugins */,
@@ -385,6 +490,7 @@
 			buildConfigurationList = 06125AFB5613AA0F2C34D2C1 /* Build configuration list for PBXNativeTarget "MatindWorkboard" */;
 			buildPhases = (
 				7E29E0AD8107707C4252BE6C /* Sources */,
+				72FB4BB03EE86B89F3305639 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -392,6 +498,7 @@
 			);
 			name = MatindWorkboard;
 			packageProductDependencies = (
+				304EEB562EA4C0F237241AA1 /* MatindCore */,
 			);
 			productName = MatindWorkboard;
 			productReference = DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */;
@@ -402,6 +509,7 @@
 			buildConfigurationList = EE082199FB3043B59615BAEF /* Build configuration list for PBXNativeTarget "MatindWorkboardTests" */;
 			buildPhases = (
 				F2930E51B8698EA11BEB85D4 /* Sources */,
+				C99C63A8707569786437CBC4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -410,6 +518,7 @@
 			);
 			name = MatindWorkboardTests;
 			packageProductDependencies = (
+				DD4ECD44C9399A332E72BE71 /* MatindCore */,
 			);
 			productName = MatindWorkboardTests;
 			productReference = C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */;
@@ -425,6 +534,7 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					29639C02D47C54987AB40394 = {
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -438,6 +548,9 @@
 			);
 			mainGroup = 3561173A8818078217569C55;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				513317C3260FF5CF4D9B6292 /* XCLocalSwiftPackageReference "MatindCore" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EE9780451302DB74A1C94996 /* Products */;
 			projectDirPath = "";
@@ -456,14 +569,13 @@
 			files = (
 				4FC0D595442D9073AFD79649 /* APIClient.swift in Sources */,
 				6546FFBE7016EB978C683AB0 /* AppConfig.swift in Sources */,
-				AA0001001111111100000001 /* AppTab.swift in Sources */,
-				AA0001001111111100000003 /* AppTabBar.swift in Sources */,
-				AA0001001111111100000005 /* AutomationView.swift in Sources */,
-				AA0001001111111100000004 /* SettingsView.swift in Sources */,
-				AA0001001111111100000002 /* TabManager.swift in Sources */,
 				B455C98DF0E74CCDA4E790FF /* AppNotification.swift in Sources */,
+				3BA46EEBC94EF4ED81B687D1 /* AppTab.swift in Sources */,
+				9A8536AD69B65C7CB52DDC3E /* AppTabBar.swift in Sources */,
 				FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */,
 				9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */,
+				5D1EDFD9670AA9DB370E384D /* AuthorizationLedger.swift in Sources */,
+				E0719DFF5AA955EE545E2CD7 /* AutomationView.swift in Sources */,
 				8B09E16AC61155851B3986C8 /* Board.swift in Sources */,
 				2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */,
 				C237C5034A262FFBD34694FE /* BoardLayoutRepository.swift in Sources */,
@@ -471,10 +583,17 @@
 				50D390C12A8C3287B2FB82CB /* BoardRepository.swift in Sources */,
 				58529A575205917977358089 /* BoardTabView.swift in Sources */,
 				76544923377AA7B936AB872B /* BoardViewModel.swift in Sources */,
+				9340F1CF6321327C91965DA4 /* BrowserSignInReceiver.swift in Sources */,
 				BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */,
+				28796B2EFFC5B884B24DB93D /* ControlPlaneTransport.swift in Sources */,
+				E9ACAB5D814672BFDE8ACF82 /* DeviceIdentityStore.swift in Sources */,
+				36D3A54FCCFDA8F2DF9CC40E /* KeychainPasswordStore.swift in Sources */,
 				59C7A996669363D6100F4406 /* LastVisited.swift in Sources */,
+				DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */,
+				AFEA8E16ADE3C6DDDF845B92 /* LocalServerState.swift in Sources */,
 				161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */,
 				ED19B40927A9337319E6834C /* LoginView.swift in Sources */,
+				E6EB4E6105FB3D9EBD7B04C7 /* LoopbackServer.swift in Sources */,
 				2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */,
 				47E156C06905C6FF67C901E1 /* NotificationCenterView.swift in Sources */,
 				5235368F408A7388EA8325EC /* NotificationRepository.swift in Sources */,
@@ -482,13 +601,16 @@
 				62058DF1F146DC6C9AD7B43D /* NotificationViewModel.swift in Sources */,
 				5FCAAEFAB750B82AB320F54B /* PluginManifest.swift in Sources */,
 				8C51046CF39EF170418F4E1B /* PluginRegistry.swift in Sources */,
+				D31D5C3C9A04B598AC465EBF /* PrivateServerSection.swift in Sources */,
+				46D6D4D901CEF2E24BF454CE /* SessionCredentialStore.swift in Sources */,
+				94A6DEED423C8110D6C8C379 /* SettingsView.swift in Sources */,
+				4014206FA39A0E66C3187B68 /* TabManager.swift in Sources */,
 				E3A7F6903AD6041885B0EC65 /* User.swift in Sources */,
 				973F7B6D232918ABD3EA161B /* WebViewPluginHost.swift in Sources */,
 				74AE08D96F575BCECA9A12B6 /* WidgetInstance.swift in Sources */,
-				154D3D4F8B6BAB8B3B6D9082 /* Workbench.swift in Sources */,
-				34EE62ECF27AC6DB904014E7 /* WorkbenchRepository.swift in Sources */,
-				8C0D1E53F45C77257F6185D6 /* WorkbenchSidebarView.swift in Sources */,
-				E6965632B991617C7D493B18 /* WorkbenchViewModel.swift in Sources */,
+				022D760A305BD89FB8189B82 /* Workbench.swift in Sources */,
+				7942EE38E7BD0742DE5B6971 /* WorkbenchRepository.swift in Sources */,
+				5CBBDC93D0B644D1CEB27F01 /* WorkbenchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */,
+				714F66C626834E71EA79253E /* PrivateServerPolicyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +634,23 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1180729052C744C9F14E40C2 /* Local */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = Local;
+		};
 		19C892DBF36CC027CF3CD071 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -570,12 +710,13 @@
 		};
 		4AB104A244DB5ED34E115F82 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FE63A3F5B1D63EA5115FF65 /* Remote.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5N9NPM3QDC;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MatindWorkboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -588,7 +729,66 @@
 			};
 			name = Release;
 		};
-		55C176762D8F45AC174DC73F /* Debug */ = {
+		4D0E255225DE6E1BFDAF71BE /* Remote */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FE63A3F5B1D63EA5115FF65 /* Remote.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Remote;
+		};
+		955E2C4F565BC9B9D0717BE0 /* Local */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BDC3848D3EF63294E011B7A /* Local.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Local;
+		};
+		A4451D487E95E1BEA77B1E02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = Release;
+		};
+		D030C9B06E3F0FB2C9F0C3E2 /* Local */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -650,13 +850,14 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 			};
-			name = Debug;
+			name = Local;
 		};
-		A4451D487E95E1BEA77B1E02 /* Release */ = {
+		D7B8EC51F0DA34F5B23FE361 /* Remote */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -666,43 +867,71 @@
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
 			};
-			name = Release;
+			name = Remote;
 		};
-		BCA08387B037514AEB73B57C /* Debug */ = {
+		E3437F0AD10F24BADC73B412 /* Remote */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
+					"DEBUG=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
-			name = Debug;
-		};
-		C9C755E63B93EE88918E902E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5N9NPM3QDC;
-				INFOPLIST_FILE = MatindWorkboard/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
-				PRODUCT_NAME = MatindWorkboard;
-				SDKROOT = macosx;
-				SWIFT_STRICT_CONCURRENCY = complete;
-			};
-			name = Debug;
+			name = Remote;
 		};
 /* End XCBuildConfiguration section */
 
@@ -710,31 +939,52 @@
 		06125AFB5613AA0F2C34D2C1 /* Build configuration list for PBXNativeTarget "MatindWorkboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C9C755E63B93EE88918E902E /* Debug */,
+				955E2C4F565BC9B9D0717BE0 /* Local */,
 				4AB104A244DB5ED34E115F82 /* Release */,
+				4D0E255225DE6E1BFDAF71BE /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Local;
 		};
 		1CB7C5FB00BAB7F376D26894 /* Build configuration list for PBXProject "MatindWorkboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				55C176762D8F45AC174DC73F /* Debug */,
+				D030C9B06E3F0FB2C9F0C3E2 /* Local */,
 				19C892DBF36CC027CF3CD071 /* Release */,
+				E3437F0AD10F24BADC73B412 /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Local;
 		};
 		EE082199FB3043B59615BAEF /* Build configuration list for PBXNativeTarget "MatindWorkboardTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BCA08387B037514AEB73B57C /* Debug */,
+				1180729052C744C9F14E40C2 /* Local */,
 				A4451D487E95E1BEA77B1E02 /* Release */,
+				D7B8EC51F0DA34F5B23FE361 /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Local;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		513317C3260FF5CF4D9B6292 /* XCLocalSwiftPackageReference "MatindCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = MatindCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		304EEB562EA4C0F237241AA1 /* MatindCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MatindCore;
+		};
+		DD4ECD44C9399A332E72BE71 /* MatindCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MatindCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1AC452536F0C97444305954 /* Project object */;
 }

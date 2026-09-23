@@ -7,29 +7,33 @@ import Observation
 @MainActor
 final class TabManager {
     private(set) var tabs: [AppTab] = []
-    var selectedTabId: String?
+    private(set) var selectedTabId: String?
+    /// 本次会话里收起的工作板。关闭页签不删除服务端数据。
+    private var hiddenBoardIds: Set<String> = []
 
     /// 当前选中的标签
     var selectedTab: AppTab? {
         tabs.first { $0.id == selectedTabId }
     }
 
-    /// 从工作板列表初始化标签
+    /// 从工作板列表同步页签，已经收起的页签保持收起。
     func syncBoardTabs(_ boards: [Board], selectedBoardId: String?) {
-        // 保留非工作板标签
+        hiddenBoardIds.formIntersection(Set(boards.map(\.id)))
+        let visible = boards.filter { !hiddenBoardIds.contains($0.id) }
         let nonBoardTabs = tabs.filter { !$0.isBoard }
-
-        // 创建工作板标签
-        let boardTabs = boards.map { AppTab.board(id: $0.id, name: $0.name) }
-
-        tabs = boardTabs + nonBoardTabs
-
-        // 恢复选中状态
-        if let selectedBoardId, tabs.contains(where: { $0.id == "board-\(selectedBoardId)" }) {
+        tabs = visible.map { AppTab.board(id: $0.id, name: $0.name) } + nonBoardTabs
+        if let selectedBoardId,
+           !hiddenBoardIds.contains(selectedBoardId),
+           tabs.contains(where: { $0.id == "board-\(selectedBoardId)" }) {
             selectedTabId = "board-\(selectedBoardId)"
         } else if selectedTabId == nil || !tabs.contains(where: { $0.id == selectedTabId }) {
             selectedTabId = tabs.first?.id
         }
+    }
+
+    func reopen(_ boardId: String, boards: [Board]) {
+        hiddenBoardIds.remove(boardId)
+        syncBoardTabs(boards, selectedBoardId: boardId)
     }
 
     /// 打开设置标签
@@ -53,10 +57,12 @@ final class TabManager {
         selectedTabId = tabId
     }
 
-    /// 关闭标签
+    /// 关闭标签。工作板只在本次会话收起，不删除。
     func close(_ tabId: String) {
+        if let tab = tabs.first(where: { $0.id == tabId }), case .board(let id, _) = tab {
+            hiddenBoardIds.insert(id)
+        }
         tabs.removeAll { $0.id == tabId }
-        // 如果关闭的是当前选中标签，切到前一个
         if selectedTabId == tabId {
             selectedTabId = tabs.last?.id
         }

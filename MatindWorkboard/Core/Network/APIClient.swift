@@ -34,6 +34,10 @@ actor APIClient {
         self.token = token
     }
 
+    func currentToken() -> String? {
+        token
+    }
+
     func get<T: Decodable>(_ path: String, as type: T.Type = T.self) async throws -> T {
         let request = try buildRequest(path: path, method: "GET")
         return try await perform(request)

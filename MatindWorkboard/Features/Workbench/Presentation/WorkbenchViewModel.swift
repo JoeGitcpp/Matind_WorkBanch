@@ -31,7 +31,7 @@ final class WorkbenchViewModel {
             }
             selectedWorkbenchId = workbenches.first?.id
         } catch {
-            self.error = error.localizedDescription
+            self.error = PresentedFailure.message(for: error)
         }
     }
 

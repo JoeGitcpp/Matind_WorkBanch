@@ -1,0 +1,4 @@
+// 线上方案：接口与网页同域（nginx 把 /api/v1/ 转发到后端）。只含公开地址，不放任何密钥。
+APP_CONFIG_NAME = 线上
+API_BASE_URL = https:/$()/matind.com
+WEB_BASE_URL = https:/$()/matind.com

@@ -1,29 +1,68 @@
 import Foundation
+import MatindCore
 
-struct Board: Codable, Identifiable, Sendable, Equatable {
+/// 工作板摘要。布局仍在后续阶段替换，这里只保留目录契约需要的字段。
+struct Board: Identifiable, Equatable, Sendable {
     let id: String
-    let workbenchId: String?
     let name: String
-    let isDefault: Bool?
-    let config: BoardConfig?
-    let createdAt: String?
+    let accessRevision: String
+    let contentCapability: BoardContentCapability
+    let settingsCapability: BoardSettingsCapability
 
-    enum CodingKeys: String, CodingKey {
-        case id, name, config, workbenchId
-        case isDefault = "is_default"
-        case createdAt = "created_at"
+    var surfaceAccess: BoardSurfaceAccess {
+        contentCapability.permitsEditing ? .editable : .readOnly
+    }
+
+    init(_ summary: BoardSummary) {
+        id = summary.id
+        name = summary.name
+        accessRevision = summary.accessRevision
+        contentCapability = summary.contentCapability
+        settingsCapability = summary.settingsCapability
+    }
+
+    init(
+        id: String,
+        name: String,
+        accessRevision: String,
+        contentCapability: BoardContentCapability,
+        settingsCapability: BoardSettingsCapability
+    ) {
+        self.id = id
+        self.name = name
+        self.accessRevision = accessRevision
+        self.contentCapability = contentCapability
+        self.settingsCapability = settingsCapability
     }
 }
 
-struct BoardConfig: Codable, Sendable, Equatable {
-    let layout: String?
+/// 内容能力映射成界面可执行的动作，避免用布尔值一路传下去。
+enum BoardSurfaceAccess: Equatable, Sendable {
+    case editable
+    case readOnly
 }
 
-struct BoardListResponse: Codable, Sendable {
-    let data: [Board]?
-    let list: [Board]?
+enum PresentedFailure {
+    static func message(for error: Error) -> String {
+        if let failure = error as? ControlPlaneFailure {
+            return failure.message
+        }
+        if let api = error as? APIError {
+            return apiMessage(api)
+        }
+        return ControlPlaneFailure.unreachable.message
+    }
 
-    var boards: [Board] {
-        data ?? list ?? []
+    private static func apiMessage(_ error: APIError) -> String {
+        switch error {
+        case .unauthorized:
+            return ControlPlaneFailure.unauthenticated.message
+        case .networkError:
+            return ControlPlaneFailure.unreachable.message
+        case .decodingError:
+            return ControlPlaneFailure.undecodable.message
+        case .serverError:
+            return error.localizedDescription
+        }
     }
 }

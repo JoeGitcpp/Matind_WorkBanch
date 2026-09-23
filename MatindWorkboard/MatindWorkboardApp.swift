@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct MatindWorkboardApp: App {
     @State private var authState = AuthState()
+    @State private var localServer = LocalServerState()
 
     init() {
         // 初始化通知服务（设置 delegate）
@@ -16,6 +17,7 @@ struct MatindWorkboardApp: App {
         WindowGroup {
             ContentView()
                 .environment(authState)
+                .environment(localServer)
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)

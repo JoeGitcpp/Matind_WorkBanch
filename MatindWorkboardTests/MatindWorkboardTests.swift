@@ -1,12 +1,15 @@
 import Testing
 import Foundation
+import MatindCore
 @testable import MatindWorkboard
 
 @Suite("AppConfig Tests")
 struct AppConfigTests {
-    @Test("API base URL is correct")
-    func apiBaseURL() {
-        #expect(AppConfig.apiBaseURL == "https://api.matind.com")
+    @Test("当前方案带有接口与网页地址")
+    func publicEndpoints() {
+        #expect(AppConfig.apiBase != nil)
+        #expect(AppConfig.webBase != nil)
+        #expect(AppConfig.configName == "本机" || AppConfig.configName == "线上")
     }
 
     @Test("Keychain service name is correct")
@@ -145,19 +148,19 @@ struct APIClientTests {
 
 @Suite("BoardViewModel Tests")
 struct BoardViewModelTests {
-    @Test("Deleting current board selects default board")
+    @Test("删除当前页面后回到剩下的第一页")
     @MainActor
-    func deletingCurrentBoardSelectsDefault() async {
+    func deletingCurrentBoardSelectsTheRemainingBoard() async throws {
         let boards = [
-            Board(id: "b1", workbenchId: "wb1", name: "主板", isDefault: true, config: nil, createdAt: nil),
-            Board(id: "b2", workbenchId: "wb1", name: "副板", isDefault: false, config: nil, createdAt: nil)
+            Board(id: "b1", name: "主板", accessRevision: "1", contentCapability: .edit, settingsCapability: .manage),
+            Board(id: "b2", name: "副板", accessRevision: "1", contentCapability: .read, settingsCapability: .none)
         ]
         let vm = BoardViewModel(repository: MockBoardRepository(boards: boards))
         await vm.load(workbenchId: "wb1")
-        #expect(vm.selectedBoardId == "b1") // 默认板被选中
+        vm.selectBoard("b1", workbenchId: "wb1")
+        #expect(vm.selectedBoardId == "b1")
 
-        await vm.deleteBoard("b1", workbenchId: "wb1")
-        // 删除后应回退到下一个可用板
+        try await vm.delete(workbenchId: "wb1", board: boards[0], reason: nil, idempotencyKey: UUID())
         #expect(vm.selectedBoardId == "b2")
         #expect(vm.boards.count == 1)
     }
@@ -178,7 +181,13 @@ struct MockBoardRepository: BoardRepositoryProtocol {
     let boards: [Board]
 
     func fetchBoards(workbenchId: String) async throws -> [Board] { boards }
-    func deleteBoard(boardId: String) async throws {}
+    func createBoard(workbenchId: String, name: String, idempotencyKey: UUID) async throws -> Board {
+        boards[0]
+    }
+    func renameBoard(workbenchId: String, boardId: String, name: String, idempotencyKey: UUID) async throws -> Board {
+        boards[0]
+    }
+    func deleteBoard(workbenchId: String, board: Board, reason: String?, idempotencyKey: UUID) async throws {}
 }
 
 // MARK: - NotificationViewModel Tests
