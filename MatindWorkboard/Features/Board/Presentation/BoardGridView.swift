@@ -9,12 +9,12 @@ struct BoardGridView: View {
     let arrangement: BoardArrangement
 
     // 网格配置
-    private let columnCount = 12
     private let rowHeight: CGFloat = 80
     private let gap: CGFloat = 8
 
     var body: some View {
         GeometryReader { geo in
+            let columnCount = layoutVM.bounds.columns
             let colWidth = (geo.size.width - gap * CGFloat(columnCount + 1)) / CGFloat(columnCount)
 
             ScrollView {
@@ -32,6 +32,7 @@ struct BoardGridView: View {
                             colWidth: colWidth,
                             rowHeight: rowHeight,
                             gap: gap,
+                            bounds: layoutVM.bounds,
                             arrangement: arrangement,
                             onRemove: { layoutVM.removeWidget(id: widget.id) },
                             onParams: { datasetId, viewType in
@@ -123,6 +124,18 @@ struct BoardGridGeometry: Equatable, Sendable {
         )
     }
 
+    /// 拖动预览时把像素尺寸压在边界允许的最小、最大占格之间，卡片到了边界就停住，松手不会再弹回。
+    func size(_ size: CGSize, clampedAt x: Int, within bounds: BoardGridBounds) -> CGSize {
+        let smallest = bounds.clampedSpan(x: x, width: Int.min, height: Int.min)
+        let largest = bounds.clampedSpan(x: x, width: Int.max, height: Int.max)
+        let minSize = frame(x: 0, y: 0, width: smallest.width, height: smallest.height).size
+        let maxSize = frame(x: 0, y: 0, width: largest.width, height: largest.height).size
+        return CGSize(
+            width: min(maxSize.width, max(minSize.width, size.width)),
+            height: min(maxSize.height, max(minSize.height, size.height))
+        )
+    }
+
     private func snapped(_ distance: CGFloat, pitch: CGFloat) -> Int {
         guard pitch > 1 else { return 0 }
         return Int((distance / pitch).rounded())
@@ -142,19 +155,15 @@ struct PointerAnchor: Equatable {
 /// 拖动时的预览。格子要等松手再改，否则手势坐标会跟着卡片跑，抓住的位置就会跳。
 enum CardPointerPreview: Equatable {
     case moving(start: CGRect, translation: CGSize)
-    case resizing(start: CGRect, translation: CGSize)
+    /// 缩放预览直接存已压到边界内的尺寸，左上角不动。
+    case resizing(start: CGRect, size: CGSize)
 
     var frame: CGRect {
         switch self {
         case .moving(let start, let translation):
             return start.offsetBy(dx: translation.width, dy: translation.height)
-        case .resizing(let start, let translation):
-            return CGRect(
-                x: start.minX,
-                y: start.minY,
-                width: max(1, start.width + translation.width),
-                height: max(1, start.height + translation.height)
-            )
+        case .resizing(let start, let size):
+            return CGRect(origin: start.origin, size: size)
         }
     }
 }
@@ -167,6 +176,7 @@ struct WidgetCardView: View {
     let colWidth: CGFloat
     let rowHeight: CGFloat
     let gap: CGFloat
+    let bounds: BoardGridBounds
     let arrangement: BoardArrangement
     let onRemove: () -> Void
     let onParams: (String, String) -> Void
@@ -300,20 +310,25 @@ struct WidgetCardView: View {
             .onChanged { value in
                 let anchor = resizeAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
                 resizeAnchor = anchor
-                preview = .resizing(start: anchor.frame, translation: anchor.translation(to: value.location))
+                preview = .resizing(start: anchor.frame, size: resizedSize(anchor, pointer: value.location))
             }
             .onEnded { value in
                 let anchor = resizeAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
-                let translation = anchor.translation(to: value.location)
-                let size = CGSize(
-                    width: anchor.frame.width + translation.width,
-                    height: anchor.frame.height + translation.height
-                )
-                let span = geometry.span(covering: size)
+                let span = geometry.span(covering: resizedSize(anchor, pointer: value.location))
                 resizeAnchor = nil
                 preview = nil
                 onResize(span.width - widget.gridW, span.height - widget.gridH)
             }
+    }
+
+    /// 指针拖到哪里，卡片就跟到哪里，但不越过格子边界；预览和松手用同一个尺寸，所见即所得。
+    private func resizedSize(_ anchor: PointerAnchor, pointer: CGPoint) -> CGSize {
+        let translation = anchor.translation(to: pointer)
+        let requested = CGSize(
+            width: anchor.frame.width + translation.width,
+            height: anchor.frame.height + translation.height
+        )
+        return geometry.size(requested, clampedAt: widget.gridX, within: bounds)
     }
 
     private var title: String {

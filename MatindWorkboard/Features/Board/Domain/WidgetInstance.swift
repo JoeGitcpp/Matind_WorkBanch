@@ -62,6 +62,31 @@ struct WidgetInstance: Codable, Identifiable, Sendable {
     }
 }
 
+/// 工作板格子的边界。移动、缩放、拖动预览都从这里取限制，避免各处写死不同的数字。
+struct BoardGridBounds: Equatable, Sendable {
+    var columns: Int
+    var minWidth: Int
+    var minHeight: Int
+    /// 与网页端组件默认最大高度保持一致。
+    var maxHeight: Int
+
+    static let standard = BoardGridBounds(columns: 12, minWidth: 2, minHeight: 1, maxHeight: 12)
+
+    /// 一个格子起点能放下给定宽度的最右列。
+    func clampedOrigin(x: Int, y: Int, width: Int) -> (x: Int, y: Int) {
+        (x: max(0, min(x, columns - width)), y: max(0, y))
+    }
+
+    /// 缩放不能越过右边界，也不能小于最小占格或高于最大占格。
+    func clampedSpan(x: Int, width: Int, height: Int) -> (width: Int, height: Int) {
+        let widest = max(minWidth, columns - max(0, x))
+        return (
+            width: max(minWidth, min(widest, width)),
+            height: max(minHeight, min(maxHeight, height))
+        )
+    }
+}
+
 struct BoardLayout: Codable, Sendable {
     let boardId: String
     let widgets: [WidgetInstance]

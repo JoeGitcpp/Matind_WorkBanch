@@ -10,6 +10,8 @@ final class BoardLayoutViewModel {
     var showPluginPicker = false
 
     private let repository: any BoardLayoutRepositoryProtocol
+    /// 卡片移动、缩放共用的格子边界。
+    let bounds = BoardGridBounds.standard
     private var currentBoardId: String?
     /// 后发起的加载作废先发起的结果，避免切页时把加载状态提前清掉。
     private var loadGeneration = UUID()
@@ -71,25 +73,17 @@ final class BoardLayoutViewModel {
 
     func moveWidget(id: String, toX: Int, toY: Int) {
         guard let index = widgets.firstIndex(where: { $0.id == id }) else { return }
-        let old = widgets[index]
-        widgets[index] = WidgetInstance(
-            id: old.id, pluginId: old.pluginId,
-            gridX: max(0, min(toX, 12 - old.gridW)), gridY: max(0, toY),
-            gridW: old.gridW, gridH: old.gridH,
-            params: old.params
-        )
+        let origin = bounds.clampedOrigin(x: toX, y: toY, width: widgets[index].gridW)
+        widgets[index].gridX = origin.x
+        widgets[index].gridY = origin.y
         scheduleSave()
     }
 
     func resizeWidget(id: String, newW: Int, newH: Int) {
         guard let index = widgets.firstIndex(where: { $0.id == id }) else { return }
-        let old = widgets[index]
-        widgets[index] = WidgetInstance(
-            id: old.id, pluginId: old.pluginId,
-            gridX: old.gridX, gridY: old.gridY,
-            gridW: max(2, min(12, newW)), gridH: max(1, min(8, newH)),
-            params: old.params
-        )
+        let span = bounds.clampedSpan(x: widgets[index].gridX, width: newW, height: newH)
+        widgets[index].gridW = span.width
+        widgets[index].gridH = span.height
         scheduleSave()
     }
 

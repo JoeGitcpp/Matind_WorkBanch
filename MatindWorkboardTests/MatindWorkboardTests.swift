@@ -300,11 +300,28 @@ struct BoardLayoutViewModelTests {
 
         vm.resizeWidget(id: id, newW: 999, newH: 999)
         #expect(vm.widgets.first?.gridW == 12)
-        #expect(vm.widgets.first?.gridH == 8)
+        #expect(vm.widgets.first?.gridH == 12)
 
         vm.resizeWidget(id: id, newW: 0, newH: 0)
         #expect(vm.widgets.first?.gridW == 2)
         #expect(vm.widgets.first?.gridH == 1)
+    }
+
+    @Test("靠右的卡片加宽不能越过右边界")
+    @MainActor
+    func resizeStopsAtRightEdge() async {
+        let vm = BoardLayoutViewModel(repository: MockLayoutRepository())
+        await vm.load(boardId: "b1")
+        vm.addWidget(.hyperTable)
+        let id = vm.widgets.first!.id
+
+        vm.resizeWidget(id: id, newW: 4, newH: 3)
+        vm.moveWidget(id: id, toX: 9, toY: 0)
+        #expect(vm.widgets.first?.gridX == 8)
+
+        vm.resizeWidget(id: id, newW: 10, newH: 3)
+        #expect(vm.widgets.first?.gridW == 4)
+        #expect(vm.widgets.first?.gridX == 8)
     }
 }
 
@@ -335,6 +352,24 @@ struct BoardGridGeometryTests {
         #expect(within.x == 2)
         #expect(within.y == 1)
         #expect(crossed.x == 3)
+    }
+
+    @Test("缩放预览到了边界就停住，松手落格和预览一致")
+    func resizePreviewClampsToBounds() {
+        let bounds = BoardGridBounds.standard
+        let start = geometry.frame(x: 0, y: 0, width: 12, height: 6)
+        let dragged = CGSize(width: start.width + 300, height: start.height + 900)
+
+        let clamped = geometry.size(dragged, clampedAt: 0, within: bounds)
+        let span = geometry.span(covering: clamped)
+        #expect(clamped.width == start.width)
+        #expect(span.width == 12)
+        #expect(span.height == bounds.maxHeight)
+
+        let shrunk = geometry.size(CGSize(width: 1, height: 1), clampedAt: 0, within: bounds)
+        let smallest = geometry.span(covering: shrunk)
+        #expect(smallest.width == bounds.minWidth)
+        #expect(smallest.height == bounds.minHeight)
     }
 }
 
