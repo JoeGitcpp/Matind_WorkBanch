@@ -127,7 +127,7 @@ final class BrowserSignInReceiver: @unchecked Sendable {
         let outcome = requestTarget(request).map { authorization?.outcome(of: $0) ?? .unrelated } ?? .unrelated
         switch outcome {
         case .granted(let code):
-            send(connection, status: "200 OK", page: "登录成功，可以关闭此页，回到 Matind Workboard。")
+            send(connection, status: "200 OK", page: "授权已交回本机，请回到 Matind Workboard。")
             finish(.success(code))
         case .denied:
             send(connection, status: "200 OK", page: "已取消授权，可以关闭此页。")
