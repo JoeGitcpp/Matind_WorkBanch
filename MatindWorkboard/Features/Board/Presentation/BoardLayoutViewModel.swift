@@ -1,4 +1,5 @@
 import Foundation
+import MatindCore
 import Observation
 
 @Observable
@@ -37,10 +38,29 @@ final class BoardLayoutViewModel {
         }
     }
 
-    func addWidget(pluginId: String) {
+    func addWidget(_ kind: BoardWidgetKind) {
         let nextRow = widgets.map { $0.gridY + $0.gridH }.max() ?? 0
-        let instance = WidgetInstance.defaultInstance(pluginId: pluginId, at: nextRow)
+        let placement = kind.placement
+        let instance = WidgetInstance(
+            id: UUID().uuidString,
+            pluginId: kind.rawValue,
+            gridX: 0,
+            gridY: nextRow,
+            gridW: placement.width,
+            gridH: placement.height
+        )
         widgets.append(instance)
+        scheduleSave()
+    }
+
+    func updateParams(id: String, datasetId: String, viewType: String) {
+        guard let index = widgets.firstIndex(where: { $0.id == id }) else { return }
+        widgets[index].params["datasetId"] = datasetId
+        if viewType.isEmpty {
+            widgets[index].params.removeValue(forKey: "viewType")
+        } else {
+            widgets[index].params["viewType"] = viewType
+        }
         scheduleSave()
     }
 
@@ -55,7 +75,8 @@ final class BoardLayoutViewModel {
         widgets[index] = WidgetInstance(
             id: old.id, pluginId: old.pluginId,
             gridX: max(0, min(toX, 12 - old.gridW)), gridY: max(0, toY),
-            gridW: old.gridW, gridH: old.gridH
+            gridW: old.gridW, gridH: old.gridH,
+            params: old.params
         )
         scheduleSave()
     }
@@ -66,7 +87,8 @@ final class BoardLayoutViewModel {
         widgets[index] = WidgetInstance(
             id: old.id, pluginId: old.pluginId,
             gridX: old.gridX, gridY: old.gridY,
-            gridW: max(2, min(12, newW)), gridH: max(1, min(8, newH))
+            gridW: max(2, min(12, newW)), gridH: max(1, min(8, newH)),
+            params: old.params
         )
         scheduleSave()
     }

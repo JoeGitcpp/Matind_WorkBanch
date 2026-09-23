@@ -1,10 +1,11 @@
+import MatindCore
 import SwiftUI
 
 /// 工作板主网格视图
 struct BoardGridView: View {
     @Bindable var layoutVM: BoardLayoutViewModel
+    @Environment(AuthState.self) private var auth
     let boardId: String
-    let plugins: [PluginManifest]
     let arrangement: BoardArrangement
 
     // 网格配置
@@ -25,31 +26,36 @@ struct BoardGridView: View {
 
                     // 插件卡片层
                     ForEach(layoutVM.widgets) { widget in
-                        if let plugin = plugins.first(where: { $0.id == widget.pluginId }) {
-                            WidgetCardView(
-                                widget: widget,
-                                plugin: plugin,
-                                colWidth: colWidth,
-                                rowHeight: rowHeight,
-                                gap: gap,
-                                arrangement: arrangement,
-                                onRemove: { layoutVM.removeWidget(id: widget.id) },
-                                onMove: { dx, dy in
-                                    layoutVM.moveWidget(
-                                        id: widget.id,
-                                        toX: widget.gridX + dx,
-                                        toY: widget.gridY + dy
-                                    )
-                                },
-                                onResize: { dw, dh in
-                                    layoutVM.resizeWidget(
-                                        id: widget.id,
-                                        newW: widget.gridW + dw,
-                                        newH: widget.gridH + dh
-                                    )
-                                }
-                            )
-                        }
+                        WidgetCardView(
+                            widget: widget,
+                            accessToken: auth.accessToken ?? "",
+                            colWidth: colWidth,
+                            rowHeight: rowHeight,
+                            gap: gap,
+                            arrangement: arrangement,
+                            onRemove: { layoutVM.removeWidget(id: widget.id) },
+                            onParams: { datasetId, viewType in
+                                layoutVM.updateParams(
+                                    id: widget.id,
+                                    datasetId: datasetId,
+                                    viewType: viewType
+                                )
+                            },
+                            onMove: { dx, dy in
+                                layoutVM.moveWidget(
+                                    id: widget.id,
+                                    toX: widget.gridX + dx,
+                                    toY: widget.gridY + dy
+                                )
+                            },
+                            onResize: { dw, dh in
+                                layoutVM.resizeWidget(
+                                    id: widget.id,
+                                    newW: widget.gridW + dw,
+                                    newH: widget.gridH + dh
+                                )
+                            }
+                        )
                     }
                 }
                 .frame(
@@ -62,8 +68,8 @@ struct BoardGridView: View {
             }
         }
         .sheet(isPresented: $layoutVM.showPluginPicker) {
-            PluginPickerView(plugins: plugins) { pluginId in
-                layoutVM.addWidget(pluginId: pluginId)
+            PluginPickerView { kind in
+                layoutVM.addWidget(kind)
                 layoutVM.showPluginPicker = false
             }
         }
@@ -84,12 +90,13 @@ struct BoardGridView: View {
 
 struct WidgetCardView: View {
     let widget: WidgetInstance
-    let plugin: PluginManifest
+    let accessToken: String
     let colWidth: CGFloat
     let rowHeight: CGFloat
     let gap: CGFloat
     let arrangement: BoardArrangement
     let onRemove: () -> Void
+    let onParams: (String, String) -> Void
     let onMove: (Int, Int) -> Void
     let onResize: (Int, Int) -> Void
 
@@ -104,7 +111,7 @@ struct WidgetCardView: View {
                 Image(systemName: "line.3.horizontal")
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
-                Text(plugin.name)
+                Text(title)
                     .font(.system(size: 12, weight: .semibold))
                     .lineLimit(1)
                 Spacer()
@@ -125,29 +132,7 @@ struct WidgetCardView: View {
 
             Divider()
 
-            // 内容区
-            if let pluginDir = Bundle.main.url(
-                forResource: plugin.id,
-                withExtension: nil,
-                subdirectory: "Plugins"
-            ) {
-                WebViewPluginHost(
-                    pluginId: plugin.id,
-                    pluginDirectory: pluginDir,
-                    apiToken: nil
-                )
-            } else {
-                Color.gray.opacity(0.05)
-                    .overlay {
-                        VStack(spacing: 4) {
-                            Image(systemName: "puzzlepiece")
-                                .foregroundStyle(.secondary)
-                            Text(plugin.name)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-            }
+            widgetSurface
         }
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(color: .black.opacity(isDragging ? 0.2 : 0.07), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
@@ -176,13 +161,62 @@ struct WidgetCardView: View {
             }
         }
     }
+
+    private var title: String {
+        BoardWidgetKind(rawValue: widget.pluginId)?.title ?? widget.pluginId
+    }
+
+    @ViewBuilder
+    private var widgetSurface: some View {
+        switch BoardWidgetKind(rawValue: widget.pluginId) {
+        case .hyperTable:
+            hyperTable
+        case nil:
+            missingKind
+        }
+    }
+
+    @ViewBuilder
+    private var hyperTable: some View {
+        if let webBase = AppConfig.webBase,
+           let page = HyperTableLocation.page(
+            webBase: webBase,
+            datasetId: widget.params["datasetId"] ?? ""
+           ),
+           let claims = AccessTokenClaims.snapshot(of: accessToken) {
+            HyperTableEmbedHost(
+                page: page,
+                accessToken: accessToken,
+                subject: claims.subject,
+                expiresAt: claims.expiresAt,
+                onParams: onParams
+            )
+        } else if AppConfig.webBase == nil {
+            missingKind
+        } else {
+            Text("登录已过期，请重新登录后再打开多维表")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private var missingKind: some View {
+        VStack(spacing: 4) {
+            Image(systemName: "rectangle.dashed")
+                .foregroundStyle(.secondary)
+            Text("这个组件请在网页里查看")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
 }
 
 // MARK: - PluginPickerView
 
 struct PluginPickerView: View {
-    let plugins: [PluginManifest]
-    let onSelect: (String) -> Void
+    let onSelect: (BoardWidgetKind) -> Void
     @Environment(\.dismiss) private var dismiss
 
     private let columns = [GridItem(.adaptive(minimum: 120))]
@@ -201,22 +235,20 @@ struct PluginPickerView: View {
 
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(plugins) { plugin in
-                        Button(action: { onSelect(plugin.id) }) {
+                    ForEach(BoardWidgetKind.allCases, id: \.rawValue) { kind in
+                        Button(action: { onSelect(kind) }) {
                             VStack(spacing: 8) {
-                                Image(systemName: "puzzlepiece.fill")
+                                Image(systemName: "tablecells")
                                     .font(.system(size: 28))
                                     .foregroundStyle(.blue)
-                                Text(plugin.name)
+                                Text(kind.title)
                                     .font(.system(size: 12, weight: .medium))
                                     .multilineTextAlignment(.center)
-                                if let desc = plugin.description {
-                                    Text(desc)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                }
+                                Text(kind.summary)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(2)
                             }
                             .padding(12)
                             .frame(maxWidth: .infinity)

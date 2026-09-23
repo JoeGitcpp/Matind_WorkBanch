@@ -48,6 +48,17 @@ enum Base64URL {
             .replacingOccurrences(of: "/", with: "_")
             .replacingOccurrences(of: "=", with: "")
     }
+
+    static func decode(_ text: String) -> Data? {
+        var padded = text
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        let remainder = padded.count % 4
+        if remainder > 0 {
+            padded.append(String(repeating: "=", count: 4 - remainder))
+        }
+        return Data(base64Encoded: padded)
+    }
 }
 
 /// RFC 7636 的校验值对：verifier 只留在本机，challenge 交给浏览器。

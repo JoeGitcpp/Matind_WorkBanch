@@ -1,13 +1,14 @@
 import Foundation
 
-/// 工作板上的插件实例（包含布局信息）
+/// 工作板上的一个组件。pluginId 存的是网页端种类名，例如 HyperTable。
 struct WidgetInstance: Codable, Identifiable, Sendable {
     let id: String
     let pluginId: String
-    var gridX: Int       // 网格列位置（0-11）
-    var gridY: Int       // 网格行位置
-    var gridW: Int       // 宽度（列数，1-12）
-    var gridH: Int       // 高度（行数）
+    var gridX: Int
+    var gridY: Int
+    var gridW: Int
+    var gridH: Int
+    var params: [String: String]
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -16,10 +17,48 @@ struct WidgetInstance: Codable, Identifiable, Sendable {
         case gridY = "grid_y"
         case gridW = "grid_w"
         case gridH = "grid_h"
+        case params
     }
 
-    static func defaultInstance(pluginId: String, at row: Int) -> WidgetInstance {
-        WidgetInstance(id: UUID().uuidString, pluginId: pluginId, gridX: 0, gridY: row, gridW: 4, gridH: 3)
+    init(
+        id: String,
+        pluginId: String,
+        gridX: Int,
+        gridY: Int,
+        gridW: Int,
+        gridH: Int,
+        params: [String: String] = [:]
+    ) {
+        self.id = id
+        self.pluginId = pluginId
+        self.gridX = gridX
+        self.gridY = gridY
+        self.gridW = gridW
+        self.gridH = gridH
+        self.params = params
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        pluginId = try container.decode(String.self, forKey: .pluginId)
+        gridX = try container.decode(Int.self, forKey: .gridX)
+        gridY = try container.decode(Int.self, forKey: .gridY)
+        gridW = try container.decode(Int.self, forKey: .gridW)
+        gridH = try container.decode(Int.self, forKey: .gridH)
+        // 旧的本机布局没有参数，缺省为空，不能因此整份布局读不出来。
+        params = try container.decodeIfPresent([String: String].self, forKey: .params) ?? [:]
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(pluginId, forKey: .pluginId)
+        try container.encode(gridX, forKey: .gridX)
+        try container.encode(gridY, forKey: .gridY)
+        try container.encode(gridW, forKey: .gridW)
+        try container.encode(gridH, forKey: .gridH)
+        try container.encode(params, forKey: .params)
     }
 }
 

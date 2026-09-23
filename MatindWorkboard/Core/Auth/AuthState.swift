@@ -21,6 +21,7 @@ enum BrowserSignIn: Equatable {
 @MainActor
 final class AuthState {
     private(set) var phase: SessionPhase = .restoring
+    private(set) var accessToken: String?
     private(set) var currentUser: User?
     private(set) var notice: String?
     private(set) var signIn: BrowserSignIn = .idle
@@ -87,6 +88,7 @@ final class AuthState {
     func logout() {
         sessions.clear()
         legacyTokens.clearToken()
+        accessToken = nil
         currentUser = nil
         notice = nil
         phase = .signedOut
@@ -148,6 +150,7 @@ final class AuthState {
             phase = .unavailable
         } catch {
             sessions.clear()
+            accessToken = nil
             notice = (error as? ControlPlaneFailure)?.message
             phase = .signedOut
         }
@@ -165,6 +168,7 @@ final class AuthState {
 
     private func enter(_ session: SessionTokens) async throws {
         await APIClient.shared.setToken(session.accessToken)
+        accessToken = session.accessToken
         let profile: User = try await transport.envelope(
             .get,
             path: "/api/v1/users/me",

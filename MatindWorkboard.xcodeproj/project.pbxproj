@@ -42,6 +42,7 @@
 		973F7B6D232918ABD3EA161B /* WebViewPluginHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7FB882FA3F2FFE4FD6BFAD /* WebViewPluginHost.swift */; };
 		9A8536AD69B65C7CB52DDC3E /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC52FD87F209E3BA677AF607 /* AppTabBar.swift */; };
 		9D9C047E7EEF074F9FAD5BDB /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */; };
+		AA326D42C997019BD2CBA139 /* HyperTableEmbedHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F23077EDC827255375802C /* HyperTableEmbedHost.swift */; };
 		AFEA8E16ADE3C6DDDF845B92 /* LocalServerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */; };
 		B455C98DF0E74CCDA4E790FF /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF60BB371CDC46231AC7226 /* AppNotification.swift */; };
 		BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD18F256539A80E7CE771B99 /* ContentView.swift */; };
@@ -106,6 +107,7 @@
 		B5B69EB09AF35AE0E66F11F1 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		B70DF759304B388F7E0965A7 /* PluginRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistry.swift; sourceTree = "<group>"; };
 		BE796F527DB0D7CDC93EF3B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C0F23077EDC827255375802C /* HyperTableEmbedHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperTableEmbedHost.swift; sourceTree = "<group>"; };
 		C45E458F3E9DF5B6976FC129 /* MatindWorkboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatindWorkboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateServerSection.swift; sourceTree = "<group>"; };
 		C531ACDFDFE232EC0AAC45B4 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */,
 				22BA5B9205A4062220DEFD1B /* BoardTabView.swift */,
 				4E7E94A641D22637F8815007 /* BoardViewModel.swift */,
+				C0F23077EDC827255375802C /* HyperTableEmbedHost.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				BC32AFFF20894B451E07D35B /* ContentView.swift in Sources */,
 				28796B2EFFC5B884B24DB93D /* ControlPlaneTransport.swift in Sources */,
 				E9ACAB5D814672BFDE8ACF82 /* DeviceIdentityStore.swift in Sources */,
+				AA326D42C997019BD2CBA139 /* HyperTableEmbedHost.swift in Sources */,
 				36D3A54FCCFDA8F2DF9CC40E /* KeychainPasswordStore.swift in Sources */,
 				59C7A996669363D6100F4406 /* LastVisited.swift in Sources */,
 				DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */,

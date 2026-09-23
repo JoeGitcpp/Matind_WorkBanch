@@ -11,14 +11,12 @@ struct BoardContentView: View {
     let editing: BoardEditing
     let pluginAddRequest: PluginAddRequest?
     @State private var layoutVM = BoardLayoutViewModel()
-    @StateObject private var registry = PluginRegistry.shared
 
     var body: some View {
         ZStack {
             BoardGridView(
                 layoutVM: layoutVM,
                 boardId: boardId,
-                plugins: registry.plugins,
                 arrangement: BoardArrangement.resolve(access: access, editing: editing)
             )
             if layoutVM.isLoading {
@@ -26,9 +24,6 @@ struct BoardContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.background.opacity(0.6))
             }
-        }
-        .task {
-            registry.loadBuiltinPlugins()
         }
         .task(id: boardId) {
             await layoutVM.load(boardId: boardId)
