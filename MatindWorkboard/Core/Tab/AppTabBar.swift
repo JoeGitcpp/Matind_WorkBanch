@@ -82,33 +82,41 @@ struct AppTabItem: View {
 
     @State private var isHovering = false
 
+    private var showsCloseButton: Bool {
+        onClose != nil && (isHovering || isSelected)
+    }
+
     var body: some View {
-        Button(action: onSelect) {
-            HStack(spacing: 6) {
-                Image(systemName: tab.icon)
-                    .font(.system(size: 11))
-                    .foregroundStyle(isSelected ? .primary : .secondary)
+        HStack(spacing: 6) {
+            Button(action: onSelect) {
+                HStack(spacing: 6) {
+                    Image(systemName: tab.icon)
+                        .font(.system(size: 11))
+                        .foregroundStyle(isSelected ? .primary : .secondary)
 
-                Text(tab.title)
-                    .font(.system(size: 13))
-                    .lineLimit(1)
-
-                if let onClose, isHovering || isSelected {
-                    Button(action: onClose) {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(.secondary)
-                    }
-                    .buttonStyle(.plain)
-                    .help(closeTitle)
+                    Text(tab.title)
+                        .font(.system(size: 13))
+                        .lineLimit(1)
                 }
+                .padding(.leading, 12)
+                .padding(.vertical, 8)
+                .padding(.trailing, showsCloseButton ? 0 : 12)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(isSelected ? Color.accentColor.opacity(0.15) : isHovering ? Color.primary.opacity(0.05) : .clear)
-            .cornerRadius(6)
+            .buttonStyle(.plain)
+
+            if showsCloseButton, let onClose {
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, 8)
+                .help(closeTitle)
+            }
         }
-        .buttonStyle(.plain)
+        .background(isSelected ? Color.accentColor.opacity(0.15) : isHovering ? Color.primary.opacity(0.05) : .clear)
+        .cornerRadius(6)
         .onHover { hovering in
             isHovering = hovering
         }
