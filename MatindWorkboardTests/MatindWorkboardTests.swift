@@ -308,6 +308,36 @@ struct BoardLayoutViewModelTests {
     }
 }
 
+@Suite("工作板拖动锚点")
+struct BoardGridGeometryTests {
+    private let geometry = BoardGridGeometry(columnWidth: 40, rowHeight: 80, gap: 8)
+
+    @Test("卡片矩形和格子互相还原")
+    func frameRoundTrips() {
+        let frame = geometry.frame(x: 2, y: 3, width: 4, height: 6)
+        let cell = geometry.cell(containingOrigin: CGPoint(x: frame.minX, y: frame.minY))
+        let span = geometry.span(covering: frame.size)
+        #expect(cell.x == 2)
+        #expect(cell.y == 3)
+        #expect(span.width == 4)
+        #expect(span.height == 6)
+    }
+
+    @Test("不到半格时仍落在原格，超过半格才进入下一格")
+    func snapUsesHalfPitch() {
+        let frame = geometry.frame(x: 2, y: 1, width: 3, height: 2)
+        let within = geometry.cell(
+            containingOrigin: CGPoint(x: frame.minX + 10, y: frame.minY + 10)
+        )
+        let crossed = geometry.cell(
+            containingOrigin: CGPoint(x: frame.minX + geometry.pitch.width * 0.6, y: frame.minY)
+        )
+        #expect(within.x == 2)
+        #expect(within.y == 1)
+        #expect(crossed.x == 3)
+    }
+}
+
 struct MockLayoutRepository: BoardLayoutRepositoryProtocol {
     func fetchLayout(boardId: String) async throws -> BoardLayout {
         BoardLayout(boardId: boardId, widgets: [])

@@ -65,6 +65,7 @@ struct BoardGridView: View {
                         CGFloat((layoutVM.widgets.map { $0.gridY + $0.gridH }.max() ?? 4) + 2) * (rowHeight + gap) + gap
                     )
                 )
+                .coordinateSpace(name: BoardCanvasSpace.name)
             }
         }
         .sheet(isPresented: $layoutVM.showPluginPicker) {
@@ -77,31 +78,84 @@ struct BoardGridView: View {
 
     /// 计算卡片在像素坐标系中的位置和尺寸
     static func frame(for widget: WidgetInstance, colWidth: CGFloat, rowHeight: CGFloat, gap: CGFloat) -> CGRect {
-        CGRect(
-            x: gap + CGFloat(widget.gridX) * (colWidth + gap),
-            y: gap + CGFloat(widget.gridY) * (rowHeight + gap),
-            width: CGFloat(widget.gridW) * colWidth + CGFloat(widget.gridW - 1) * gap,
-            height: CGFloat(widget.gridH) * rowHeight + CGFloat(widget.gridH - 1) * gap
-        )
+        BoardGridGeometry(columnWidth: colWidth, rowHeight: rowHeight, gap: gap)
+            .frame(x: widget.gridX, y: widget.gridY, width: widget.gridW, height: widget.gridH)
     }
 }
 
-/// 把一次拖动的位移换成网格步数。只在跨过新格子时返回增量，避免每像素都挪一格。
-struct GridTranslation {
-    private var applied = (x: 0, y: 0)
+/// 工作板内容坐标。拖动位移在这个坐标系里计算，不跟卡片自己走。
+enum BoardCanvasSpace {
+    static let name = "board-canvas"
+}
 
-    mutating func consume(translation: CGSize, unit: CGSize) -> (x: Int, y: Int)? {
-        guard unit.width > 1, unit.height > 1 else { return nil }
-        let nextX = Int((translation.width / unit.width).rounded())
-        let nextY = Int((translation.height / unit.height).rounded())
-        let step = (x: nextX - applied.x, y: nextY - applied.y)
-        guard step.x != 0 || step.y != 0 else { return nil }
-        applied = (nextX, nextY)
-        return step
+/// 格子与像素的换算。拖动过程中卡片按指针平移，松手才用这里对齐。
+struct BoardGridGeometry: Equatable, Sendable {
+    var columnWidth: CGFloat
+    var rowHeight: CGFloat
+    var gap: CGFloat
+
+    var pitch: CGSize {
+        CGSize(width: columnWidth + gap, height: rowHeight + gap)
     }
 
-    mutating func reset() {
-        applied = (0, 0)
+    func frame(x: Int, y: Int, width: Int, height: Int) -> CGRect {
+        CGRect(
+            x: gap + CGFloat(x) * pitch.width,
+            y: gap + CGFloat(y) * pitch.height,
+            width: CGFloat(width) * columnWidth + CGFloat(max(0, width - 1)) * gap,
+            height: CGFloat(height) * rowHeight + CGFloat(max(0, height - 1)) * gap
+        )
+    }
+
+    /// 松手时把卡片左上角吸到最近的格子。抓住的点相对卡片不变。
+    func cell(containingOrigin origin: CGPoint) -> (x: Int, y: Int) {
+        (
+            x: max(0, snapped(origin.x - gap, pitch: pitch.width)),
+            y: max(0, snapped(origin.y - gap, pitch: pitch.height))
+        )
+    }
+
+    /// 松手时按卡片像素尺寸收回占几格。
+    func span(covering size: CGSize) -> (width: Int, height: Int) {
+        (
+            width: max(1, snapped(size.width + gap, pitch: pitch.width)),
+            height: max(1, snapped(size.height + gap, pitch: pitch.height))
+        )
+    }
+
+    private func snapped(_ distance: CGFloat, pitch: CGFloat) -> Int {
+        guard pitch > 1 else { return 0 }
+        return Int((distance / pitch).rounded())
+    }
+}
+
+/// 按下时的指针和卡片。之后只用指针在工作板里的位置计算位移，不读会重置的 translation。
+struct PointerAnchor: Equatable {
+    var pointer: CGPoint
+    var frame: CGRect
+
+    func translation(to location: CGPoint) -> CGSize {
+        CGSize(width: location.x - pointer.x, height: location.y - pointer.y)
+    }
+}
+
+/// 拖动时的预览。格子要等松手再改，否则手势坐标会跟着卡片跑，抓住的位置就会跳。
+enum CardPointerPreview: Equatable {
+    case moving(start: CGRect, translation: CGSize)
+    case resizing(start: CGRect, translation: CGSize)
+
+    var frame: CGRect {
+        switch self {
+        case .moving(let start, let translation):
+            return start.offsetBy(dx: translation.width, dy: translation.height)
+        case .resizing(let start, let translation):
+            return CGRect(
+                x: start.minX,
+                y: start.minY,
+                width: max(1, start.width + translation.width),
+                height: max(1, start.height + translation.height)
+            )
+        }
     }
 }
 
@@ -119,12 +173,12 @@ struct WidgetCardView: View {
     let onMove: (Int, Int) -> Void
     let onResize: (Int, Int) -> Void
 
-    @State private var isDragging = false
-    @State private var moveTranslation = GridTranslation()
-    @State private var resizeTranslation = GridTranslation()
+    @State private var preview: CardPointerPreview?
+    @State private var moveAnchor: PointerAnchor?
+    @State private var resizeAnchor: PointerAnchor?
 
     var body: some View {
-        let frame = BoardGridView.frame(for: widget, colWidth: colWidth, rowHeight: rowHeight, gap: gap)
+        let frame = preview?.frame ?? restingFrame
 
         VStack(spacing: 0) {
             cardHeader
@@ -139,9 +193,7 @@ struct WidgetCardView: View {
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(color: .black.opacity(isDragging ? 0.2 : 0.07), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
-        .scaleEffect(isDragging ? 1.02 : 1.0)
-        .animation(.easeInOut(duration: 0.15), value: isDragging)
+        .shadow(color: .black.opacity(preview == nil ? 0.07 : 0.2), radius: preview == nil ? 3 : 8, y: preview == nil ? 1 : 4)
         .position(x: frame.midX, y: frame.midY)
         .contextMenu {
             if arrangement == .arranging {
@@ -165,8 +217,12 @@ struct WidgetCardView: View {
         }
     }
 
-    private var gridPitch: CGSize {
-        CGSize(width: colWidth + gap, height: rowHeight + gap)
+    private var geometry: BoardGridGeometry {
+        BoardGridGeometry(columnWidth: colWidth, rowHeight: rowHeight, gap: gap)
+    }
+
+    private var restingFrame: CGRect {
+        geometry.frame(x: widget.gridX, y: widget.gridY, width: widget.gridW, height: widget.gridH)
     }
 
     /// 编辑模式下标题栏才拖动卡片。锁定时这里只是标题，避免抢走表内的列宽和行高拖拽。
@@ -219,32 +275,44 @@ struct WidgetCardView: View {
     }
 
     private var moveGesture: some Gesture {
-        DragGesture(minimumDistance: 4)
+        DragGesture(minimumDistance: 4, coordinateSpace: .named(BoardCanvasSpace.name))
             .onChanged { value in
-                isDragging = true
-                var translation = moveTranslation
-                guard let step = translation.consume(translation: value.translation, unit: gridPitch) else { return }
-                moveTranslation = translation
-                onMove(step.x, step.y)
+                let anchor = moveAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
+                moveAnchor = anchor
+                preview = .moving(start: anchor.frame, translation: anchor.translation(to: value.location))
             }
-            .onEnded { _ in
-                isDragging = false
-                moveTranslation.reset()
+            .onEnded { value in
+                let anchor = moveAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
+                let translation = anchor.translation(to: value.location)
+                let origin = CGPoint(
+                    x: anchor.frame.minX + translation.width,
+                    y: anchor.frame.minY + translation.height
+                )
+                let cell = geometry.cell(containingOrigin: origin)
+                moveAnchor = nil
+                preview = nil
+                onMove(cell.x - widget.gridX, cell.y - widget.gridY)
             }
     }
 
     private var resizeGesture: some Gesture {
-        DragGesture(minimumDistance: 4)
+        DragGesture(minimumDistance: 4, coordinateSpace: .named(BoardCanvasSpace.name))
             .onChanged { value in
-                isDragging = true
-                var translation = resizeTranslation
-                guard let step = translation.consume(translation: value.translation, unit: gridPitch) else { return }
-                resizeTranslation = translation
-                onResize(step.x, step.y)
+                let anchor = resizeAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
+                resizeAnchor = anchor
+                preview = .resizing(start: anchor.frame, translation: anchor.translation(to: value.location))
             }
-            .onEnded { _ in
-                isDragging = false
-                resizeTranslation.reset()
+            .onEnded { value in
+                let anchor = resizeAnchor ?? PointerAnchor(pointer: value.startLocation, frame: restingFrame)
+                let translation = anchor.translation(to: value.location)
+                let size = CGSize(
+                    width: anchor.frame.width + translation.width,
+                    height: anchor.frame.height + translation.height
+                )
+                let span = geometry.span(covering: size)
+                resizeAnchor = nil
+                preview = nil
+                onResize(span.width - widget.gridW, span.height - widget.gridH)
             }
     }
 
