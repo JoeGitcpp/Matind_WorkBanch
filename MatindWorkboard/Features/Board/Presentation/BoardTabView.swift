@@ -1,47 +1,42 @@
 import SwiftUI
 
+/// 一次「添加插件」请求。用新的标识区分重复点击，而不是用开关来回拨。
+struct PluginAddRequest: Equatable {
+    let id: UUID
+}
+
 struct BoardContentView: View {
     let boardId: String
     let access: BoardSurfaceAccess
+    let editing: BoardEditing
+    let pluginAddRequest: PluginAddRequest?
     @State private var layoutVM = BoardLayoutViewModel()
     @StateObject private var registry = PluginRegistry.shared
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                if access == .readOnly {
-                    Text("当前只能查看")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                Button(action: { layoutVM.showPluginPicker = true }) {
-                    Label("添加插件", systemImage: "plus")
-                        .font(.system(size: 13))
-                }
-                .buttonStyle(.bordered)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .disabled(access != .editable || registry.plugins.isEmpty)
-            }
-            .background(.bar)
-
-            Divider()
-
+        ZStack {
+            BoardGridView(
+                layoutVM: layoutVM,
+                boardId: boardId,
+                plugins: registry.plugins,
+                arrangement: BoardArrangement.resolve(access: access, editing: editing)
+            )
             if layoutVM.isLoading {
                 ProgressView("加载布局…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                BoardGridView(
-                    layoutVM: layoutVM,
-                    boardId: boardId,
-                    plugins: registry.plugins,
-                    access: access
-                )
+                    .background(.background.opacity(0.6))
             }
         }
         .task {
             registry.loadBuiltinPlugins()
+        }
+        .task(id: boardId) {
+            await layoutVM.load(boardId: boardId)
+        }
+        .onChange(of: pluginAddRequest) { _, request in
+            if request != nil {
+                layoutVM.showPluginPicker = true
+            }
         }
     }
 }

@@ -38,6 +38,10 @@ struct MainView: View {
     @State private var notificationVM = NotificationViewModel()
     @State private var showNotifications = false
     @State private var managedBoard: Board?
+    @State private var boardEditing: BoardEditing = .off
+    @State private var pluginAddRequest: PluginAddRequest?
+    @State private var boardPendingDelete: Board?
+    @State private var deleteNotice: String?
 
     private var canCreateBoard: Bool {
         guard workbenchVM.selectedWorkbenchId != nil else { return false }
@@ -75,6 +79,19 @@ struct MainView: View {
         managedBoard = boardVM.boards.first { $0.id == boardId }
     }
 
+    private var selectedBoard: Board? {
+        guard let id = tabManager.selectedBoardId else { return nil }
+        return boardVM.boards.first { $0.id == id }
+    }
+
+    private var showsEditMode: Bool {
+        selectedBoard?.surfaceAccess == .editable
+    }
+
+    private var showsAddPlugin: Bool {
+        showsEditMode && boardEditing == .on
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // 唯一的标签栏
@@ -85,13 +102,21 @@ struct MainView: View {
                 canCreate: canCreateBoard,
                 createHelp: createHelp,
                 onSelect: { tabManager.select($0) },
-                onClose: { tabManager.close($0) },
+                onClose: closeTab,
                 onCreate: createBoard,
-                onReopen: { tabManager.reopen($0, boards: boardVM.boards) },
                 onManage: openManage
             )
 
-            if let notice = boardVM.writeNotice {
+            if let notice = deleteNotice {
+                HStack {
+                    Text(notice)
+                        .font(.callout)
+                    Spacer()
+                    Button("关闭") { deleteNotice = nil }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+            } else if let notice = boardVM.writeNotice {
                 HStack {
                     Text(notice)
                         .font(.callout)
@@ -121,18 +146,35 @@ struct MainView: View {
                 )
             }
 
-            // 通知按钮（右侧）
-            ToolbarItem(placement: .automatic) {
-                Button(action: { showNotifications.toggle() }) {
-                    ZStack(alignment: .topTrailing) {
-                        Image(systemName: "bell")
-                        NotificationBadge(count: notificationVM.unreadCount)
-                            .offset(x: 6, y: -6)
+            // 编辑模式在通知左侧；添加插件只在编辑模式下出现，并排在编辑按钮左边。
+            ToolbarItem(placement: .primaryAction) {
+                HStack(spacing: 8) {
+                    if showsAddPlugin {
+                        Button {
+                            pluginAddRequest = PluginAddRequest(id: UUID())
+                        } label: {
+                            Label("添加插件", systemImage: "plus")
+                        }
                     }
-                }
-                .help("通知中心")
-                .popover(isPresented: $showNotifications, arrowEdge: .bottom) {
-                    NotificationCenterView(viewModel: notificationVM)
+                    if showsEditMode {
+                        Button {
+                            boardEditing = boardEditing.toggled
+                        } label: {
+                            Label(boardEditing == .on ? "完成编辑" : "编辑模式", systemImage: "pencil")
+                        }
+                        .tint(boardEditing == .on ? .red : nil)
+                    }
+                    Button(action: { showNotifications.toggle() }) {
+                        ZStack(alignment: .topTrailing) {
+                            Image(systemName: "bell")
+                            NotificationBadge(count: notificationVM.unreadCount)
+                                .offset(x: 6, y: -6)
+                        }
+                    }
+                    .help("通知中心")
+                    .popover(isPresented: $showNotifications, arrowEdge: .bottom) {
+                        NotificationCenterView(viewModel: notificationVM)
+                    }
                 }
             }
         }
@@ -156,6 +198,21 @@ struct MainView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .openAutomation)) { _ in
             tabManager.openAutomation()
+        }
+        .alert(
+            "删除页面",
+            isPresented: Binding(
+                get: { boardPendingDelete != nil },
+                set: { if !$0 { boardPendingDelete = nil } }
+            ),
+            presenting: boardPendingDelete
+        ) { board in
+            Button("删除", role: .destructive) {
+                Task { await confirmDelete(board) }
+            }
+            Button("取消", role: .cancel) {}
+        } message: { board in
+            Text("将删除「\(board.name)」。")
         }
         .sheet(item: $managedBoard) { board in
             BoardManageSheet(board: board) { name, key in
@@ -227,7 +284,9 @@ struct MainView: View {
         case .board(let id, _):
             BoardContentView(
                 boardId: id,
-                access: boardVM.boards.first { $0.id == id }?.surfaceAccess ?? .readOnly
+                access: boardVM.boards.first { $0.id == id }?.surfaceAccess ?? .readOnly,
+                editing: boardEditing,
+                pluginAddRequest: pluginAddRequest
             )
         case .settings:
             SettingsView()
@@ -241,6 +300,31 @@ struct MainView: View {
     private func handleWorkbenchChange(_ newId: String?) {
         guard let wbId = newId else { return }
         Task { await boardVM.load(workbenchId: wbId) }
+    }
+
+    private func closeTab(_ tabId: String) {
+        guard let tab = tabManager.tabs.first(where: { $0.id == tabId }) else { return }
+        if case .board(let id, _) = tab, let board = boardVM.boards.first(where: { $0.id == id }) {
+            boardPendingDelete = board
+            return
+        }
+        tabManager.close(tabId)
+    }
+
+    private func confirmDelete(_ board: Board) async {
+        boardPendingDelete = nil
+        deleteNotice = nil
+        guard let workbenchId = workbenchVM.selectedWorkbenchId else { return }
+        do {
+            try await boardVM.delete(
+                workbenchId: workbenchId,
+                board: board,
+                reason: nil,
+                idempotencyKey: UUID()
+            )
+        } catch {
+            deleteNotice = PresentedFailure.message(for: error)
+        }
     }
 
     private func handleTabBoardChange(_ newBoardId: String?) {

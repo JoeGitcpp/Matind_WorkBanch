@@ -5,7 +5,7 @@ struct BoardGridView: View {
     @Bindable var layoutVM: BoardLayoutViewModel
     let boardId: String
     let plugins: [PluginManifest]
-    let access: BoardSurfaceAccess
+    let arrangement: BoardArrangement
 
     // 网格配置
     private let columnCount = 12
@@ -32,7 +32,7 @@ struct BoardGridView: View {
                                 colWidth: colWidth,
                                 rowHeight: rowHeight,
                                 gap: gap,
-                                access: access,
+                                arrangement: arrangement,
                                 onRemove: { layoutVM.removeWidget(id: widget.id) },
                                 onMove: { dx, dy in
                                     layoutVM.moveWidget(
@@ -61,9 +61,6 @@ struct BoardGridView: View {
                 )
             }
         }
-        .task(id: boardId) {
-            await layoutVM.load(boardId: boardId)
-        }
         .sheet(isPresented: $layoutVM.showPluginPicker) {
             PluginPickerView(plugins: plugins) { pluginId in
                 layoutVM.addWidget(pluginId: pluginId)
@@ -91,7 +88,7 @@ struct WidgetCardView: View {
     let colWidth: CGFloat
     let rowHeight: CGFloat
     let gap: CGFloat
-    let access: BoardSurfaceAccess
+    let arrangement: BoardArrangement
     let onRemove: () -> Void
     let onMove: (Int, Int) -> Void
     let onResize: (Int, Int) -> Void
@@ -111,7 +108,7 @@ struct WidgetCardView: View {
                     .font(.system(size: 12, weight: .semibold))
                     .lineLimit(1)
                 Spacer()
-                if access == .editable {
+                if arrangement == .arranging {
                     Button(action: onRemove) {
                         Image(systemName: "xmark")
                             .font(.system(size: 10))
@@ -124,7 +121,7 @@ struct WidgetCardView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(.bar)
-            .cursor(.openHand)
+            .cursor(arrangement == .arranging ? .openHand : .arrow)
 
             Divider()
 
@@ -159,7 +156,7 @@ struct WidgetCardView: View {
         .position(x: frame.midX, y: frame.midY)
         .frame(width: frame.width, height: frame.height)
         .contextMenu {
-            if access == .editable {
+            if arrangement == .arranging {
                 Menu("移动") {
                     Button("↑ 上移") { onMove(0, -1) }
                     Button("↓ 下移") { onMove(0, 1) }

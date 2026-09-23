@@ -42,6 +42,34 @@ enum BoardSurfaceAccess: Equatable, Sendable {
     case readOnly
 }
 
+/// 页面是在查看，还是进入了编辑。和账号有没有编辑权限是两件事。
+enum BoardEditing: Equatable, Sendable {
+    case off
+    case on
+
+    var toggled: BoardEditing {
+        switch self {
+        case .off: return .on
+        case .on: return .off
+        }
+    }
+}
+
+/// 插件能不能被添加、移动或移除。只有既有编辑权限、又处于编辑状态时才开放。
+enum BoardArrangement: Equatable, Sendable {
+    case locked
+    case arranging
+
+    static func resolve(access: BoardSurfaceAccess, editing: BoardEditing) -> BoardArrangement {
+        switch (access, editing) {
+        case (.editable, .on):
+            return .arranging
+        case (.editable, .off), (.readOnly, _):
+            return .locked
+        }
+    }
+}
+
 enum PresentedFailure {
     static func message(for error: Error) -> String {
         if let failure = error as? ControlPlaneFailure {

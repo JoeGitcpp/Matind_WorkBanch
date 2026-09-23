@@ -146,6 +146,28 @@ struct APIClientTests {
 
 // MARK: - BoardViewModel Tests
 
+@Suite("页面编排")
+struct BoardArrangementTests {
+    @Test("只有编辑状态下、并且有编辑权限时才能编排插件")
+    func lockedUntilEditing() {
+        #expect(BoardArrangement.resolve(access: .editable, editing: .off) == .locked)
+        #expect(BoardArrangement.resolve(access: .editable, editing: .on) == .arranging)
+        #expect(BoardArrangement.resolve(access: .readOnly, editing: .on) == .locked)
+    }
+
+    @Test("关闭工作板页签不会把它藏起来")
+    @MainActor
+    func closingABoardTabLeavesTheCatalogTab() {
+        let manager = TabManager()
+        let boards = [
+            Board(id: "b1", name: "一", accessRevision: "1", contentCapability: .edit, settingsCapability: .manage)
+        ]
+        manager.syncBoardTabs(boards, selectedBoardId: "b1")
+        manager.close("board-b1")
+        #expect(manager.tabs.contains { $0.id == "board-b1" })
+    }
+}
+
 @Suite("BoardViewModel Tests")
 struct BoardViewModelTests {
     @Test("删除当前页面后回到剩下的第一页")

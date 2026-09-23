@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// 统一标签栏。关闭只收起页签，删除放在管理菜单里。
+/// 统一标签栏。工作板页签上的叉是删除页面，不再另开一份页面列表。
 struct AppTabBar: View {
     let tabs: [AppTab]
     let boards: [Board]
@@ -10,7 +10,6 @@ struct AppTabBar: View {
     let onSelect: (String) -> Void
     let onClose: (String) -> Void
     let onCreate: () -> Void
-    let onReopen: (String) -> Void
     let onManage: (String) -> Void
 
     var body: some View {
@@ -22,7 +21,8 @@ struct AppTabBar: View {
                             tab: tab,
                             isSelected: selectedTabId == tab.id,
                             onSelect: { onSelect(tab.id) },
-                            onClose: { onClose(tab.id) },
+                            onClose: closeAction(for: tab),
+                            closeTitle: tab.isBoard ? "删除页面" : "关闭标签",
                             onManage: manageAction(for: tab)
                         )
                     }
@@ -32,31 +32,10 @@ struct AppTabBar: View {
 
             Spacer()
 
-            pageMenu
             createButton
         }
         .frame(height: 40)
         .background(.bar)
-    }
-
-    private var pageMenu: some View {
-        Menu {
-            if boards.isEmpty {
-                Text("还没有页面")
-            } else {
-                ForEach(boards) { board in
-                    Button(board.name) { onReopen(board.id) }
-                }
-            }
-        } label: {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
-        }
-        .menuStyle(.borderlessButton)
-        .fixedSize()
-        .padding(.horizontal, 4)
-        .help("所有页面")
     }
 
     private var createButton: some View {
@@ -69,6 +48,19 @@ struct AppTabBar: View {
         .padding(.horizontal, 12)
         .disabled(!canCreate)
         .help(createHelp)
+    }
+
+    /// 工作板页签只有具备管理权限时才出现删除；设置和自动化页签只是关掉自己。
+    private func closeAction(for tab: AppTab) -> (() -> Void)? {
+        switch tab {
+        case .board(let id, _):
+            guard boards.first(where: { $0.id == id })?.settingsCapability.permitsManagement == true else {
+                return nil
+            }
+            return { onClose(tab.id) }
+        case .settings, .automation:
+            return { onClose(tab.id) }
+        }
     }
 
     private func manageAction(for tab: AppTab) -> (() -> Void)? {
@@ -84,7 +76,8 @@ struct AppTabItem: View {
     let tab: AppTab
     let isSelected: Bool
     let onSelect: () -> Void
-    let onClose: () -> Void
+    let onClose: (() -> Void)?
+    let closeTitle: String
     let onManage: (() -> Void)?
 
     @State private var isHovering = false
@@ -100,14 +93,14 @@ struct AppTabItem: View {
                     .font(.system(size: 13))
                     .lineLimit(1)
 
-                if isHovering || isSelected {
+                if let onClose, isHovering || isSelected {
                     Button(action: onClose) {
                         Image(systemName: "xmark")
                             .font(.system(size: 9, weight: .bold))
                             .foregroundStyle(.secondary)
                     }
                     .buttonStyle(.plain)
-                    .help("关闭标签")
+                    .help(closeTitle)
                 }
             }
             .padding(.horizontal, 12)
@@ -123,8 +116,10 @@ struct AppTabItem: View {
             onManage?()
         })
         .contextMenu {
-            Button(action: onClose) {
-                Label("关闭标签", systemImage: "xmark")
+            if let onClose {
+                Button(role: tab.isBoard ? .destructive : nil, action: onClose) {
+                    Label(closeTitle, systemImage: tab.isBoard ? "trash" : "xmark")
+                }
             }
             if let onManage {
                 Button(action: onManage) {

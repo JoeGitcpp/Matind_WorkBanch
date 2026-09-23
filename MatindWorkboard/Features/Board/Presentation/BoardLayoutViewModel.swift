@@ -10,6 +10,8 @@ final class BoardLayoutViewModel {
 
     private let repository: any BoardLayoutRepositoryProtocol
     private var currentBoardId: String?
+    /// 后发起的加载作废先发起的结果，避免切页时把加载状态提前清掉。
+    private var loadGeneration = UUID()
     private var saveTask: Task<Void, Never>?
 
     init(repository: any BoardLayoutRepositoryProtocol = BoardLayoutRepository()) {
@@ -17,13 +19,20 @@ final class BoardLayoutViewModel {
     }
 
     func load(boardId: String) async {
+        let generation = UUID()
+        loadGeneration = generation
         currentBoardId = boardId
         isLoading = true
-        defer { isLoading = false }
         do {
             let layout = try await repository.fetchLayout(boardId: boardId)
+            guard loadGeneration == generation else { return }
             widgets = layout.widgets
+            isLoading = false
+        } catch is CancellationError {
+            return
         } catch {
+            guard loadGeneration == generation else { return }
+            isLoading = false
             print("[BoardLayoutViewModel] Failed to load layout: \(error)")
         }
     }
