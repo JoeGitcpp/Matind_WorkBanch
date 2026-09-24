@@ -58,7 +58,7 @@ struct AppTabBar: View {
                 return nil
             }
             return { onClose(tab.id) }
-        case .settings, .automation:
+        case .settings, .automation, .services:
             return { onClose(tab.id) }
         }
     }

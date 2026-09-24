@@ -31,7 +31,18 @@ struct SettingsView: View {
                     .padding(.vertical, 8)
                 }
 
-                PrivateServerSection()
+                GroupBox("本机服务") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("服务的安装、启停和授权在本机服务页。")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        Button("打开本机服务") {
+                            NotificationCenter.default.post(name: .openLocalServices, object: nil)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding(.vertical, 8)
+                }
 
                 // 通用设置
                 GroupBox("通用") {

@@ -35,10 +35,19 @@ final class TabManager {
 
     /// 打开自动化蓝图标签
     func openAutomation() {
-        if !tabs.contains(where: { $0.id == AppTab.automation.id }) {
-            tabs.append(.automation)
+        openFixed(.automation)
+    }
+
+    /// 打开本机服务标签
+    func openServices() {
+        openFixed(.services)
+    }
+
+    private func openFixed(_ tab: AppTab) {
+        if !tabs.contains(where: { $0.id == tab.id }) {
+            tabs.append(tab)
         }
-        selectedTabId = AppTab.automation.id
+        selectedTabId = tab.id
     }
 
     /// 选择标签

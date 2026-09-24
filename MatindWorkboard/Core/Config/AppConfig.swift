@@ -8,6 +8,7 @@ enum AppConfig {
     /// 设备签名私钥。和登录令牌不是同一条钥匙串记录。
     static let deviceKeyAccount = "device_signing_key"
     static let privateServerLedgerKey = "matind.privateServer.ledger"
+    static let serviceCatalogKey = "matind.privateServer.serviceCatalog"
     static let lastVisitedKey = "matind:lastVisited"
     static let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		022D760A305BD89FB8189B82 /* Workbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB38CA50C831A8C6C6A9F3C /* Workbench.swift */; };
 		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
+		1D629247B8F0CA4341BC6E02 /* ServiceCatalogState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E744DCB0A0BDF84A64F2AC26 /* ServiceCatalogState.swift */; };
 		28796B2EFFC5B884B24DB93D /* ControlPlaneTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55252A310853A9F7C408100D /* ControlPlaneTransport.swift */; };
 		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
 		2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C11FBFABA7EA10899775D4 /* BoardGridView.swift */; };
@@ -55,6 +56,7 @@
 		E6EB4E6105FB3D9EBD7B04C7 /* LoopbackServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */; };
 		E9ACAB5D814672BFDE8ACF82 /* DeviceIdentityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */; };
 		ED19B40927A9337319E6834C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F0541EFA5DF0DF0C494176 /* LoginView.swift */; };
+		F013CF7DA6AAF614064C3216 /* LocalServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78200C73C8957351C61771C4 /* LocalServicesView.swift */; };
 		FB0E61CBD068B65C32F7DD8C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0422E2E7F100E8281AF089E /* AuthService.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,7 @@
 		55252A310853A9F7C408100D /* ControlPlaneTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPlaneTransport.swift; sourceTree = "<group>"; };
 		60059C19B10E1D032193B7C4 /* WorkbenchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchRepository.swift; sourceTree = "<group>"; };
 		781A66F267F03E29171E455B /* LocalServerContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerContract.swift; sourceTree = "<group>"; };
+		78200C73C8957351C61771C4 /* LocalServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServicesView.swift; sourceTree = "<group>"; };
 		78EC92EBE765B9A7B1DD7B49 /* NotificationCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterView.swift; sourceTree = "<group>"; };
 		81999E0766D8136773656C98 /* TabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		82477CA33EC17A203A667C13 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		DCB03F1BDCBE5757F63F26C1 /* MatindWorkboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatindWorkboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01D30867A3FA2AA31C9B59C /* PrivateServerPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateServerPolicyTests.swift; sourceTree = "<group>"; };
 		E0422E2E7F100E8281AF089E /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		E744DCB0A0BDF84A64F2AC26 /* ServiceCatalogState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCatalogState.swift; sourceTree = "<group>"; };
 		EC52FD87F209E3BA677AF607 /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
 		ED7FB882FA3F2FFE4FD6BFAD /* WebViewPluginHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPluginHost.swift; sourceTree = "<group>"; };
 		F84D2A8289857A02A25836DA /* BoardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRepository.swift; sourceTree = "<group>"; };
@@ -465,7 +469,9 @@
 			isa = PBXGroup;
 			children = (
 				42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */,
+				78200C73C8957351C61771C4 /* LocalServicesView.swift */,
 				C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */,
+				E744DCB0A0BDF84A64F2AC26 /* ServiceCatalogState.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -595,6 +601,7 @@
 				59C7A996669363D6100F4406 /* LastVisited.swift in Sources */,
 				DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */,
 				AFEA8E16ADE3C6DDDF845B92 /* LocalServerState.swift in Sources */,
+				F013CF7DA6AAF614064C3216 /* LocalServicesView.swift in Sources */,
 				161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */,
 				ED19B40927A9337319E6834C /* LoginView.swift in Sources */,
 				E6EB4E6105FB3D9EBD7B04C7 /* LoopbackServer.swift in Sources */,
@@ -606,6 +613,7 @@
 				5FCAAEFAB750B82AB320F54B /* PluginManifest.swift in Sources */,
 				8C51046CF39EF170418F4E1B /* PluginRegistry.swift in Sources */,
 				D31D5C3C9A04B598AC465EBF /* PrivateServerSection.swift in Sources */,
+				1D629247B8F0CA4341BC6E02 /* ServiceCatalogState.swift in Sources */,
 				46D6D4D901CEF2E24BF454CE /* SessionCredentialStore.swift in Sources */,
 				94A6DEED423C8110D6C8C379 /* SettingsView.swift in Sources */,
 				4014206FA39A0E66C3187B68 /* TabManager.swift in Sources */,

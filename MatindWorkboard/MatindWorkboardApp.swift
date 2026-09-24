@@ -4,6 +4,7 @@ import SwiftUI
 struct MatindWorkboardApp: App {
     @State private var authState = AuthState()
     @State private var localServer = LocalServerState()
+    @State private var serviceCatalog = ServiceCatalogState()
 
     init() {
         // 初始化通知服务（设置 delegate）
@@ -18,6 +19,7 @@ struct MatindWorkboardApp: App {
             ContentView()
                 .environment(authState)
                 .environment(localServer)
+                .environment(serviceCatalog)
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
@@ -37,6 +39,11 @@ struct MatindWorkboardApp: App {
                     NotificationCenter.default.post(name: .openAutomation, object: nil)
                 }
                 .keyboardShortcut("b", modifiers: [.command, .shift])
+
+                Button("本机服务") {
+                    NotificationCenter.default.post(name: .openLocalServices, object: nil)
+                }
+                .keyboardShortcut("j", modifiers: [.command, .shift])
             }
         }
     }
@@ -47,4 +54,5 @@ struct MatindWorkboardApp: App {
 extension Notification.Name {
     static let openSettings = Notification.Name("matind.openSettings")
     static let openAutomation = Notification.Name("matind.openAutomation")
+    static let openLocalServices = Notification.Name("matind.openLocalServices")
 }

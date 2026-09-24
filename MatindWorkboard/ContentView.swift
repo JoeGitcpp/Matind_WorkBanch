@@ -199,6 +199,9 @@ struct MainView: View {
         .onReceive(NotificationCenter.default.publisher(for: .openAutomation)) { _ in
             tabManager.openAutomation()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .openLocalServices)) { _ in
+            tabManager.openServices()
+        }
         .alert(
             "删除页面",
             isPresented: Binding(
@@ -292,6 +295,8 @@ struct MainView: View {
             SettingsView()
         case .automation:
             AutomationView()
+        case .services:
+            LocalServicesView()
         }
     }
 
