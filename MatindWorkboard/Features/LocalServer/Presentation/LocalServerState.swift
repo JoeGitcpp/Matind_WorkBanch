@@ -264,7 +264,14 @@ final class LocalServerState {
             let testOnly = browser["testOnlyModuleRoot"] as? Bool == true
             let qualifier = testOnly ? "（开发测试组件）" : ""
             if browser["ready"] as? Bool == true {
-                browserStatusText = "浏览器执行器已就绪\(qualifier)"
+                switch browser["errorCode"] as? String {
+                case "control_plane_offline":
+                    browserStatusText = "浏览器执行器已就绪\(qualifier)，控制面暂时离线"
+                case "control_plane_rejected":
+                    browserStatusText = "浏览器执行器已就绪\(qualifier)，请核对控制面的设备授权"
+                default:
+                    browserStatusText = "浏览器执行器已就绪\(qualifier)"
+                }
             } else if browser["enabled"] as? Bool == false {
                 browserStatusText = "浏览器执行未启用\(qualifier)"
             } else {

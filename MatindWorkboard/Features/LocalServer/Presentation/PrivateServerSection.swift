@@ -134,7 +134,7 @@ struct PrivateServerSection: View {
 
     private var controlPlaneButton: some View {
         HStack {
-            Text(localServer.controlPlaneConnected ? "控制面已连接" : "控制面未连接").font(.caption)
+            Text(localServer.controlPlaneConnected ? "设备已登记到控制面" : "设备尚未登记到控制面").font(.caption)
             Button("连接控制面") {
                 Task {
                     guard let user = authState.currentUser, let token = authState.accessToken else { return }
