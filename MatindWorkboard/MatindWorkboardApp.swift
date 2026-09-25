@@ -20,6 +20,9 @@ struct MatindWorkboardApp: App {
                 .environment(authState)
                 .environment(localServer)
                 .environment(serviceCatalog)
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
+                    localServer.stop()
+                }
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)

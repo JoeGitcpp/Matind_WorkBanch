@@ -2,7 +2,11 @@ import Foundation
 
 /// 构建配置只含公开地址，按方案（本机 / 线上）写入 Info.plist；客户端不含任何密钥。
 enum AppConfig {
-    static let keychainService = "matind-workboard"
+    // The direct execution edition and development preview have their own identities.
+    // Existing sandbox installations retain their original service name.
+    static let keychainService = configuredText("MATIND_DISTRIBUTION") == "direct"
+        ? (Bundle.main.bundleIdentifier ?? "com.matrixindustry.matind-workboard.operations")
+        : "matind-workboard"
     static let keychainAccount = "auth_token"
     static let sessionAccount = "session"
     /// 设备签名私钥。和登录令牌不是同一条钥匙串记录。

@@ -24,6 +24,10 @@ enum LocalCapability: String, Codable, CaseIterable, Hashable, Sendable {
     case healthRead = "local.health.read"
     case auditRead = "local.audit.read"
     case deviceRevoke = "local.device.revoke"
+    case browserObserve = "local.browser.observe"
+    case browserNavigate = "local.browser.navigate"
+    case browserFill = "local.browser.fill"
+    case browserClick = "local.browser.click"
 
     var title: String {
         switch self {
@@ -31,6 +35,10 @@ enum LocalCapability: String, Codable, CaseIterable, Hashable, Sendable {
         case .healthRead: "读取健康状态"
         case .auditRead: "读取审计"
         case .deviceRevoke: "解除设备"
+        case .browserObserve: "读取浏览器页面"
+        case .browserNavigate: "打开授权网站"
+        case .browserFill: "填写网页字段（需操作审批）"
+        case .browserClick: "点击网页控件（需操作审批）"
         }
     }
 }

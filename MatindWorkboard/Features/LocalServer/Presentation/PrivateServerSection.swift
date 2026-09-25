@@ -1,16 +1,20 @@
 import SwiftUI
+import MatindCore
 
 /// 设置里的本机服务器。所有者可以启动、授权、收窄和解除。
 struct PrivateServerSection: View {
     @Environment(AuthState.self) private var authState
     @Environment(LocalServerState.self) private var localServer
     @State private var workspaceText = ""
-    @State private var draft: Set<LocalCapability> = [.blueprintRun, .healthRead]
+    @State private var draft: Set<LocalCapability> = [.browserObserve, .browserNavigate]
+    @State private var browserConnectionText = ""
+    @State private var browserOriginsText = ""
+    @State private var browserAllowsWrite = false
 
     var body: some View {
         GroupBox("本机服务器") {
             VStack(alignment: .leading, spacing: 12) {
-                Text("这台电脑上的服务器属于当前登录用户。它可以授权给工作区；已有授权只能收窄或解除，不能扩大，也不能改挂到别的账号。服务只监听 127.0.0.1。短时操作授权由网页签发，最长 15 分钟，并且必须落在已有授权里。")
+                Text("服务启动后才能执行本机任务。退出工作台会停止服务；离线任务等待设备上线。设备属于当前用户，工作区授权与本机网站许可同时生效，已有工作区授权只能收窄或解除。")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -21,8 +25,10 @@ struct PrivateServerSection: View {
                 } else {
                     identityBlock
                     runtimeButton
+                    controlPlaneButton
                     authorizationForm
                     authorizationList
+                    browserAccessForm
                 }
 
                 if let message = ServerNoticeCopy.text(localServer.notice),
@@ -30,6 +36,9 @@ struct PrivateServerSection: View {
                     Text(message)
                         .font(.caption)
                         .foregroundStyle(messageColor)
+                }
+                if let message = localServer.accessNotice {
+                    Text(message).font(.caption).foregroundStyle(.secondary)
                 }
             }
             .padding(.vertical, 8)
@@ -78,12 +87,14 @@ struct PrivateServerSection: View {
             Task { await changeRuntime() }
         }
         .buttonStyle(.bordered)
+        .disabled(localServer.isStarting)
     }
 
     private var runtimeButtonTitle: String {
+        if localServer.isStarting { return "正在启动执行服务…" }
         switch localServer.runtime {
-        case .stopped: "启动本机服务"
-        case .running: "停止本机服务"
+        case .stopped: return "启动本机服务"
+        case .running: return "停止本机服务"
         }
     }
 
@@ -96,10 +107,10 @@ struct PrivateServerSection: View {
                 Toggle(capability.title, isOn: binding(for: capability))
             }
             Button("提交授权") {
-                submitAuthorization()
+                Task { await submitAuthorization() }
             }
             .buttonStyle(.bordered)
-            .disabled(localServer.ledger == nil)
+            .disabled(!localServer.controlPlaneConnected || localServer.isUpdatingAccess)
         }
     }
 
@@ -110,13 +121,76 @@ struct PrivateServerSection: View {
                     Text("工作区 \(record.workspaceId) · 版本 \(record.version)")
                     Spacer()
                     Button("解除") {
-                        release(record)
+                        Task { await release(record) }
                     }
                     .buttonStyle(.borderless)
                 }
                 Text(record.capabilities.map(\.title).sorted().joined(separator: "、"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var controlPlaneButton: some View {
+        HStack {
+            Text(localServer.controlPlaneConnected ? "控制面已连接" : "控制面未连接").font(.caption)
+            Button("连接控制面") {
+                Task {
+                    guard let user = authState.currentUser, let token = authState.accessToken else { return }
+                    await localServer.connectControlPlane(actorUserId: user.id, token: token)
+                }
+            }
+            .disabled(localServer.runtime == .stopped || localServer.isUpdatingAccess)
+        }
+    }
+
+    private var browserAccessForm: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Divider()
+            Text("本机浏览器许可").font(.headline)
+            Text(localServer.browserStatusText).font(.caption).foregroundStyle(.secondary)
+            if localServer.browserPolicy != nil {
+                Toggle("启用本机浏览器执行", isOn: Binding(
+                    get: { localServer.browserPolicy?.enabled == true },
+                    set: { enabled in
+                        guard let user = authState.currentUser else { return }
+                        localServer.setBrowserEnabled(actorUserId: user.id, enabled: enabled)
+                    }
+                ))
+            }
+            Text("在网页自动化设置中添加本地浏览器账号，选择上面的设备编号，再把账号连接编号填入这里。每个账号使用独立浏览器登录环境。")
+                .font(.caption).foregroundStyle(.secondary)
+            TextField("账号连接编号", text: $browserConnectionText).textFieldStyle(.roundedBorder)
+            TextField("允许的网站，例如 https://example.com，多个用逗号分隔", text: $browserOriginsText).textFieldStyle(.roundedBorder)
+            Toggle("允许填写与点击（每次写入仍需操作授权）", isOn: $browserAllowsWrite)
+            Button("保存网站许可") {
+                guard let user = authState.currentUser,
+                      let connectionId = UUID(uuidString: browserConnectionText.trimmingCharacters(in: .whitespaces)),
+                      let workspaceId = Int64(workspaceText.trimmingCharacters(in: .whitespaces)) else { return }
+                localServer.saveBrowserBinding(actorUserId: user.id, workspaceId: workspaceId, connectionId: connectionId,
+                    origins: browserOriginsText.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }, allowWrite: browserAllowsWrite)
+            }
+            .disabled(!localServer.controlPlaneConnected || UUID(uuidString: browserConnectionText.trimmingCharacters(in: .whitespaces)) == nil)
+            ForEach(localServer.browserPolicy?.bindings ?? []) { binding in
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("工作区 \(binding.workspaceId) · \(binding.connectionId.uuidString)").font(.caption).textSelection(.enabled)
+                        Text(binding.allowedOrigins.joined(separator: "、")).font(.caption).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("打开账号浏览器") {
+                        Task {
+                            guard let user = authState.currentUser else { return }
+                            await localServer.openAccountBrowser(actorUserId: user.id, binding: binding)
+                        }
+                    }
+                    .disabled(localServer.runtime == .stopped || localServer.isOpeningBrowser)
+                    Button("解除网站许可") {
+                        guard let user = authState.currentUser else { return }
+                        localServer.removeBrowserBinding(actorUserId: user.id, connectionId: binding.connectionId)
+                    }
+                }
             }
         }
     }
@@ -141,22 +215,26 @@ struct PrivateServerSection: View {
         case .stopped:
             guard let user = authState.currentUser else { return }
             _ = await localServer.start(ownerUserId: user.id)
+            if let token = authState.accessToken {
+                await localServer.connectControlPlane(actorUserId: user.id, token: token)
+            }
         }
     }
 
-    private func submitAuthorization() {
-        guard let user = authState.currentUser else { return }
+    private func submitAuthorization() async {
+        guard let user = authState.currentUser, let token = authState.accessToken else { return }
         let workspaceId = Int64(workspaceText.trimmingCharacters(in: .whitespaces)) ?? 0
-        _ = localServer.propose(
+        await localServer.authorizeRemotely(
             actorUserId: user.id,
             workspaceId: workspaceId,
-            capabilities: draft
+            capabilities: draft,
+            token: token
         )
     }
 
-    private func release(_ record: WorkspaceAuthorization) {
-        guard let user = authState.currentUser else { return }
-        _ = localServer.release(actorUserId: user.id, authorizationId: record.id)
+    private func release(_ record: WorkspaceAuthorization) async {
+        guard let user = authState.currentUser, let token = authState.accessToken else { return }
+        await localServer.releaseRemotely(actorUserId: user.id, record: record, token: token)
     }
 }
 
@@ -182,6 +260,16 @@ enum ServerNoticeCopy {
             return "设备身份不完整，没有改写或重新生成密钥"
         case .listenerFailed:
             return "本机端口没有打开"
+        case .hostUnavailable(let error):
+            switch error {
+            case .executableUnavailable: return "未安装本地执行服务，请安装包含执行服务的工作台版本"
+            case .identityMismatch, .invalidIdentity: return "执行服务的设备身份不一致，已停止启动"
+            case .contractMismatch: return "执行服务版本不兼容，已停止启动"
+            case .startupTimedOut: return "执行服务启动超时，已停止"
+            case .processExited: return "本地执行服务已退出，本地任务将等待设备上线"
+            case .startCancelled: return "启动已取消"
+            case .launchFailed: return "执行服务无法启动，请检查安装与系统权限"
+            }
         }
     }
 

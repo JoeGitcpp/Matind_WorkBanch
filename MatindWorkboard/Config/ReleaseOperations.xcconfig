@@ -1,0 +1,4 @@
+#include "Remote.xcconfig"
+// Production direct distribution. No development module trust root.
+MATIND_DISTRIBUTION = direct
+CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboardDirect.entitlements

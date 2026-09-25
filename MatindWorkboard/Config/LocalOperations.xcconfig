@@ -1,0 +1,4 @@
+#include "Local.xcconfig"
+// Explicit Developer ID / direct-distribution browser execution variant.
+MATIND_DISTRIBUTION = direct
+CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboardDirect.entitlements

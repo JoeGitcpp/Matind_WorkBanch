@@ -2,12 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>MATIND_DISTRIBUTION</key>
+    <string>$(MATIND_DISTRIBUTION)</string>
+    <key>MATIND_BUILD_CONFIGURATION</key>
+    <string>$(CONFIGURATION)</string>
     <key>CFBundleName</key>
     <string>Matind Workboard</string>
     <key>CFBundleDisplayName</key>
     <string>Matind Workboard</string>
     <key>CFBundleIdentifier</key>
-    <string>com.matrixindustry.matind-workboard</string>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>

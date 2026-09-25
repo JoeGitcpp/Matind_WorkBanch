@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import Testing
+import MatindCore
 @testable import MatindWorkboard
 
 @Suite("本机服务器授权")
@@ -216,7 +217,7 @@ struct LocalServerStateTests {
         let state = LocalServerState(
             identities: MemoryDeviceKeyStore(),
             ledgers: MemoryLedgerStore(existing),
-            loopback: LoopbackServer(),
+            host: MemoryLocalServiceHost(),
             label: "Test",
             clientVersion: "1.0.0"
         )
@@ -232,7 +233,7 @@ struct LocalServerStateTests {
         let state = LocalServerState(
             identities: keys,
             ledgers: MemoryLedgerStore(nil),
-            loopback: LoopbackServer(),
+            host: MemoryLocalServiceHost(),
             label: "Studio",
             clientVersion: "1.0.0"
         )
@@ -300,4 +301,14 @@ final class MemoryDeviceKeyStore: DeviceKeyProviding, @unchecked Sendable {
         key = created
         return created
     }
+}
+
+@MainActor
+final class MemoryLocalServiceHost: LocalServiceHosting {
+    private(set) var isRunning = false
+    func start(configuration: LocalServiceLaunch, identity: LocalServiceBootstrap) async throws -> LocalServiceReady {
+        isRunning = true
+        return LocalServiceReady(port: 43210, identity: LocalServiceIdentity(deviceId: identity.deviceId, publicKey: identity.publicKey))
+    }
+    func stop() { isRunning = false }
 }

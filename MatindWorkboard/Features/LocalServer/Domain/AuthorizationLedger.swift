@@ -95,6 +95,17 @@ struct AuthorizationLedger: Codable, Equatable, Sendable {
         records.filter { $0.status == .active }
     }
 
+    /// Adopt only the result of an owner-submitted request, preserving the server's ID/version.
+    mutating func adoptConfirmed(_ record: WorkspaceAuthorization, requested: Set<LocalCapability>) -> Bool {
+        guard record.deviceId == server.deviceId, LocalServerContract.validWorkspace(record.workspaceId),
+              record.version > 0, record.capabilities == requested else { return false }
+        if let existing = records.first(where: { $0.workspaceId == record.workspaceId && $0.status == .active }),
+           !record.capabilities.isSubset(of: existing.capabilities) { return false }
+        records.removeAll { $0.id == record.id || ($0.workspaceId == record.workspaceId && $0.status == .active) }
+        records.append(record)
+        return true
+    }
+
     mutating func propose(
         actorUserId: Int64,
         workspaceId: Int64,

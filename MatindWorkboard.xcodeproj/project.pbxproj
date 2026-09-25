@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		022D760A305BD89FB8189B82 /* Workbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB38CA50C831A8C6C6A9F3C /* Workbench.swift */; };
+		02D3AF33CF438776374CB8D9 /* LocalDeviceControlClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583229811511439924E1026B /* LocalDeviceControlClient.swift */; };
 		161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A090111C61779493D3C65E /* LocalStorage.swift */; };
 		1D629247B8F0CA4341BC6E02 /* ServiceCatalogState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E744DCB0A0BDF84A64F2AC26 /* ServiceCatalogState.swift */; };
 		28796B2EFFC5B884B24DB93D /* ControlPlaneTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55252A310853A9F7C408100D /* ControlPlaneTransport.swift */; };
 		2C3520FDD56FAA257724300C /* MatindWorkboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */; };
+		2E1EE13EDD823114308BE02A /* RemoteDeviceAuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7317481374482ED0589733 /* RemoteDeviceAuthorizationTests.swift */; };
 		2E861C61970B320EA10E3320 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C11FBFABA7EA10899775D4 /* BoardGridView.swift */; };
 		36D3A54FCCFDA8F2DF9CC40E /* KeychainPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB557ABCBCDB5B155561C1 /* KeychainPasswordStore.swift */; };
 		3BA46EEBC94EF4ED81B687D1 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E5415BF46915E3C436E2D /* AppTab.swift */; };
@@ -52,6 +54,7 @@
 		D31D5C3C9A04B598AC465EBF /* PrivateServerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EFD03FB398980C247A3524 /* PrivateServerSection.swift */; };
 		DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781A66F267F03E29171E455B /* LocalServerContract.swift */; };
 		E0719DFF5AA955EE545E2CD7 /* AutomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924ADAF05D3DC7E37F0E74E6 /* AutomationView.swift */; };
+		E34A2DB78BBF8E8D084DEB5F /* LocalServiceInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE94FA13EEAED1A35679396 /* LocalServiceInstallation.swift */; };
 		E3A7F6903AD6041885B0EC65 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4266C052BFD81CDB48AADA86 /* User.swift */; };
 		E6EB4E6105FB3D9EBD7B04C7 /* LoopbackServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */; };
 		E9ACAB5D814672BFDE8ACF82 /* DeviceIdentityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */; };
@@ -83,12 +86,15 @@
 		239E5415BF46915E3C436E2D /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		33559A614D5E88D6D13142D2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		33C11FBFABA7EA10899775D4 /* BoardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGridView.swift; sourceTree = "<group>"; };
+		33D564855C442BD8736DF542 /* LocalOperations.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LocalOperations.xcconfig; sourceTree = "<group>"; };
 		38D88353796A0A62AACA323B /* BoardLayoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutViewModel.swift; sourceTree = "<group>"; };
 		4266C052BFD81CDB48AADA86 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		42A0CCBBF61D5C5E09BB781B /* LocalServerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerState.swift; sourceTree = "<group>"; };
+		450C27B31B424BCDF921950B /* ReleaseOperations.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseOperations.xcconfig; sourceTree = "<group>"; };
 		4E7E94A641D22637F8815007 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		516AE3627E3F65DBBD992E61 /* LastVisited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastVisited.swift; sourceTree = "<group>"; };
 		55252A310853A9F7C408100D /* ControlPlaneTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPlaneTransport.swift; sourceTree = "<group>"; };
+		583229811511439924E1026B /* LocalDeviceControlClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDeviceControlClient.swift; sourceTree = "<group>"; };
 		60059C19B10E1D032193B7C4 /* WorkbenchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchRepository.swift; sourceTree = "<group>"; };
 		781A66F267F03E29171E455B /* LocalServerContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerContract.swift; sourceTree = "<group>"; };
 		78200C73C8957351C61771C4 /* LocalServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServicesView.swift; sourceTree = "<group>"; };
@@ -102,8 +108,11 @@
 		8DCB557ABCBCDB5B155561C1 /* KeychainPasswordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordStore.swift; sourceTree = "<group>"; };
 		924ADAF05D3DC7E37F0E74E6 /* AutomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationView.swift; sourceTree = "<group>"; };
 		9BDC3848D3EF63294E011B7A /* Local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Local.xcconfig; sourceTree = "<group>"; };
+		9FE94FA13EEAED1A35679396 /* LocalServiceInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServiceInstallation.swift; sourceTree = "<group>"; };
 		A3D884CFF78623D8EA394F06 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		A6B69EFC9645D6F93E0BD56E /* WorkbenchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchViewModel.swift; sourceTree = "<group>"; };
+		AE6B7C441013370D34A16E47 /* MatindWorkboardDirect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatindWorkboardDirect.entitlements; sourceTree = "<group>"; };
+		AE7317481374482ED0589733 /* RemoteDeviceAuthorizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDeviceAuthorizationTests.swift; sourceTree = "<group>"; };
 		B12EAD494217F32A03EDF91A /* PluginManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManifest.swift; sourceTree = "<group>"; };
 		B519BBD48208434631893267 /* BoardLayoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayoutRepository.swift; sourceTree = "<group>"; };
 		B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentityStore.swift; sourceTree = "<group>"; };
@@ -337,6 +346,8 @@
 			isa = PBXGroup;
 			children = (
 				B5AC0F2AA2E0509012318F13 /* DeviceIdentityStore.swift */,
+				583229811511439924E1026B /* LocalDeviceControlClient.swift */,
+				9FE94FA13EEAED1A35679396 /* LocalServiceInstallation.swift */,
 				106486C0DD8ACF3F1839BD45 /* LoopbackServer.swift */,
 			);
 			path = Data;
@@ -347,6 +358,7 @@
 			children = (
 				02D872F53120FC2166A63B32 /* MatindWorkboardTests.swift */,
 				E01D30867A3FA2AA31C9B59C /* PrivateServerPolicyTests.swift */,
+				AE7317481374482ED0589733 /* RemoteDeviceAuthorizationTests.swift */,
 			);
 			path = MatindWorkboardTests;
 			sourceTree = "<group>";
@@ -380,6 +392,8 @@
 			isa = PBXGroup;
 			children = (
 				9BDC3848D3EF63294E011B7A /* Local.xcconfig */,
+				33D564855C442BD8736DF542 /* LocalOperations.xcconfig */,
+				450C27B31B424BCDF921950B /* ReleaseOperations.xcconfig */,
 				1FE63A3F5B1D63EA5115FF65 /* Remote.xcconfig */,
 			);
 			path = Config;
@@ -487,6 +501,7 @@
 				BE796F527DB0D7CDC93EF3B4 /* Info.plist */,
 				86A8717AF50F9F7EA36D4190 /* MatindWorkboard.entitlements */,
 				DB207245C191B327DFF23359 /* MatindWorkboardApp.swift */,
+				AE6B7C441013370D34A16E47 /* MatindWorkboardDirect.entitlements */,
 			);
 			path = MatindWorkboard;
 			sourceTree = "<group>";
@@ -599,8 +614,10 @@
 				AA326D42C997019BD2CBA139 /* HyperTableEmbedHost.swift in Sources */,
 				36D3A54FCCFDA8F2DF9CC40E /* KeychainPasswordStore.swift in Sources */,
 				59C7A996669363D6100F4406 /* LastVisited.swift in Sources */,
+				02D3AF33CF438776374CB8D9 /* LocalDeviceControlClient.swift in Sources */,
 				DD5A9BDD8E9CD3E8E51F5011 /* LocalServerContract.swift in Sources */,
 				AFEA8E16ADE3C6DDDF845B92 /* LocalServerState.swift in Sources */,
+				E34A2DB78BBF8E8D084DEB5F /* LocalServiceInstallation.swift in Sources */,
 				F013CF7DA6AAF614064C3216 /* LocalServicesView.swift in Sources */,
 				161444BBA4BBF990801E829B /* LocalStorage.swift in Sources */,
 				ED19B40927A9337319E6834C /* LoginView.swift in Sources */,
@@ -632,6 +649,7 @@
 			files = (
 				8FE0DC22701E3A1FBFBEB987 /* MatindWorkboardTests.swift in Sources */,
 				714F66C626834E71EA79253E /* PrivateServerPolicyTests.swift in Sources */,
+				2E1EE13EDD823114308BE02A /* RemoteDeviceAuthorizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +728,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MATIND_DISTRIBUTION = sandbox;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -719,6 +738,44 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
+		};
+		31295BE1C777D3EEBF00241F /* LocalOperations */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = LocalOperations;
+		};
+		488752314DCEEE584A5E7DF9 /* LocalOperations */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33D564855C442BD8736DF542 /* LocalOperations.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = LocalOperations;
 		};
 		4AB104A244DB5ED34E115F82 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -762,6 +819,146 @@
 			};
 			name = Remote;
 		};
+		73E23D0D25424C744663580F /* ReleaseOperations */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MATIND_DISTRIBUTION = sandbox;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = ReleaseOperations;
+		};
+		7E13BB598BED3195777C9E5C /* ReleaseOperations */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard-tests";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
+			};
+			name = ReleaseOperations;
+		};
+		8576F9E68E6835419D331603 /* LocalOperations */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MATIND_DISTRIBUTION = sandbox;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = LocalOperations;
+		};
 		955E2C4F565BC9B9D0717BE0 /* Local */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BDC3848D3EF63294E011B7A /* Local.xcconfig */;
@@ -799,6 +996,27 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatindWorkboard.app/Contents/MacOS/MatindWorkboard";
 			};
 			name = Release;
+		};
+		C6C34246097CBF54D29963B0 /* ReleaseOperations */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 450C27B31B424BCDF921950B /* ReleaseOperations.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MatindWorkboard/MatindWorkboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = MatindWorkboard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.matrixindustry.matind-workboard";
+				PRODUCT_NAME = MatindWorkboard;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = ReleaseOperations;
 		};
 		D030C9B06E3F0FB2C9F0C3E2 /* Local */ = {
 			isa = XCBuildConfiguration;
@@ -853,6 +1071,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MATIND_DISTRIBUTION = sandbox;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -934,6 +1153,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MATIND_DISTRIBUTION = sandbox;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -952,7 +1172,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				955E2C4F565BC9B9D0717BE0 /* Local */,
+				488752314DCEEE584A5E7DF9 /* LocalOperations */,
 				4AB104A244DB5ED34E115F82 /* Release */,
+				C6C34246097CBF54D29963B0 /* ReleaseOperations */,
 				4D0E255225DE6E1BFDAF71BE /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -962,7 +1184,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D030C9B06E3F0FB2C9F0C3E2 /* Local */,
+				8576F9E68E6835419D331603 /* LocalOperations */,
 				19C892DBF36CC027CF3CD071 /* Release */,
+				73E23D0D25424C744663580F /* ReleaseOperations */,
 				E3437F0AD10F24BADC73B412 /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -972,7 +1196,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1180729052C744C9F14E40C2 /* Local */,
+				31295BE1C777D3EEBF00241F /* LocalOperations */,
 				A4451D487E95E1BEA77B1E02 /* Release */,
+				7E13BB598BED3195777C9E5C /* ReleaseOperations */,
 				D7B8EC51F0DA34F5B23FE361 /* Remote */,
 			);
 			defaultConfigurationIsVisible = 0;

@@ -15,12 +15,15 @@ configs:
   Local: debug
   Remote: debug
   Release: release
+  LocalOperations: debug
+  ReleaseOperations: release
 
 settings:
   base:
     SWIFT_VERSION: 6.0
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     ENABLE_HARDENED_RUNTIME: YES
+    MATIND_DISTRIBUTION: sandbox
 
 targets:
   MatindWorkboard:
@@ -35,6 +38,8 @@ targets:
       Local: MatindWorkboard/Config/Local.xcconfig
       Remote: MatindWorkboard/Config/Remote.xcconfig
       Release: MatindWorkboard/Config/Remote.xcconfig
+      LocalOperations: MatindWorkboard/Config/LocalOperations.xcconfig
+      ReleaseOperations: MatindWorkboard/Config/ReleaseOperations.xcconfig
     dependencies:
       - package: MatindCore
     resources:
@@ -48,6 +53,13 @@ targets:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
         SWIFT_STRICT_CONCURRENCY: complete
+      configs:
+        LocalOperations:
+          PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard.operations
+          CODE_SIGN_ENTITLEMENTS: MatindWorkboard/MatindWorkboardDirect.entitlements
+        ReleaseOperations:
+          PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard.operations
+          CODE_SIGN_ENTITLEMENTS: MatindWorkboard/MatindWorkboardDirect.entitlements
     entitlements:
       path: MatindWorkboard/MatindWorkboard.entitlements
       properties:
@@ -70,6 +82,19 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.matrixindustry.matind-workboard-tests
 
 schemes:
+  MatindWorkboard Operations:
+    build:
+      targets:
+        MatindWorkboard: all
+        MatindWorkboardTests: [test]
+    run:
+      config: LocalOperations
+    test:
+      config: LocalOperations
+      targets:
+        - MatindWorkboardTests
+    archive:
+      config: ReleaseOperations
   MatindWorkboard:
     build:
       targets:
