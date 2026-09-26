@@ -30,8 +30,7 @@ struct HyperTableEmbedHost: NSViewRepresentable {
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = context.coordinator
-        context.coordinator.allowedHost = page.host
-        context.coordinator.allowedScheme = page.scheme
+        context.coordinator.allowedPage = page
         context.coordinator.loadedToken = accessToken
         webView.load(URLRequest(url: page))
         return webView
@@ -72,8 +71,7 @@ struct HyperTableEmbedHost: NSViewRepresentable {
 
     final class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         var onParams: (String, String) -> Void
-        var allowedHost: String?
-        var allowedScheme: String?
+        var allowedPage: URL?
         var loadedToken: String?
 
         init(onParams: @escaping (String, String) -> Void) {
@@ -97,17 +95,13 @@ struct HyperTableEmbedHost: NSViewRepresentable {
         func webView(
             _ webView: WKWebView,
             decidePolicyFor navigationAction: WKNavigationAction,
-            decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+            decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void
         ) {
-            guard let url = navigationAction.request.url else {
+            guard let url = navigationAction.request.url, let allowedPage else {
                 decisionHandler(.cancel)
                 return
             }
-            if url.scheme == "about" {
-                decisionHandler(.allow)
-                return
-            }
-            let sameOrigin = url.scheme == allowedScheme && url.host == allowedHost
+            let sameOrigin = HyperTableLocation.hasSameOrigin(url, as: allowedPage)
             decisionHandler(sameOrigin ? .allow : .cancel)
         }
     }
