@@ -1,173 +1,128 @@
 import SwiftUI
 
-struct BoardTabView: View {
-    let selectedBoardId: String?
-    let boards: [Board]
-    let workbenchId: String
-    let onSelect: (String) -> Void
-    let onDelete: (String) async -> Void
-
-    var body: some View {
-        if boards.isEmpty {
-            ContentUnavailableView(
-                "暂无工作板",
-                systemImage: "rectangle.stack",
-                description: Text("点击 + 添加工作板")
-            )
-        } else {
-            VStack(spacing: 0) {
-                // 顶部 Tab 栏
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        ForEach(boards) { board in
-                            BoardTabItem(
-                                board: board,
-                                isSelected: selectedBoardId == board.id,
-                                onSelect: { onSelect(board.id) },
-                                onDelete: {
-                                    Task { await onDelete(board.id) }
-                                }
-                            )
-                        }
-                    }
-                    .padding(.horizontal, 8)
-                }
-                .frame(height: 40)
-                .background(.bar)
-
-                Divider()
-
-                // 内容区
-                if let selectedBoardId {
-                    BoardContentView(boardId: selectedBoardId)
-                } else {
-                    ContentUnavailableView("选择工作板", systemImage: "rectangle.stack")
-                }
-            }
-        }
-    }
-}
-
-struct BoardTabItem: View {
-    let board: Board
-    let isSelected: Bool
-    let onSelect: () -> Void
-    let onDelete: () -> Void
-
-    var body: some View {
-        Button(action: onSelect) {
-            HStack(spacing: 6) {
-                Text(board.name)
-                    .font(.system(size: 13))
-                    .lineLimit(1)
-                if board.isDefault == true {
-                    Image(systemName: "star.fill")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.orange)
-                }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(isSelected ? Color.accentColor.opacity(0.15) : .clear)
-            .cornerRadius(6)
-        }
-        .buttonStyle(.plain)
-        .contextMenu {
-            Button(role: .destructive, action: onDelete) {
-                Label("删除工作板", systemImage: "trash")
-            }
-        }
-    }
+/// 一次「添加插件」请求。用新的标识区分重复点击，而不是用开关来回拨。
+struct PluginAddRequest: Equatable {
+    let id: UUID
 }
 
 struct BoardContentView: View {
     let boardId: String
+    let access: BoardSurfaceAccess
+    let editing: BoardEditing
+    let pluginAddRequest: PluginAddRequest?
     @State private var layoutVM = BoardLayoutViewModel()
-    @StateObject private var registry = PluginRegistry.shared
 
     var body: some View {
-        VStack(spacing: 0) {
-            // 工具栏：添加插件按钮
-            HStack {
-                Spacer()
-                Button(action: { layoutVM.showPluginPicker = true }) {
-                    Label("添加插件", systemImage: "plus")
-                        .font(.system(size: 13))
-                }
-                .buttonStyle(.bordered)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .disabled(registry.plugins.isEmpty)
-            }
-            .background(.bar)
-
-            Divider()
-
-            // 网格内容
+        ZStack {
+            BoardGridView(
+                layoutVM: layoutVM,
+                boardId: boardId,
+                arrangement: BoardArrangement.resolve(access: access, editing: editing)
+            )
             if layoutVM.isLoading {
                 ProgressView("加载布局…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                BoardGridView(
-                    layoutVM: layoutVM,
-                    boardId: boardId,
-                    plugins: registry.plugins
-                )
+                    .background(.background.opacity(0.6))
             }
         }
-        .task {
-            registry.loadBuiltinPlugins()
+        .task(id: boardId) {
+            await layoutVM.load(boardId: boardId)
+        }
+        .onChange(of: pluginAddRequest) { _, request in
+            if request != nil {
+                layoutVM.showPluginPicker = true
+            }
         }
     }
 }
 
-struct PluginCard: View {
-    let plugin: PluginManifest
+/// 改名和删除都从这里进入。删除必须重新输入完整名称。
+struct BoardManageSheet: View {
+    let board: Board
+    let onRename: (String, UUID) async throws -> Void
+    let onDelete: (String?, UUID) async throws -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var name: String
+    @State private var confirmation = ""
+    @State private var reason = ""
+    @State private var renameKey = UUID()
+    @State private var deleteKey = UUID()
+    @State private var action: ManageAction = .idle
+    @State private var message: String?
+
+    init(
+        board: Board,
+        onRename: @escaping (String, UUID) async throws -> Void,
+        onDelete: @escaping (String?, UUID) async throws -> Void
+    ) {
+        self.board = board
+        self.onRename = onRename
+        self.onDelete = onDelete
+        _name = State(initialValue: board.name)
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // 标题栏
-            HStack {
-                Image(systemName: pluginIcon(for: plugin.category))
-                    .foregroundStyle(.blue)
-                Text(plugin.name)
-                    .font(.system(size: 13, weight: .semibold))
-                Spacer()
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(.bar)
+        VStack(alignment: .leading, spacing: 16) {
+            Text("管理页面")
+                .font(.headline)
+            TextField("名称", text: $name)
+                .textFieldStyle(.roundedBorder)
+            Button("保存名称") { Task { await rename() } }
+                .disabled(name == board.name || action != .idle)
 
-            // 内容区：WebView
-            if let pluginDir = Bundle.main.url(
-                forResource: plugin.id,
-                withExtension: nil,
-                subdirectory: "Plugins"
-            ) {
-                WebViewPluginHost(
-                    pluginId: plugin.id,
-                    pluginDirectory: pluginDir,
-                    apiToken: nil
-                )
-            } else {
-                Color.gray.opacity(0.1)
-                    .overlay {
-                        Text("插件资源未找到")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+            Divider()
+
+            Text("删除页面")
+                .font(.headline)
+            Text("输入「\(board.name)」以确认删除")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            TextField("页面名称", text: $confirmation)
+                .textFieldStyle(.roundedBorder)
+            TextField("原因（可选）", text: $reason)
+                .textFieldStyle(.roundedBorder)
+            Button("删除", role: .destructive) { Task { await remove() } }
+                .disabled(confirmation != board.name || action != .idle)
+
+            if let message {
+                Text(message)
+                    .font(.callout)
+                    .foregroundStyle(.red)
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+        .padding(20)
+        .frame(width: 360)
     }
 
-    private func pluginIcon(for category: String) -> String {
-        switch category {
-        case "data": return "chart.bar"
-        case "tools": return "wrench.and.screwdriver"
-        case "monitoring": return "gauge"
-        default: return "puzzlepiece"
+    private func rename() async {
+        action = .renaming
+        message = nil
+        do {
+            try await onRename(name, renameKey)
+            dismiss()
+        } catch {
+            message = PresentedFailure.message(for: error)
+            action = .idle
         }
     }
+
+    private func remove() async {
+        action = .deleting
+        message = nil
+        let trimmed = reason.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            try await onDelete(trimmed.isEmpty ? nil : trimmed, deleteKey)
+            dismiss()
+        } catch {
+            message = PresentedFailure.message(for: error)
+            action = .idle
+        }
+    }
+}
+
+private enum ManageAction: Equatable {
+    case idle
+    case renaming
+    case deleting
 }

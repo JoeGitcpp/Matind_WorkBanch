@@ -1,5 +1,4 @@
 import Foundation
-import Security
 
 enum AuthServiceError: Error {
     case keychainError(OSStatus)
@@ -7,62 +6,32 @@ enum AuthServiceError: Error {
 }
 
 struct AuthService {
-    private let service = AppConfig.keychainService
-    private let account = AppConfig.keychainAccount
+    private let store: KeychainPasswordStore
+
+    init(store: KeychainPasswordStore = KeychainPasswordStore(
+        service: AppConfig.keychainService,
+        account: AppConfig.keychainAccount
+    )) {
+        self.store = store
+    }
 
     func saveToken(_ token: String) throws {
         guard let data = token.data(using: .utf8) else {
             throw AuthServiceError.dataConversionError
         }
-
-        // 先尝试删除旧值
-        let deleteQuery: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account
-        ]
-        SecItemDelete(deleteQuery as CFDictionary)
-
-        // 添加新值
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked
-        ]
-        let status = SecItemAdd(query as CFDictionary, nil)
-        guard status == errSecSuccess else {
+        do {
+            try store.save(data)
+        } catch let KeychainStoreError.keychain(status) {
             throw AuthServiceError.keychainError(status)
         }
     }
 
     func loadToken() -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        guard status == errSecSuccess,
-              let data = result as? Data,
-              let token = String(data: data, encoding: .utf8) else {
-            return nil
-        }
-        return token
+        guard let data = store.load() else { return nil }
+        return String(data: data, encoding: .utf8)
     }
 
     func clearToken() {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account
-        ]
-        let status = SecItemDelete(query as CFDictionary)
-        assert(status == errSecSuccess || status == errSecItemNotFound,
-               "Failed to clear token from Keychain: \(status)")
+        store.clear()
     }
 }

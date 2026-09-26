@@ -1,0 +1,4 @@
+// 本机方案：接口连本机后端，登录在本机网页授权。只含公开地址，不放任何密钥。
+APP_CONFIG_NAME = 本机
+API_BASE_URL = http:/$()/127.0.0.1:8800
+WEB_BASE_URL = http:/$()/localhost:3000

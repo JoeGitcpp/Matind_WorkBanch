@@ -31,11 +31,30 @@ struct SettingsView: View {
                     .padding(.vertical, 8)
                 }
 
+                GroupBox("本机服务") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("服务的安装、启停和授权在本机服务页。")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        Button("打开本机服务") {
+                            NotificationCenter.default.post(name: .openLocalServices, object: nil)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding(.vertical, 8)
+                }
+
                 // 通用设置
                 GroupBox("通用") {
                     VStack(alignment: .leading, spacing: 12) {
+                        LabeledContent("配置", value: AppConfig.configName)
                         LabeledContent("服务器地址") {
                             Text(AppConfig.apiBaseURL)
+                                .foregroundStyle(.secondary)
+                                .textSelection(.enabled)
+                        }
+                        LabeledContent("网页地址") {
+                            Text(AppConfig.webBaseURL)
                                 .foregroundStyle(.secondary)
                                 .textSelection(.enabled)
                         }
