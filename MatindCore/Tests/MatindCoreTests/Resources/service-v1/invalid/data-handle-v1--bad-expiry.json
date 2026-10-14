@@ -1,0 +1,8 @@
+{
+  "contract": "data-handle-v1",
+  "handleId": "h-1",
+  "destination": "workspace_storage",
+  "sizeBytes": 2147483648,
+  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "expiresAt": "2026-10-14 08:30:00"
+}

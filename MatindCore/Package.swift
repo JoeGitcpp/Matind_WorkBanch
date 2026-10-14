@@ -9,6 +9,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "MatindCore"),
-        .testTarget(name: "MatindCoreTests", dependencies: ["MatindCore"])
+        .testTarget(
+            name: "MatindCoreTests",
+            dependencies: ["MatindCore"],
+            resources: [.copy("Resources/service-v1")]
+        )
     ]
 )

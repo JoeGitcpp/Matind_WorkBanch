@@ -1,0 +1,105 @@
+{
+  "contract": "service-manifest-v1",
+  "serviceId": "com.matind.echo",
+  "version": "1.2.0",
+  "source": "official",
+  "driver": {
+    "kind": "external",
+    "endpoint": "http://127.0.0.1:8123"
+  },
+  "operations": [
+    {
+      "name": "echo",
+      "description": "Echo text",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "longRunning": false,
+      "streams": {
+        "consumes": false,
+        "produces": "none"
+      },
+      "meteringUnit": "call"
+    },
+    {
+      "name": "render",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "longRunning": true,
+      "streams": {
+        "consumes": true,
+        "produces": "workspace_storage"
+      },
+      "meteringUnit": "image"
+    }
+  ],
+  "resources": {
+    "diskMb": 10,
+    "memoryMb": 64,
+    "gpu": false,
+    "maxConcurrency": 4
+  },
+  "health": {
+    "kind": "http",
+    "target": "/healthz",
+    "intervalSec": 5
+  },
+  "displayName": "Echo",
+  "config": [
+    {
+      "key": "endpoint_port",
+      "type": "integer",
+      "label": "Port",
+      "required": true,
+      "default": 11434
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "label": "Key",
+      "required": false
+    }
+  ],
+  "modelKinds": [
+    "chat"
+  ]
+}

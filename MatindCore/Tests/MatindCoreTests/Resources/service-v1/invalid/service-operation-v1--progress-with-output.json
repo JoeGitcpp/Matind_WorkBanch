@@ -1,0 +1,7 @@
+{
+  "contract": "service-operation-v1",
+  "taskId": "task-1",
+  "kind": "progress",
+  "progress": 0.1,
+  "output": {}
+}

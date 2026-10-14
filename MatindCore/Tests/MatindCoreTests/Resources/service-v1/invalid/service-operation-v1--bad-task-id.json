@@ -1,0 +1,5 @@
+{
+  "contract": "service-operation-v1",
+  "taskId": "has space",
+  "kind": "cancel"
+}

@@ -1,0 +1,58 @@
+{
+  "contract": "service-manifest-v1",
+  "serviceId": "com.matind.echo",
+  "version": "1.2.0",
+  "source": "official",
+  "driver": {
+    "kind": "process",
+    "package": "comfy-adapter",
+    "entry": "bin/adapter",
+    "args": [
+      "--port",
+      "0"
+    ]
+  },
+  "operations": [
+    {
+      "name": "echo",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "longRunning": false,
+      "streams": {
+        "consumes": false,
+        "produces": "none"
+      },
+      "meteringUnit": "call"
+    }
+  ],
+  "resources": {
+    "diskMb": 10,
+    "memoryMb": 64,
+    "gpu": false,
+    "maxConcurrency": 4
+  },
+  "health": {
+    "kind": "process",
+    "intervalSec": 10
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "contract": "metering-entry-v1",
+  "entryId": "m-1",
+  "taskId": "task-1",
+  "workspaceId": "ws-1",
+  "callerId": "u-1",
+  "serverId": "srv-1",
+  "serviceId": "com.matind.echo",
+  "operation": "echo",
+  "unit": "call",
+  "units": 1.5,
+  "payerId": "u-1",
+  "createdAt": "2026-10-14T08:30:00Z"
+}

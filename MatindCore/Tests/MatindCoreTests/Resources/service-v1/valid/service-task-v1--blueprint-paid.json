@@ -1,0 +1,17 @@
+{
+  "contract": "service-task-v1",
+  "taskId": "task-1",
+  "workspaceId": "ws-1",
+  "callerId": "u-1",
+  "status": "running",
+  "serverId": "srv-1",
+  "serviceId": "com.matind.echo",
+  "operation": "echo",
+  "payer": {
+    "kind": "blueprint_owner",
+    "userId": "u-9"
+  },
+  "meteringUnit": "call",
+  "createdAt": "2026-10-14T08:30:00Z",
+  "blueprintId": "bp-1"
+}

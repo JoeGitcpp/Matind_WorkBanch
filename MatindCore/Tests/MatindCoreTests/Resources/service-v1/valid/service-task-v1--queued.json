@@ -1,0 +1,15 @@
+{
+  "contract": "service-task-v1",
+  "taskId": "task-1",
+  "workspaceId": "ws-1",
+  "callerId": "u-1",
+  "status": "queued",
+  "serviceId": "com.matind.echo",
+  "operation": "echo",
+  "payer": {
+    "kind": "caller",
+    "userId": "u-1"
+  },
+  "meteringUnit": "call",
+  "createdAt": "2026-10-14T08:30:00Z"
+}

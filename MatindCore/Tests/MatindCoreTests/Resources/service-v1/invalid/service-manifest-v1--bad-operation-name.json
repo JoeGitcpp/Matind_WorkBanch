@@ -1,0 +1,54 @@
+{
+  "contract": "service-manifest-v1",
+  "serviceId": "com.matind.echo",
+  "version": "1.2.0",
+  "source": "official",
+  "driver": {
+    "kind": "external",
+    "endpoint": "http://127.0.0.1:8123"
+  },
+  "operations": [
+    {
+      "name": "Echo-1",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "longRunning": false,
+      "streams": {
+        "consumes": false,
+        "produces": "none"
+      },
+      "meteringUnit": "call"
+    }
+  ],
+  "resources": {
+    "diskMb": 10,
+    "memoryMb": 64,
+    "gpu": false,
+    "maxConcurrency": 4
+  },
+  "health": {
+    "kind": "operation",
+    "target": "echo",
+    "intervalSec": 30
+  }
+}
