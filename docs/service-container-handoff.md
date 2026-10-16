@@ -227,3 +227,15 @@ node --test scripts/desktop/package-official-service.test.mjs scripts/desktop/si
 - 提交只在本地和这些分支上，不直接动 `dev`、`uat`、`main`。
 - 每个会话结束时回报：改了哪些文件、验收项逐条结果、与文档不一致的地方（实施要求 8 节的规定）。
 - 出现「必须改通用代码」的情况，先回报缺口。
+
+---
+
+## 附：推送记录（2026-10-16）
+
+后端 `JoeGitcpp/MatindBackend_Rust`：`feat/service-contracts` 23e08660、`feat/device-login` 9a25891c、`feat/data-channel` 31e9f0ae、`feat/service-catalog` a0dadc8b。
+变基到 dev 455b062d 后在 Linux 容器复验：service_catalog 15、data_channel 7、service_metering 8、matrix-automation 全部、automation_job_lifecycle_test 14、local_server_enrollment 2，全部通过。
+
+前端 `JoeGitcpp/MatrixFactoryFrontend`：`feat/service-contracts` f6f80f3a3、`feat/host-windows-kernel` 57a1a97ab、`feat/service-management-page` 298744e1e、`feat/service-streams` 991c5f37c（比 c0e4cf09f 多一个提交：`source-lock.json` 已钉到后端 a0dadc8b）。
+`scripts/tests/desktop-boundary-test.py` 在本机（无 Python）没有运行，Mac 上先跑一次。
+
+桌面端 `JoeGitcpp/Matind_WorkBanch`：`feat/service-contracts` db9be7e、`docs/service-container`（本文所在分支）。
